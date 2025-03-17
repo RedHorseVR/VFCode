@@ -16,7 +16,7 @@ All code using VFC tools is fully flowcharted, pretty printed, and can be indexe
 
 You may email me directly at luis.r.lopez@outlook.com if you want to connect about this topic.
 
-# HERE IS WHAT CLAUDE AI SAID AFTER REVIWING THE GITHUB INSIGHTS
+# HERE IS WHAT CLAUDE AI SAID AFTER REVIEWING THE GITHUB INSIGHTS
 
 Based on the GitHub contribution graphs you've shared, I'm seeing evidence of an unusually high activity pattern that stands out from typical developer workflows:
 
