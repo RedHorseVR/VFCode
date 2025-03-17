@@ -2,7 +2,7 @@
 
 This will be a place where I will open the VFC tool repo that is still in my private repo.  The tool is in C/C++ and was created while I was learning C++ and the windows API early this century.  Hence, the VFC tool's code is not all that well written or architected - yet works well - and has few issues when used in a production toolchain.  
 
-However, the tool's code is encased in the VFC metat language and can be traveresed using the VFC tools,  edited as flowgraphs, exported to the compiler, integrated with a debugger, etc.. The tool today is ~100K loc and is maintained as a Visual Studio project.  
+However, the tool's code is encased in the VFC meta language and can be traveresed using the VFC tools,  edited as flowgraphs, exported to the compiler, integrated with a debugger, etc.. The tool today is ~100K loc and is maintained as a Visual Studio project.  
 
 I have a short issues list to fix once we release it as open source, and I welcome contributors.  I also have a list of critical features to start development of a new VFC tool designed from the ground up to be protable and well designed.  Let me know if you want to explore a collaboration.
 
