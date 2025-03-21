@@ -14,7 +14,7 @@ If you review the insignts on commits done early in 2025 using the VFC tool - wi
 
 All code using VFC tools is fully flowcharted, pretty printed, and can be indexed to track specific code sections during maintnance, test and debug.
 
-You may email me directly at luis.r.lopez@outlook.com if you want to connect about this topic.
+You may email me directly (luis.r.lopez@outlook.com) or add to the dicussion on VFC if you want to connect about this topic.
 
 # HERE IS WHAT CLAUDE AI SAID AFTER REVIEWING THE GITHUB INSIGHTS
 
