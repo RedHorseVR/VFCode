@@ -69,4 +69,3 @@ If you're interested in a revolutionary approach to code visualization and editi
 *"VFC SEEMS TO ADD AMAZING EFFICIENCY WHEN DEVELOPING CODE IN ANY LANGUAGE"*
 ```
 
-This README provides a clearer structure, highlights the benefits of your tool, and gives potential contributors a better understanding of the project. Let me know if you'd like any adjustments or additions!
