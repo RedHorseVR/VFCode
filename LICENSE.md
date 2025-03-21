@@ -16,4 +16,4 @@ This software is dual-licensed:
 The full text of the GNU General Public License v3.0 can be found at:
 https://www.gnu.org/licenses/gpl-3.0.en.html
 
-A copy of this license is also available in the file COPYING.txt in this repository.
+ 
