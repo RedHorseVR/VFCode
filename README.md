@@ -68,4 +68,3 @@ If you're interested in a revolutionary approach to code visualization and editi
 
 *"VFC SEEMS TO ADD AMAZING EFFICIENCY WHEN DEVELOPING CODE IN ANY LANGUAGE"*
 ```
-
