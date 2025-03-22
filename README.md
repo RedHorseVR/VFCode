@@ -64,7 +64,7 @@ There are several ways to contribute to the VFC project:
 ## 🤝 Join Us!
 If you're interested in a revolutionary approach to code visualization and editing that demonstrably increases productivity, we welcome your contributions! Email luis.r.lopez@outlook.com to request access to the current tool or to discuss how you'd like to get involved.
 
----
+[![Hacktoberfest 2024](https://img.shields.io/badge/Hacktoberfest-2024-orange.svg)](https://hacktoberfest.com/)
 
 *"VFC SEEMS TO ADD AMAZING EFFICIENCY WHEN DEVELOPING CODE IN ANY LANGUAGE"*
 ```
