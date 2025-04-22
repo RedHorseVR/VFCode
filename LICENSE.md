@@ -1,19 +1,27 @@
-# VFC Tool Dual License
+Dual-License Notice for VFCode and related tools
+-------------------------------------------------
 
-This software is dual-licensed:
+This software is dual-licensed by the author, Luis R. Lopez.
 
-1. For individuals and organizations with fewer than 5 developers:
-   This software is available under GPL v3 with the following conditions:
-   - You must maintain all copyright notices and attributions
-   - Any modifications must be shared back under the same license
-   - All uses must prominently reference "Built with VFC Technology (github.com/redhorseVR)"
+1. For individuals and organizations with:
+   - Fewer than 4 developers
+   - AND less than $5,000,000 USD in annual revenue
 
-2. For organizations with 5 or more developers:
-   A commercial license is required. Please contact luis.r.lopez@outlook.com to negotiate license terms.
+   The software is licensed under the GNU General Public License v3.0, with the following conditions:
+   - Retain all copyright notices
+   - Share modifications under the same license (GPLv3)
+   - Prominently display the reference:
+     "Built with VFC Technology (https://github.com/redhorseVR)"
+   - Binary exports must include a comment stamp such as:
+     # Export Date: 11:13:19 AM - 22:Apr:2025.
 
-## GNU General Public License v3.0
+2. All other use cases require a commercial license. This includes:
+   - Organizations with 4 or more developers
+   - OR organizations with fewer than 4 developers but more than $5,000,000 USD in annual revenue
 
-The full text of the GNU General Public License v3.0 can be found at:
+   - Contact: luis.r.lopez@outlook.com
+   - Organizations actively engaged with the author (via employment, consulting, etc.) may use the tools beyond these limits at the author's discretion for the duration of the engagement
+   - Any substantial commercial use of VFCode exceeding these thresholds requires a negotiated license
+
+Full GPL v3 license:  
 https://www.gnu.org/licenses/gpl-3.0.en.html
-
- 
