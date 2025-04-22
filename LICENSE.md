@@ -12,8 +12,9 @@ This software is dual-licensed by the author, Luis R. Lopez.
    - Share modifications under the same license (GPLv3)
    - Prominently display the reference:
      "Built with VFC Technology (https://github.com/redhorseVR)"
-   - Binary exports must include a comment stamp such as:
-     # Export Date: 11:13:19 AM - 22:Apr:2025.
+   - Binary exports must retain any comment stamps in the exported code such as:
+   
+     '*Export Date: 11:13:19 AM - 22:Apr:2025.*' or '*Made with VFCode*'
 
 2. All other use cases require a commercial license. This includes:
    - Organizations with 4 or more developers
