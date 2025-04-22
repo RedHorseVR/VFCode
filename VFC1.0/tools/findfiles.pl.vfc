@@ -1,0 +1,120 @@
+;  IRL FlowCode Version: Version 10.0
+;  c1995-2015: Visual Flow Coder by 2LResearch
+;
+;  File Name : findfiles.pl.vfc
+;  File Date : 11:17:25 PM - 23:Feb:2024
+
+event(use File::Find;);//// //////
+event(use File::Basename;);// ////
+set($HIT_TOTAL = 0;);//
+end();//
+
+input(sub GetLines{ local ( $filename , $word_to_find  , $type ) = @_;);//
+generic(open(my $fh, '<', $filename) or die "Could not open file '$filename' $!";);// ////
+generic(my $line_number = 0;);// ////
+set($found = 0;);//
+output();//print( "******************** $type \n\n  " );
+set($VFCtoken = "^(generic|variable|input|event|process|set|output|loop|lend|branch|path|bend|end)" ;);//
+loop(while (my $row = <$fh>) {);// ////
+branch(if ( $row =~ m/$VFCtoken/  ));//if ( $row =~ m/$VFCtoken/ ||  $row =~ m/\w*/ )
+path( {);//
+generic($line_number++;);// ////
+bend( });//
+set($row =~ s/$VFCtoken// ;);//
+set($tok = $& ;);//
+set($row =~ s/;\/\/.*// ;);//
+set($row =~ s/\n// ;);//
+branch(if($row =~ m/$word_to_find/) {);///// ////////if($row =~ /\b$word_to_find\b/) {
+path();//
+branch(if ( $type =~ m/$VFCtoken/  ));//
+path( { );//
+branch(if ( $tok =~ m/^$type/ ));//
+path( { );//
+set($found += 1;);//
+output(print "\tVFC2000 $filename  -Goto $line_number\t|--------> $tok$row;\n";);// ////
+path( }else{ );//
+bend( } );//
+path( }else{ );//
+set($found += 1;);//
+output(print "\tVFC2000 $filename  -Goto $line_number  |--------> $tok$row;\n";);// ////
+bend( } );//
+bend(});//// //////
+lend(});//// //////
+generic(close($fh););// ////
+branch(if ( $found > 0  ));//
+path( { );//
+output(print "\tLOC: $line_number :: $found HIT(s)\n\n";);//
+set($HIT_TOTAL += $found ;);//
+bend( } );//
+end(return $line_number; });//
+
+input(sub process_files{ my( $dir , $word , $type  ) = @_;);//
+generic(opendir(DIR, $dir) or die "Could not open $dir in process_files \n";);// ////
+set($total_lines  = 0;);//
+loop(while (my $file = readdir(DIR)) {);// ////
+branch(if ( $file =~ m/\.dart\.vfc/ &&   -f "$dir/$file") {);//// //////
+path();//
+set($VFCfile = "$dir\\$file" ;);//
+set($VFCfile  =~ s/\\\//\\/;);//
+branch(if ( $VFCfile =~ m/\.vfc$/ ));//
+path( {);//
+process($lines = GetLines( $VFCfile , $word , $type  ) ;);//
+set($total_lines  += $lines ;);//
+output( );//print "$VFCfile $lines\n";
+bend( });//
+bend(});//// //////
+lend(});//// //////
+generic(closedir(DIR););// ////
+end(return $total_lines  ;   });//
+
+input(#main);//// // Print the directories ////
+event();//my $dir = shift @ARGV or die "Usage: $0 <directory>\n";
+set(my $dir = "";);//
+set(my $word = "";);//
+generic(my $size = $#ARGV + 1;);//
+output(print "The size of \@ARGV is $size\n";);// ////
+branch(if ( $size >=  2) {);// ////
+path();// // Get the directory and file names from the arguments //
+generic( $dir = $ARGV[0];);//
+generic($word = $ARGV[1];);//\
+generic($type = $ARGV[2];);//\
+path(}else{);//
+output(print( "Useage: @0  <directory>  <search term> <vfc_type>\n" ) ;);//////// //////////
+end(exit);//
+bend(});//
+process();//process_files( "$dir" , $word  , $type ) ;
+generic();// // Use glob to get all the files and directories in the path //
+generic(my @list_of_files = glob("$dir/*"););// ////
+set($TotalLines = 0;);//
+output(print "\n===============================\n";);//// //////
+output(print( "<directory=$dir>  <search term=$word> <vfc_type=$type>\n" ) ;);////// ////////
+output(print "===============================\n\n";);//// //////
+output(print "\t============> $dir\n";);//// //////
+process($lines = process_files( "$dir" , $word , $type ) ;);//
+output();//print "\t--------------> $dir  :  $lines \n\n";
+set($TotalLines += $lines;);//
+generic();// // Filter out the directories using the -d file test operator //
+process(my @list_of_dirs = grep { -d } @list_of_files;);//// //////
+loop(foreach my $dir (@list_of_dirs) {);// ////
+branch(if ( $dir =~ m/BackupVFC/ ));//
+path( {);//
+path(} else {);//
+output(print "\t============> $dir \t============\n";);//// //////
+process($lines = process_files( "$dir" , $word , $type ) ;);//
+set($TotalLines += $lines;);//
+output();// print "\t--------------> $dir  :  $lines \n\n";
+bend( });//
+lend(});//// //////
+output(print "--------------> \n";);//// //////
+output(print "--------------> TOTAL LOC: $TotalLines :: HITS: $HIT_TOTAL \n";);// 
+output(print "--------------> \n";);//// //////
+end();//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 8454143 13158600 0 255 255 9895835 8454143 7274551
+;    findfiles.pl   #   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 4294966861 1400 1798 490 32 160   1057   4294966706    perl.key  0

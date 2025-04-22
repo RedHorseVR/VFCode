@@ -1,0 +1,49 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : Basic Application Template.ins
+;  File Date : 12:56:23 AM - 20:Jan:1999
+
+
+input(//BEGIN_INSECTA_TEMPLATE );//
+event(//MAP_VARIABLE $appname =JavaApplicationENTER: The name for the new Applet);//
+event(//MAP_VARIABLE $keyfile =java.keyENTER: The name for the new Applet);//
+set(//SET_EXPORT_FILENAME   $appname.java);//
+set(//SET_INSECTA_FILENAME   $appname.ins);//
+set(//SET_LANGUAGE_KEY   $keyfile);//
+end(//END_INSECTA_TEMPLATE );//
+
+input(/** recipe log **/);//<--- part of framework
+process(/** <TIME_STAMP> LANGUAGE: Java ;   started Applet / Application  $appname.class   using frame: 'Basic Applet.fm'   **/);//
+end(//AFFIRM_END);//
+
+input(/** Imports **/);//<--- part of framework
+generic(import java.awt.*;);//  
+generic(import java.applet.*;);//  
+generic(import java.net.*;);//  
+set();//import Resource;
+end(/*------------*/);//
+
+input(public class $appname  extends Applet);//  <----- start of class definition  has drawing vars for lines
+branch({);//
+path(/** class data **/);//<--- used in framework
+path(/** methods **/);//<--- used in framework
+
+input(public static void main(String args[]){);//  
+set(int     i=0; );//
+set( System.out.println( "$appname  Started" ););//
+loop(for( i =0 ; i< 10 ; i++ ) {);//
+set( System.out.println( "             Hello New World ..." ););// 
+lend( } // end for );//
+set( System.out.println( "$appname  Exited" ););// 
+end(} );//  
+bend(}       /** end of class definition **/);// <------------ end of class definition
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    //   //   //
+; INSECTA
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 815 29 607 758 25 100   278   4294966929    template.key  0

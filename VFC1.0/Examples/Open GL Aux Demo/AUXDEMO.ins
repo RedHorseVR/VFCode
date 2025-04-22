@@ -1,0 +1,152 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : AUXDEMO.ins
+;  File Date : 10:59:45 PM - 10:Aug:1997
+
+
+input(/* includes */);//FILE: glos.h
+   generic(#include "glos.h");//  
+   generic(#include <GL/gl.h>);//  
+   generic(#include <GL/glu.h>);//  
+   generic(#include <GL/glaux.h>);//  
+
+input(/* prototypes */ );//
+   generic(GLvoid Initialize(GLvoid););//  
+   generic(GLvoid CALLBACK drawScene(GLvoid););//  
+   generic(GLvoid CALLBACK resize(GLsizei, GLsizei););//  
+   generic(GLvoid drawLight(GLvoid););//  
+   generic(void polarView( GLdouble, GLdouble, GLdouble, GLdouble););//  
+   generic(GLfloat latitude, longitude, radius;);//  
+end(/*------------*/);// 
+
+input(void _CRTAPI1 main(void){);//  
+   generic(Initialize(););//  
+   generic(auxMainLoop( drawScene ););//  
+end(} );//  
+end(/*------------*/);// 
+
+input(GLvoid CALLBACK resize( GLsizei width, GLsizei height ){);//  
+   generic(GLfloat aspect;);//  
+   generic(glViewport( 0, 0, width, height ););//  
+   generic(aspect = (GLfloat) width / height;);//  
+   generic(glMatrixMode( GL_PROJECTION ););//  
+   generic(glLoadIdentity(););//  
+   generic(gluPerspective( 45.0, aspect, 3.0, 7.0 ););//  
+   generic(glMatrixMode( GL_MODELVIEW ););//  
+end(} );//  
+end(/*------------*/);// 
+
+input(GLvoid Initialize(GLvoid){);//  
+   generic(GLfloat maxObjectSize, aspect;);//  
+   generic(GLdouble near_plane, far_plane;);//  
+   generic(GLsizei width, height;);//  
+   set(GLfloat ambientProperties[] = {0.7, 0.7, 0.7, 1.0};);//
+   generic(GLfloat diffuseProperties[] = {0.8, 0.8, 0.8, 1.0};);//  
+   generic(GLfloat specularProperties[] = {1.0, 1.0, 1.0, 1.0};);//  
+   generic(width = 512.0;);//  
+   generic(height = 380.0;);//  
+   generic(auxInitPosition( width/4, height/4, width/2, height/2););//  
+   generic(auxInitDisplayMode( AUX_RGB | AUX_DEPTH | AUX_DOUBLE ););//  
+   generic(  auxInitWindow( "Flowcoded OpenGL Demo" ););//auxInitWindow( "AUX Library Demo" );
+   generic(auxIdleFunc( drawScene ););//  
+   generic(auxReshapeFunc( resize ););//  
+   generic(glClearColor( 0.0, 0.0, 0.0, 1.0 ););//  
+   generic(glClearDepth( 1.0 ););//  
+   generic(glEnable(GL_DEPTH_TEST););//  
+   generic(glEnable(GL_LIGHTING););//  
+   generic(glLightfv( GL_LIGHT0, GL_AMBIENT, ambientProperties););//  
+   generic(glLightfv( GL_LIGHT0, GL_DIFFUSE, diffuseProperties););//  
+   generic(glLightfv( GL_LIGHT0, GL_SPECULAR, specularProperties););//  
+   generic(glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, 1.0););//  
+   generic(glEnable( GL_LIGHT0 ););//  
+   generic(glMatrixMode( GL_PROJECTION ););//  
+   generic(aspect = (GLfloat) width / height;);//  
+   generic(gluPerspective( 45.0, aspect, 3.0, 7.0 ););//  
+   generic(glMatrixMode( GL_MODELVIEW ););//  
+   generic(near_plane = 3.0;);//  
+   generic(far_plane = 7.0;);//  
+   generic(maxObjectSize = 3.0;);//  
+   generic(radius = near_plane + maxObjectSize/2.0;);//  
+   generic(latitude = 0.0;);//  
+   generic(longitude = 0.0;);//  
+   generic(} );//  
+end(/*------------*/);// 
+
+input(void polarView(GLdouble radius, GLdouble twist, GLdouble latitude,       GLdouble longitude){);//  
+   generic(glTranslated(0.0, 0.0, -radius););//  
+   generic(glRotated( -twist, 0.0, 0.0, 1.0 ););//  
+   generic(glRotated( -latitude, 1.0, 0.0, 0.0););//  
+   generic(glRotated( longitude, 0.0, 0.0, 1.0););//  
+end(} );//  
+end(/*------------*/);// 
+
+input(GLvoid CALLBACK drawScene(GLvoid){);//  
+   set(static GLfloat whiteAmbient[] = {0.3, 0.3, 0.3, 1.0};);//
+   generic(static GLfloat redAmbient[] = {0.3, 0.1, 0.1, 1.0};);//  
+   generic(static GLfloat greenAmbient[] = {0.1, 0.3, 0.1, 1.0};);//  
+   generic(static GLfloat blueAmbient[] = {0.1, 0.1, 0.3, 1.0};);//  
+   generic(static GLfloat whiteDiffuse[] = {1.0, 1.0, 1.0, 1.0};);//  
+   generic(static GLfloat redDiffuse[] = {1.0, 0.0, 0.0, 1.0};);//  
+   generic(static GLfloat greenDiffuse[] = {0.0, 1.0, 0.0, 1.0};);//  
+   generic(static GLfloat blueDiffuse[] = {0.0, 0.0, 1.0, 1.0};);//  
+   generic(static GLfloat whiteSpecular[] = {1.0, 1.0, 1.0, 1.0};);//  
+   generic(static GLfloat redSpecular[] = {1.0, 0.0, 0.0, 1.0};);//  
+   generic(static GLfloat greenSpecular[] = {0.0, 1.0, 0.0, 1.0};);//  
+   generic(static GLfloat blueSpecular[] = {0.0, 0.0, 1.0, 1.0};);//  
+   generic(static GLfloat lightPosition0[] = {1.0, 1.0, 1.0, 1.0};);//  
+   generic(static GLfloat angle = 0.0;);//  
+   generic(glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ););//  
+   generic(glPushMatrix(););//  
+   generic(latitude += 4.0;);//  
+   generic(longitude += 2.5;);//  
+   generic(polarView( radius, 0, latitude, longitude ););//  
+   generic(glPushMatrix(););//  
+   generic(angle += 20.0;);//  angle += 1.0;  // Speed of orbiting light object
+   generic(glRotatef(angle, 1.0, 0.0, 1.0););//  
+   generic(glTranslatef( 0.0, 1.5, 0.0););//  
+   generic(glLightfv(GL_LIGHT0, GL_POSITION, lightPosition0););//  
+   generic(drawLight(););//  
+   generic(glPopMatrix(););//  
+   generic(glPushAttrib(GL_LIGHTING_BIT););//  
+   generic(glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, redAmbient););//  
+   generic(glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, redDiffuse););//  
+   generic(glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, whiteSpecular););//  
+   generic(glMaterialf(GL_FRONT, GL_SHININESS, 100.0););//  
+   generic(auxSolidCone( 0.3, 0.6 ););//  
+   generic(glPopAttrib(););//  
+   generic(auxWireSphere(1.5););//  
+   generic(glPushAttrib(GL_LIGHTING_BIT););//  
+   generic(glMaterialfv(GL_BACK, GL_AMBIENT, greenAmbient););//  
+   generic(glMaterialfv(GL_BACK, GL_DIFFUSE, greenDiffuse););//  
+   generic(glMaterialfv(GL_FRONT, GL_AMBIENT, blueAmbient););//  
+   generic(glMaterialfv(GL_FRONT, GL_DIFFUSE, blueDiffuse););//  
+   generic(glMaterialfv(GL_FRONT, GL_SPECULAR, blueSpecular););//  
+   generic(glMaterialf(GL_FRONT, GL_SHININESS, 50.0););//  
+   generic(glPushMatrix(););//  
+   generic(glTranslatef(0.8, -0.65, 0.0););//  
+   generic(glRotatef(30.0, 1.0, 0.5, 1.0););//  
+   generic(auxSolidCylinder( 0.3, 0.6 ););//  
+   generic(glPopMatrix(););//  
+   generic(glPopAttrib(););//  
+   generic(glPopMatrix(););//  
+   generic(auxSwapBuffers(););//  
+   generic(} );//  
+end(/*------------*/);// 
+
+input(GLvoid drawLight(GLvoid){);//  
+   generic(glPushAttrib(GL_LIGHTING_BIT););//  
+   generic(glDisable(GL_LIGHTING););//  
+   generic(glColor3f(1.0, 1.0, 1.0););//  
+   generic(auxSolidDodecahedron(0.1););//  
+   generic(glPopAttrib(););//  
+end(} );//  
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 0 13158600 0 0 13158600 8388608 255 16777215 0 0 0 0 12632256
+;    Auxdemo.c   /*   */
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 172 65 493 167 23 100   267   4294966890    opengl.key  0

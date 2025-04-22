@@ -1,0 +1,126 @@
+;  IRL FlowCode Version: Version 10.0
+;  c1995-2015: Visual Flow Coder by 2LResearch
+;
+;  File Name : E:\Users\luisr\OneDrive\Desktop\MicroPyrhon\rainbow\ws2812.py.vfc
+;  File Date : 09:27:27 PM - 08:Sep:2024
+
+event( import array );// 
+event( import time );// 
+event( from machine import Pin );// 
+event( import rp2 );// 
+set();//# Configure the number of WS2812 LEDs.
+set();//#brightness = 0.2
+set();//
+input( def ws2812() : );// 
+branch(  );//
+path(  );//
+set( T1 = 2 );// 
+set( T2 = 5 );// 
+set( T3 = 3 );// 
+process( wrap_target() );// 
+process( label('bitloop') );// 
+process( out(x, 1).side(0)[T3 - 1] );// 
+process( jmp(not_x, 'do_zero').side(1)[T1 - 1] );// 
+process( jmp('bitloop').side(1)[T2 - 1] );// 
+process( label('do_zero') );// 
+process( nop().side(0)[T2 - 1] );// 
+process( wrap() );// 
+bend(  );// # end if ws2812
+end(  );// end def ws2812
+input( class WS2812(): );// 
+branch(  );//
+path(  );//
+input( def __init__(self, pin_num, led_count, brightness) : );// 
+branch(  );//
+path(  );//
+set( self.Pin = Pin );// 
+set( self.led_count = led_count );// 
+set( self.brightness = brightness );// 
+set( self.sm = rp2.StateMachine(0, ws2812, freq=8000000, sideset_base=Pin(pin_num)) );// 
+process( self.sm.active(1) );// 
+set( self.ar = array.array('I', [0 for _ in range(led_count)]) );// 
+bend(  );// # end if __init__
+end(  );// end def __init__
+input( def pixels_show(self) : );// 
+branch(  );//
+path(  );//
+set( dimmer_ar = array.array('I', [0 for _ in range(self.led_count)]) );// 
+loop( for (i, c) in enumerate(self.ar): );// 
+set( r = int((c >> 8 & 255) * self.brightness) );// 
+set( g = int((c >> 16 & 255) * self.brightness) );// 
+set( b = int((c & 255) * self.brightness) );// 
+set( dimmer_ar[i] = (g << 16) + (r << 8) + b );// 
+lend(  );//
+process( self.sm.put(dimmer_ar, 8) );// 
+process( time.sleep_ms(10) );// 
+bend(  );// # end if pixels_show
+end(  );// end def pixels_show
+input( def pixels_set(self, i, color) : );// 
+branch(  );//
+path(  );//
+set( self.ar[i] = (color[1] << 16) + (color[0] << 8) + color[2] );// 
+bend(  );// # end if pixels_set
+end(  );// end def pixels_set
+input( def pixels_fill(self, color) : );// 
+branch(  );//
+path(  );//
+loop( for i in range(len(self.ar)): );// 
+process( self.pixels_set(i, color) );// 
+lend(  );//
+bend(  );// # end if pixels_fill
+end(  );// end def pixels_fill
+input( def color_chase(self, color, wait) : );// 
+branch(  );//
+path(  );//
+loop( for i in range(self.led_count): );// 
+process( self.pixels_set(i, color) );// 
+process( time.sleep(wait) );// 
+process( self.pixels_show() );// 
+lend(  );//
+process( time.sleep(0.2) );// #0#
+bend(  );// # end if color_chase
+end(  );// end def color_chase
+input( def wheel(self, pos) : );// #0#
+branch(  );//
+path(  );//
+branch( if pos < 0 or pos > 255: );// #0#
+path(  );//
+end( return (0, 0, 0) );// #0#
+bend(  );//
+branch( if pos < 85: );// #0#
+path(  );//
+end( return (255 - pos * 3, pos * 3, 0) );// #0#
+bend(  );//
+branch( if pos < 170: );// #0#
+path(  );//
+set( pos = 85 );// #0#
+end( return (0, 255 - pos * 3, pos * 3) );// #0#
+bend(  );//
+set( pos = 170 );// #0#
+end( return (pos * 3, 0, 255 - pos * 3) );// #0#
+bend(  );// # end if wheel
+end(  );// end def wheel
+input( def rainbow_cycle(self, wait) : );// #0#
+branch(  );//
+path(  );//
+loop( for j in range(255): );// #0#
+loop( for i in range(self.led_count): );// #0#
+set( rc_index = i * 256 // self.led_count + j );// #0#
+process( self.pixels_set(i, self.wheel(rc_index & 255)) );// #0#
+lend(  );//
+process( self.pixels_show() );// #0#
+process( time.sleep(wait) );// #0#
+lend(  );//
+bend(  );// # end if rainbow_cycle
+end(  );// end def rainbow_cycle
+bend(  );//
+end(  );// class WS2812
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 12632256 0 255 255 65535 65280 5439529
+;    E:\Users\luisr\OneDrive\Desktop\MicroPyrhon\rainbow\ws2812.py   #   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 2925 288 902 1802 0 100   756   4294966693    python.key  0

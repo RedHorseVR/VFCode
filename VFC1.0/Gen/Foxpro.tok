@@ -1,0 +1,212 @@
+[VARIABLES]
+
+
+
+
+
+
+
+
+
+
+
+
+[INPUT]
+^ *PROCEDURE
+^ *FUNCTION
+\*.*Main
+
+
+
+
+
+
+
+[EVENT]
+^ *WAIT
+
+
+
+
+
+
+
+
+
+
+
+
+[PROCESS]
+^ *SELECT
+^ *GO
+
+
+
+
+
+
+
+
+
+
+[SET]
+^ *SET
+.*=.*
+^ *LOCAL
+
+
+
+
+
+
+
+
+
+[OUTPUT]
+^ *OUTPUT
+^ *#DEFINE
+^ *USE
+^ *DIMENSION
+^ *PRIVATE
+
+
+
+
+
+
+
+[LOOP]
+^ *SCAN
+^ *FOR +
+
+
+
+
+
+
+
+
+
+
+
+[LEND]
+ENDSCAN
+^ *ENDFOR
+
+
+
+
+
+
+
+
+
+
+[BRANCH]
+^ *IF
+^ *DO *CASE
+^ *DEFINE *CLASS
+^IIF *(.*)$<CLOSER>
+
+
+
+
+
+
+
+
+[PATH]
+^ *ELSE
+^ *CASE
+^ *OTHERWISE
+^ *ADD *OBJECT
+
+
+
+
+
+
+
+
+[BEND]
+^ENDIF
+^ *ENDIF
+^ *ENDCASE
+^ *ENDDEFINE
+
+
+
+
+
+[END]
+EXIT
+RETURN
+^ *BREAK
+^ *ENDPROC
+^ *ENDFUNC
+^ *LOOP
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[TOOLS]
+
+
+
+
+
+
+
+
+
+
+
+
+[HELP]
+
+
+
+
+
+
+
+
+
+
+
+
+[NO_CASE_SENSITIVE]
+[MATCH_ORDER]
+[COMMENTS]
+&&
+.
+[] Begin Misc KeyFile Comments
+<TEXT_QUALIFIER>
+"
+<BEGIN_FLOW>
+USE +
+
+
+<PREPROCESSOR>
+pproc.exe -> .txt
+
+
+
+[] End Misc KeyFile Comments
+[DEFAULT_EXTENSION]
+.prg

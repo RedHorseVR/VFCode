@@ -1,0 +1,317 @@
+[VARIABLES]
+	$I = 0;
+	fname
+	lname
+	company
+	address
+	city
+	state
+	zip
+	phone
+	fax
+	email
+	website
+	$param{  fname  }
+	$param{  lname  }
+	$param{  company  }
+	$param{  address  }
+	$param{  city  }
+	$param{  state  }
+	$param{  zip  }
+	$param{  phone  }
+	$param{  fax  }
+	$param{  email  }
+	$param{  website  }
+	@pairs = 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+[INPUT]
+^ *sub
+# *use
+# *forward declairations
+# *requires
+# *main
+
+
+
+
+
+
+
+
+
+
+[EVENT]
+
+
+
+
+
+
+
+
+
+
+
+
+
+[PROCESS]
+
+
+
+
+
+
+
+
+
+
+[SET]
+.*=.*; 
+$.*;
+@.*;
+
+
+
+
+
+
+
+[OUTPUT]
+print
+
+
+
+
+
+
+
+
+
+
+
+[LOOP]
+^ *foreach
+^ *while *(
+
+
+
+
+
+
+
+
+
+
+
+[LEND]
+^ *}
+
+
+
+
+
+
+
+
+
+
+
+
+[BRANCH]
+^ *if *(.*
+^ *if(.*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[PATH]
+else
+^ *{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[BEND]
+^ *}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[END]
+^ *}
+^ *return *;
+
+
+
+
+
+
+
+
+
+
+
+
+[COMPILE_BUTTON]
+
+"C:\Program Files\Microsoft Internet\IEXPLORE.EXE"  file:c:\perl5\bin\perl.exe?<ExportFileName>  |Perl in HTTP	
+[BUILD_BUTTON]
+
+[HELP_BUTTON]
+"C:\Program Files\Internet Explorer\IEXPLORE.EXE" file://c:\perl5\docs\perl\perlfunc.html  |PERL Functions
+
+[RUN_BUTTON]
+VFCpipe C:\PERL5\BIN\PERL.EXE <ExportFileName>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[TOOLS]
+	Explorer.exe c:\perl5   		|Open Perl Folder
+SEPARATOR
+	COMMAND.COM |DOS
+
+	CMD	|NT SHELL
+	CONSOLE: |VFC console
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[HELP]
+"C:\Program Files\Internet Explorer\IEXPLORE.EXE" file://c:\perl5\docs\perl\perlfunc.html |PERL funcitons
+
+"C:\Program Files\Internet Explorer\IEXPLORE.EXE" file://c:\perl5\docs\perl\perlobj.html   |PERL objects
+
+"C:\Program Files\Internet Explorer\IEXPLORE.EXE" file://c:\perl5\docs\perl\perlsub.html   |PERL subroutines
+
+Explorer.exe c:\perl5\docs\perl  |PERL docs directory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[NO_CASE_SENSITIVE]
+[MATCH_ORDER]
+[COMMENTS]
+#
+.
+[] Begin Misc KeyFile Comments
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[] End Misc KeyFile Comments
+[DEFAULT_EXTENSION]
+.pl

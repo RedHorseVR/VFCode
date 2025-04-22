@@ -1,0 +1,23 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : lnkDLL.ins
+;  File Date : 01:09:34 PM - 01:Jun:2009
+
+
+input(REM NORMAL BATCH FILE );//
+process(SET LIB="C:\Program Files\Microsoft Visual Studio\VC98\LIB);//
+process(PATH="C:\Program Files\Microsoft Visual Studio\VC98\Bin\");//
+generic(link /DEF:export.def -out:%1.dll -dll -entry:"DLLMain" *.obj    kernel32.lib comctl32.lib comdlg32.lib user32.lib gdi32.lib winspool.lib advapi32.lib shell32.lib);//
+process(ECHO Finished %1 ______________________________________ );//
+end(PAUSE );//
+end();// 
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    lnkDLL.bat   REM   
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 323 4294966486 1103 637 6 130   610   116    dos.key  0

@@ -1,0 +1,51 @@
+;  IRL FlowCode Version: Version 8.0 - mAY 2009
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : ARGTEST.pl.ins
+;  File Date : 08:42:13 PM - 30:Jan:2010
+
+
+input(#!/usr/bin/perl --);// 
+end();// 
+end();// 
+
+input(# use );//
+process($server_dir = "/home/sites/www.flowlynx.com/web/WebFlow" ;);//$server_dir =  "C:\\Perl5\\bin";
+process($webflow_dir = "/";);//$webflow_dir = "w:\\wwwroot\\webflow"; 
+
+input(# prototype definitions);// 
+set(sub Get_Rec;);// 
+set(sub Read_Counter;);// 
+end();// 
+set(sub Get_Rec;);// 
+set(sub Read_Counter;);// 
+end();// 
+
+input(sub LoadFileAsString {);//
+output(local ( $file ) = @_;);//
+output(local ( $keyfile ) ;);//
+set(  open( FILE, $file ););//
+loop(  while(<FILE>) {);//
+set(s/^ *\n//;);//
+set(tr/\t/ /;);//
+set(  $keyfile = "$keyfile$_";);//
+lend(  }   );//# End of SEARCHFILE
+generic(  close (SEARCHFILE);  );//
+end($keyfile; });//
+
+input(# main);// 
+set({);// 
+process($cmd_line = $ENV{'QUERY_STRING'} ;);//GetParams();
+process(  ($cmd_line) = @ARGV;);//$cmd_line = $ENV{'QUERY_STRING'} ;
+output(print( STDOUT  " $cmd_line  \n" ););//
+output();//SendCMD( "dir"  ) ;
+end(} # end);// 
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 0 13158600 0 0 13158600 6579300 4194432 16777215 0 0 0 0 16777215
+;    ARGTEST.PL   #   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 782 58 644 812 25 100   282   4294966803    perl.key  0

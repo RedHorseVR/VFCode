@@ -1,0 +1,22 @@
+;  IRL FlowCode Version: Version 10.0
+;  c1995-2015: Visual Flow Coder by 2LResearch
+;
+;  File Name : main.javascript.vfc
+;  File Date : 11:19:19 AM - 26:Mar:2025
+
+
+input(function main() {);//
+loop(for( let  i=0; i<5; i++ ){);//
+output(console.log("Hello, World!"););//
+lend(});//
+end(});//
+process(main(););//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 13158600 13158600 0 255 255 9895835 6946660 3289650
+;    #   //   ...
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 1777 290 757 614 0 150   378   93    javascript.key  0

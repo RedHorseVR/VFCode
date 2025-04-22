@@ -1,0 +1,50 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : NonModalDlg.ins
+;  File Date : 11:30:52 PM - 26:May:1997
+
+
+input(//BEGIN_INSECTA_TEMPLATE);//NOTE:  ALL MAP_VARIABLES MUST START WITH A '$'
+   event(//MAP_VARIABLE $appname=NoModalDlgENTER: Enter the resource name for dialog (This must match the name in your resource editor.));//
+end(//END_INSECTA_TEMPLATE );//
+
+input(/* prototypes */ );//
+   set(LRESULT CALLBACK $appname_DlgProc(HWND hDlg,UINT uMessage,WPARAM wParam,LPARAM lParam););//
+   process(// CreateDialog( hInst , "$appname" , hWnd , (DLGPROC) $appname_DlgProc ););//
+end(//AFFIRM_END);//
+
+input(        LRESULT CALLBACK $appname_DlgProc(HWND hDlg,UINT uMessage,WPARAM wParam,LPARAM lParam){);//  
+   branch(switch (uMessage){);//  
+      path(case WM_INITDIALOG:);//
+         set({ );//
+         end(return TRUE;);//
+         set(});//
+      path(case WM_COMMAND:);//  
+         branch(switch(wParam ){);//
+            path(case IDCANCEL:);//  
+               set({ );//
+               generic(EndDialog( hDlg , FALSE ););//  
+               end(break; );//
+               set(});//
+            path(case IDOK:);//  
+               set({ );//
+               generic(DestroyWindow( hDlg ););//  
+               end(return TRUE;);//  
+               set(});//
+            path(default:);//
+               end(break; );//
+               set();//
+         bend(} );//  
+   bend(} );//  
+end(return FALSE;);//  
+end(} );//  
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    project.cpp   //   //
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 257 92 852 807 7 107   417   57    template.key  0

@@ -1,0 +1,152 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : PRINTF.ins
+;  File Date : 05:48:44 AM - 09:Aug:1997
+
+
+input( /*  F:\US&R\WWW_WORK\NEWPAGE\FLOWCO~1\KITS\HC11CO~1\SAMPLES\PRINTF.C  */  );//  FILE:F:\US&R\WWW_WORK\NEWPAGE\FLOWCO~1\KITS\HC11CO~1\SAMPLES\PRINTF.C 
+end();//
+generic();// /* minimal printf-like function
+generic();// 
+generic();//  * printf(fmt, arg, ...)
+generic();// 
+generic();//  *  acceptable formats are %d, %o, %x, %c, %s
+generic();// 
+generic();//  *  no precision, width, or modifier
+generic();// 
+generic();//  *  the inernal buffer is only MAXCHAR long, there is no check to make sure
+generic();// 
+generic();//  *  it fits.
+generic();// 
+generic();//  *
+generic();// 
+generic();//  * It calls a function putchar(char a) to output each character.
+generic();// 
+generic();//  */
+
+input(/* defines */ );//
+   set( #define MAXCHARS 512);// 
+   set( #define LEN 20);// 
+
+input(/* prototypes */ );//
+   set( static void itoa(char **buf, int i, int base); );// 
+   set(void   putchar(char ););// 
+   set( void printf(char *fmt, int arg, ...) ;);// 
+end();//
+
+input(void printf(char *fmt, int arg, ...));// 
+   set( { );// 
+   set(   int *p =&arg; );// 
+   set( char *bp, *s; );// 
+   set( int i; );// 
+   set( char buf[MAXCHARS]; );// 
+   set( bp =buf; );// 
+   set( *bp =0; );// 
+   loop( while (*fmt));// 
+      branch( if (*fmt != '%'));// 
+         path({);//
+            set( *bp++ =*fmt++; );// 
+         path(} else {);// 
+            set( { );// 
+            branch( switch (*++fmt) {);// 
+               path( case 'd': );// 
+                  set( i =*p++; );// 
+                  branch( if (i < 0) );// 
+                     path( { );// 
+                        set(   *bp++ ='-'; );// 
+                        set( i =-i; );// 
+                  bend(});// 
+                  set(itoa(&bp, i, 10););// 
+                  end( break; );// 
+                  set();// 
+               path( case 'o': );// 
+                  set( i =*p++; );// 
+                  branch( if (i < 0) );// 
+                     path( { );// 
+                        set(   *bp++ ='-'; );// 
+                        set( i =-i; );// 
+                  bend(});// 
+                  set( *bp++ ='0';);// 
+                  set( itoa(&bp, i, 8); );// 
+                  end( break; );// 
+                  set();// 
+               path( case 'x': );// 
+                  set( i =*p++; );// 
+                  branch( if (i < 0) );// 
+                     path( { );// 
+                        set(   *bp++ ='-'; );// 
+                        set( i =-i; );// 
+                  bend(});// 
+                  set( *bp++ ='0';);// 
+                  set( *bp++ ='x'; );// 
+                  set( itoa(&bp, i, 16); );// 
+                  end( break; );// 
+                  set();// 
+               path( case 'c': );// 
+                  set( *bp++ =*p++; );// 
+                  end( break; );// 
+                  set();// 
+               path( case 's': );// 
+                  set( s =*(char **)p; );// 
+                  set( p +=sizeof (char **) / sizeof (int); );// 
+                  branch( if (!s) );// 
+                     path();//
+                        set( s ="(null)"; );// 
+                  bend();// 
+                  loop( while (*s));// 
+                  lend(*bp++ =*s++;);//
+                  end( break; );// 
+                  set();// 
+            bend( } );// 
+            set();// 
+            set( fmt++; );// 
+      bend(});// 
+   lend( } );// 
+   set( *bp =0; );// 
+   loop( for (bp = buf; *bp; bp++) putchar(*bp) );// 
+   lend( ; );//
+end( } );// 
+
+input( static void itoa(char **buf, int i, int base) );// 
+   set( { );// 
+   set(   char *s; );// 
+   set( int rem; );// 
+   set( static char rev[LEN+1]; );// 
+   set( rev[LEN] =0; );// 
+   branch( if (i == 0) );// 
+      path( { );// 
+         set(   (*buf)[0] ='0'; );// 
+         set( ++(*buf); );// 
+         end( return; );// 
+         set();// 
+   bend(});// 
+   set(s =&rev[LEN];);// 
+   loop( while (i) { );// 
+      set( rem =i % base; );// 
+      branch( if (rem <= 10) );// 
+         path();//
+            set( *--s =rem + '0'; );// 
+         path( else );// 
+            branch( if (base == 16) );// 
+               path();//
+                  set( *--s ="abcdef"[rem - 10]; );// 
+            bend();// 
+      bend();// 
+      set( i /=base; );// 
+   lend( } );// 
+   loop( while (*s) { );// 
+      set( (*buf)[0] =*s++; );// 
+      set( ++(*buf); );// 
+   lend( } );// 
+end( } );// 
+end();//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 16777215 8421504
+;    PRINTF.c   /*   */
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 738 122 488 603 28 95   230   4294966832    icch11.key  0

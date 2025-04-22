@@ -1,0 +1,37 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : Hello Template.ins
+;  File Date : 08:38:47 AM - 28:Jan:1999
+
+
+input(//BEGIN_INSECTA_TEMPLATE);//NOTE:  ALL MAP_VARIABLES MUST START WITH A '$'
+set(//SET_INSECTA_FILENAME    hello.ins);//
+event(//MAP_VARIABLE $appname=<InsectaFileName>.  ENTER: Enter the application's name (Do not use spaces or punctuation.));//
+event(//MAP_VARIABLE $text=Hello New World !       ENTER:  Text to print to the standard console output when the main() function runs.  (Do not use double quotes around the text.));//
+event(//MAP_VARIABLE $number = 10 ENTER: The number of times to print the message.);//
+event(//MAP_VARIABLE $key=vc4.key   ENTER: Verify the keyfile.  Use vc4.key for MSVC++ 4.x  OR vc6.key for Visual Studio 6.0);//
+set(//SET_LANGUAGE_KEY    $key);//
+set(//SET_INSECTA_FILENAME    $appname.ins);//
+set(//SET_EXPORT_FILENAME    $appname.c);//
+end(//END_INSECTA_TEMPLATE );//
+
+input(/* includes */);//
+set(#include <stdio.h> );//
+end();//
+
+input(void main() {);//
+set(int    i=0; );//
+loop( for( i =0 ; i < $number; i++ ){);//
+process(printf( "$text\n" ););//
+lend(} );//
+end(});//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 0 13158600 16777215 0 13158600 16776960 16776960 0 0 0 65535 65535 0
+;    ;   //   //
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 145 32 733 851 4 99   362   77    template.key  0

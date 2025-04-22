@@ -1,0 +1,36 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : KeySearch.ins
+;  File Date : 11:45:14 AM - 25:Feb:2001
+
+
+input( #!/usr/bin/perl --);//#!perl5/bin/perl
+end();//
+
+input(#start program);//
+output(print "Content-type: text/html\n\n"; );// 
+process($cmd_line = $ENV{'QUERY_STRING'};);//GetParams();
+process($cmd_line =~ s/\#/_/g;);//GetParams();
+process($cmd_line =~ s/</_/g;);//GetParams();
+process($cmd_line =~ s/>/_/g;);//GetParams();
+process($cmd_line =~ s/\%20/ /g;);//GetParams();
+set(@param = split(/,/, $cmd_line););//
+process($param[0] =~ s/\W/ /g;);//GetParams();
+output();//print "Hello world: $cmd_line\n";
+process($out = LoadFileAsString( "SearchTemplate.htm" ););//
+set($out =~ s/\$keyname/\"$param[0]\"/g ;);//point the download button correctly so we can run it via the script output.
+set($out =~ s/\$title/$param[1]/g ;);//point the download button correctly so we can run it via the script output.
+process(print( STDOUT $out ););//
+end(#end program);//
+end();//
+output(#include Lib1.0.pl);//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 255 0 255 255 65535 65280 9633792
+;    KeySearch.pl   #   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 240 80 609 485 11 100   283   4294967167    perl.key  0

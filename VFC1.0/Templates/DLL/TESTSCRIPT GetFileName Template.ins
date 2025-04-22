@@ -1,0 +1,30 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : TESTSCRIPT GetFileName Template.ins
+;  File Date : 03:01:18 AM - 20:Jan:1999
+
+
+input(//BEGIN_INSECTA_TEMPLATE  );//
+event(//MAP_VARIABLE $name=GetFileName.dllENTER: Enter the DLL's name);//
+event(//MAP_VARIABLE $function=GetFileNameENTER: Enter a function name to test);//
+event(//MAP_VARIABLE $params= string , "*" , "GetFileName DLL"");ENTER: Enter function params);//
+set(//SET_INSECTA_FILENAME TEST_$function.ins);//
+set(//SET_LANGUAGE_KEY    insecta.key);//
+end( //END_INSECTA_TEMPLATE );// 
+
+input(MAIN );//
+process(DLL hWnd $name  $function( $params ));//
+event(MSGBOX  "You selected " string "!");//
+end( END );// 
+
+
+define(lib $name);
+define(char string[255]="");
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65535 0
+;    testDLL   //   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 570 442 700 595 9 98   351   73    insecta.key  0

@@ -1,0 +1,29 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : login.pl.ins
+;  File Date : 10:55:09 PM - 29:Mar:2001
+
+set(#!/usr/bin/perl -- );//
+
+input( #main);//sub Old_Main () {
+output(print( "Content-type: text/html\n\n"););// 
+set($Theme = LoadFileAsString( "ThemeTemplate.htm" ););//
+set($Theme =~ s/<\/body>//;);//
+set($Theme =~ s/<\/html>//;);//
+process(GetMultiPartForm(););//
+output(print( STDOUT  "$Theme\n\n"););//
+output(print( STDOUT  "user_name = $param{ user_name }\n"););//
+output(print( STDOUT  "password = $param{ password }\n"););//
+output(print "</body>\n</html>\n\n";);//
+end();//
+output(#include "Lib1.0.pl);//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 255 0 255 255 65535 65280 9633792
+;    login.pl   #   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 26 370 612 561 0 90   316   64    perl.key  0

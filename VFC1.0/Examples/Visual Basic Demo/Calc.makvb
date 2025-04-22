@@ -1,0 +1,8 @@
+CALC.FRM
+CALC.BAS
+FORM1.FRM
+ProjWinSize=316,422,240,148
+ProjWinShow=2
+IconForm="Calculator"
+Title="CALC_VB"
+ExeName="CALC~1.EXE"

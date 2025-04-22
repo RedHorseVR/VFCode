@@ -1,0 +1,46 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : Basic Class.ins
+;  File Date : 01:15:39 AM - 20:Jul:1997
+
+
+input(//BEGIN_INSECTA_TEMPLATE );//
+   event(//MAP_VARIABLE $appname =MyClassENTER: The name for the new Java Class);//
+   event(//MAP_VARIABLE $datum=int class_dataENTER: The name for the new Java Class's first data member);//
+   event(//MAP_VARIABLE $method=public void class_methodENTER: The name for the new Java Class's first method member);//
+   set(//SET_EXPORT_FILENAME$appname.java);//
+   set(//SET_INSECTA_FILENAME$appname.ins );//
+   set(//SET_LANGUAGE_KEY     java.key);//
+end(//END_INSECTA_TEMPLATE );//
+
+input(/** Imports **/);//<--- part of framework
+   generic(import java.awt.*;);//  
+   generic(import java.applet.*;);//  
+   generic(import java.net.*;);//  
+   set();//import Resource;
+end(/*------------*/);//
+
+input(public class $appname  {);//
+   branch(/** start of class $appname definition **/);//
+      path(/** class $appname data **/);//
+      
+input(/** data **/);//
+         set($datum;);//
+end(/** end class $appname data **/);//
+path(/** class $appname methods **/);//
+
+input($method(){);//  
+   end(} );//  
+   end(/** end class $appname data **/);//
+bend(/** end of class $appname definition **/);//
+end(});//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    //   //   //
+; INSECTA
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 548 561 721 456 1 100   368   4294966787    template.key  0

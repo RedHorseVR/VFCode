@@ -1,0 +1,102 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : Example.ins
+;  File Date : 10:56:45 PM - 10:Aug:1997
+
+
+input(/* includes */);//FILE:Example.h
+   generic(#include <windows.h>);//
+   set(#include"resource.h" );//
+
+input(/* defines */ );//
+   set(#define  START_BACKGROUND     GRAY_BRUSH);//
+   set(#define STARTWIDTH  400);//
+   set(#define STARTHEIGHT  300);//
+   set(#define STARTPOSITION_X   CW_USEDEFAULT);//
+   set(#define STARTPOSITION_Y   CW_USEDEFAULT);//
+   set(#define  WINDOW_CLASS    "Example_WClass");//
+   set(#define  WINDOW_NAME  "Example - an Insecta Built Windows Program");//
+   set(#define  WINDOW_STYLE   WS_OVERLAPPEDWINDOW);//
+   set(#define  SHOWSTATE   SW_SHOW);//
+
+input(/* globals */);//
+   generic(HANDLE hInst; );//
+   set(HWND MainWindow;);//
+   generic(    WNDCLASS  wc; );//
+
+input(/* prototypes */ );//
+   set(int WINAPI WinMain(HANDLE, HANDLE, LPSTR, int););//
+   set(int CALLBACK  Example(HWND, UINT, WPARAM, LPARAM););//
+   set(LRESULT CALLBACK About_DlgProc(HWND hDlg,UINT uMessage,WPARAM wParam,LPARAM lParam););//// swap and place this in the prototype section
+end();//
+
+input(int WINAPI  Example(HWND hWnd,UINT message,WPARAM wParam,LPARAM lParam) {);//
+   branch(switch (message) { );//
+      path(case WM_COMMAND:   );//
+         branch(switch(wParam) { );//
+            path(case IDM_ABOUT :);//
+               set(DialogBox( NULL, "About" , hWnd , (DLGPROC) About_DlgProc ););//
+               end(break; );//
+               set();//
+            path(case IDCANCEL: );//
+               process(DestroyWindow(hWnd););//
+               end(break; );//
+               set();//
+         bend(} );// 
+      path(case WM_CREATE:);//
+         end(   break; );//
+         set();//
+      path(case WM_DESTROY:);//
+         generic(PostQuitMessage(0););//  
+         end(   break; );//
+         set();//
+      path(default: );//
+         end(return (DefWindowProc(hWnd, message, wParam, lParam)););//
+         set();//
+   bend(});//
+end(return FALSE;} );//
+
+input(int CALLBACK WinMain(HANDLE hInstance, HANDLE hPrevInstance, LPSTR lpCmdLine,int nCmdShow) {);//
+   branch(if (!hPrevInstance)   );//
+      path({);//
+         generic(    wc.style = 0; );//
+         generic(    wc.lpfnWndProc = (WNDPROC) Example;);//
+         generic(    wc.cbClsExtra = 0; );//
+         generic(    wc.cbWndExtra = 0; );//
+         generic(    wc.hInstance = hInstance; );//
+         generic(    wc.hIcon = LoadIcon(hInstance, "Icon"););//    wc.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(ID_ICON) );
+         generic(    wc.hCursor = LoadCursor(NULL, IDC_ARROW); );//
+         generic(    wc.hbrBackground = GetStockObject( START_BACKGROUND ););//
+         generic(    wc.lpszMenuName =  "Menu";);//    wc.lpszMenuName =  MAKEINTRESOURCE(ID_MENU);
+         generic(    wc.lpszClassName =WINDOW_CLASS;);//
+         branch(if (!RegisterClass(&wc)));//
+            path({ );//
+               end(return (FALSE);   );//
+         bend( });//
+         generic(MainWindow = CreateWindow( WINDOW_CLASS, WINDOW_NAME,  WINDOW_STYLE,STARTPOSITION_X,);//
+         generic(STARTPOSITION_Y, STARTWIDTH, STARTHEIGHT ,NULL,NULL,hInstance,NULL););//
+         branch(if ( ! MainWindow  ));//
+            path({ );//
+               end(return (FALSE); );//
+            path(}else{ );//
+               generic(    ShowWindow( MainWindow , SHOWSTATE  ););//
+               generic(    UpdateWindow( MainWindow ););//
+         bend( });//
+      path(}else{ );//
+   bend( });//
+   generic(    MSG msg; );//
+   loop(while ( GetMessage(&msg, NULL, 0, 0)  ) {);//
+      generic(    TranslateMessage(&msg);   );//
+      generic(    DispatchMessage(&msg); );//
+   lend(} );//
+end(return (msg.wParam);} );//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    Example.cpp   //   ;
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 216 92 565 357 31 80   277   4294966767    cppwin.key  0

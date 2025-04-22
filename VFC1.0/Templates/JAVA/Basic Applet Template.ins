@@ -1,0 +1,74 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : Basic Applet Template.ins
+;  File Date : 08:40:58 AM - 28:Jan:1999
+
+
+input(//BEGIN_INSECTA_TEMPLATE );//
+event(//MAP_VARIABLE $appname =JavaAppletENTER: The name for the new Applet);//
+event(//MAP_VARIABLE $keyfile =java.keyENTER: The name for the new Applet);//
+set(//SET_EXPORT_FILENAME$appname.java);//
+set(//SET_INSECTA_FILENAME$appname.ins );//
+set(//SET_LANGUAGE_KEY   $keyfile);//
+end(//END_INSECTA_TEMPLATE );//
+
+input(// HYPER LINK TO HTML_$appname --->);//FILE: HTML_$appname.ins
+
+input(/** Imports **/);//<--- part of framework
+generic(import java.awt.*;);//  
+generic(import java.applet.*;);//  
+generic(import java.net.*;);//  
+set();//import Resource;
+end(/*------------*/);//
+
+input(public class $appname  extends Applet {);//  <----- start of class definition  has drawing vars for lines
+
+input(/** class data **/);//<--- used in framework
+generic(URL CodeBase;);//
+set();//Resource Res;
+end(/** end variables **/ );//
+
+input(/** methods **/);//<--- used in framework
+end();//
+
+input(public void init(){);//  
+set(CodeBase = getCodeBase(););//
+set();//Res  = new Resource( this , CodeBase );
+end(} );//  
+
+input(public static void main(String args[]){);//  
+generic($appname  Obj = new $appname(););//  create the object application 
+process(//setup frame using MAIN controls);//Obj.Res.initMAINframe( Obj , "Main Window" ) ;
+end(} );//  
+
+input(public void paint(Graphics g){);//  
+process(g.drawString( "Hello new world ..." , 20 , 20 ););//
+end(} );//  
+
+input(public boolean handleEvent(Event e){);//  
+branch(switch (e.id){);//  
+path(case Event.ACTION_EVENT:);//
+branch(if( "OK".equals(e.arg) || "CLOSE".equals(e.arg)  ));//
+path({ );// 
+process(System.exit(0););// THIS LOGIC CALL CAUSES A SECURITY EXCEPTION WHEN USED IN APPLET MODE
+end(return true; );//
+bend(} );// 
+end(break; );//
+path(case Event.WINDOW_DESTROY:);//
+generic(System.exit(0););//  THIS FAILS TO FIRE IN APPLICATION MODE
+end(return true;);//
+set();//
+bend(} );//  
+end(return false; });//
+
+input(}       /** end of class definition **/);// <------------ end of class definition
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    //   //   //
+; INSECTA
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 488 60 772 742 31 100   387   4294967238    template.key  0

@@ -1,0 +1,45 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : Animated Images Template.ins
+;  File Date : 04:39:25 PM - 16:Nov:1996
+
+
+input(//BEGIN_INSECTA_TEMPLATE );//
+   event(//MAP_VARIABLE $picname=img1.gif ENTER: Enter the first animation Image file);//
+   event(//MAP_VARIABLE $picnam2=img2.gif ENTER: Enter the second animation Image file);//
+end(//END_INSECTA_TEMPLATE );// 
+
+input(/** recipe log **/);//<--- part of framework
+   process(/** <TIME_STAMP>  inserted an image $picname using segment: 'Animate images.sg'  **/);//
+end(//AFFIRM_END);//
+
+input(/** class data **/);//<--- used in framework
+   set( Image im;//AFFIRM_SET);//  
+   set( Image im2;//AFFIRM_SET);//  
+   set(int ImageXPos = 10;//AFFIRM_SET);//  
+   set(  int ImageYPos = 10;//AFFIRM_SET);//
+   set(  int Image = 0;//AFFIRM_SET);//
+
+input( public void init(){);//  
+   generic(im = getImage(getCodeBase(),"$picname"););//  
+   generic(im2 = getImage(getCodeBase(),"$picnam2"););//  
+
+input( public void paint(Graphics g){);//  
+   branch(if( Image==1));//
+      path({);//
+         set(Image=0;);//
+         generic(g.drawImage(im, ImageXPos, ImageYPos+50, this ););//
+      path(}else{);//
+         set(Image=1;);//
+         generic(g.drawImage(im2, ImageXPos, ImageYPos+50, this ););//
+   bend(});//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 10485760
+;    //   //   //
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 569 494 555 337 13 100   281   4294966853    template.key  0

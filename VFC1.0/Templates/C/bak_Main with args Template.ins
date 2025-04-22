@@ -1,0 +1,38 @@
+;  IRL FlowCode Version: Version 8.0 - mAY 2009
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : \bak_Main with args Template.ins
+;  File Date : 05:12:05 PM - 09:Nov:2009
+
+
+input(//BEGIN_INSECTA_TEMPLATE);//NOTE:  ALL MAP_VARIABLES MUST START WITH A '$'
+event(//MAP_VARIABLE $appname=mainENTER: Enter the application's name (Do not use spaces or punctuation.));//
+event(//MAP_VARIABLE $appinfo= This Utility  - Copyright FlowLinx/Ublige 1998 - All rights reserved. \n\n  ENTER:  Text to print to the console when the main() function runs.);//
+event(//MAP_VARIABLE $numparams = 1 ENTER: Number of required parameters);//
+event(//MAP_VARIABLE $use_message  =  filename   ENTER: Command line usage message);//
+set(//SET_INSECTA_FILENAME    $appname.ins);//
+set(//SET_EXPORT_FILENAME    $appname.c);//
+set(//SET_LANGUAGE_KEY    c.key);//
+end(//END_INSECTA_TEMPLATE );//
+
+input(/* ---  headers --- */);//FILE:write.exe c_parse.h
+generic(#include <stdio.h>);//
+generic(#include <stdlib.h>);//
+end(/*  end headers */);//
+
+input(/* --- globals & externals --- */);//
+end(/* end globals & externals */);//
+
+input(void main( int argc, char *argv[] )  {);//
+process(printf("$appinfo"););//
+branch(if( argc < $numparams+ 1  ));//
+path({);//
+process(printf("\nMust specify at least $numparams parameter(s)\n\n"););//
+process(printf("\tusage: $appname  $use_message  \n"););//\n- hit any key to exit.
+process();//getchar(); 
+end(exit(0););//
+path(}else{ );//
+bend(});//
+end(});//
+
+

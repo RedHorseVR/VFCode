@@ -1,0 +1,25 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : Call NonModal Dlg.ins
+;  File Date : 11:30:21 PM - 26:May:1997
+
+
+input(//BEGIN_INSECTA_TEMPLATE  );//
+   event(//MAP_VARIABLE $dialog_proc_name=DialogENTER:  Modal Dialog's process handler name.);//
+   event(//MAP_VARIABLE $resource_name=DialogENTER:  Modal Dialog's resource name.);//
+   event(//MAP_VARIABLE $dialog_msg=ID_CALL_DIALOG ENTER:  User Message to Call Modal Dialog.);//
+end( //END_INSECTA_TEMPLATE );// 
+path(case $dialog_msg:);//
+set(CreateDialog( hInst , "$resource_name" , hWnd , (DLGPROC) $dialog_proc_name ););//CreateDialog( NULL, "$resource_name" , hWnd , (DLGPROC) $dialog_proc_name );
+end(break; );//
+set();//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    //   //   //
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 77 280 555 500 7 100   281   22    template.key  0

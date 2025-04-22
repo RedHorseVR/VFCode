@@ -1,0 +1,132 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : MyDLL.ins
+;  File Date : 11:37:44 AM - 24:Oct:1997
+
+
+input(/* includes */);//FILE:MyDLL_h.ins
+generic(#include <windows.h>);//  
+set(#include <commdlg.h>);//
+set(#include <stdio.h> );//
+set(#include <sys\types.h>);//
+set(#include <sys\stat.h>);//
+set();// #include "MyDLL_h.h"
+
+input(/* defines */);//
+
+input(#define TRACKING    1);//#define TRACKING    0
+output(#define TRACK  if( TRACKING )  {char cmd[255]; wsprintf(cmd,"c:\\program files\\insecta\\insecta2.exe %s -Goto %d %d", "<InsectaFileName>" ,__LINE__);  WinExec(cmd, (UINT) NULL); });//
+output(#define BREAK  {char cmd [255]; if(TRACKING){wsprintf( cmd , "c:\\program files\\insecta\\insecta2.exe  %s  -Goto %d  %d ", __FILE__ , __LINE__ );  WinExec( command , NULL ); MESSG}} );//
+
+input(/* globals */);//
+set(HWND OwnerWindow = NULL;);//
+set(HINSTANCE hInst=NULL;);//
+
+input(/* prototypes */);//
+set(void Function(););//
+set(BOOL WINAPI DllMain (HINSTANCE hDLL, DWORD dwReason, LPVOID lpReserved) ;  );//
+set(void GetFileName(  HWND hWnd, char * filename, char * exten, char * prompt) ;);//  
+set(void Find_Dlg( HWND hWnd , char * string_to_find ) ;);//
+end();//
+
+input(void main() {  );//
+end( } //end main() );// 
+
+input(void GetFileName(  HWND hWnd, char * filename, char * exten, char * prompt) {);//  
+generic(OPENFILENAME OpenFileName;);//  
+generic(char DefName[258];);//  
+set(char   choice_buffer[1000];);//
+generic(strcpy(filename,""););//  
+process(wsprintf(choice_buffer,   "Record File: %s;\0%s;\0" , filename , exten ););//
+generic(wsprintf( DefName, "*.%s", exten ););//  
+generic();//  Fill in the OPENFILENAME structure to support a template and hook. 
+branch();//
+path();//
+generic(OpenFileName.lStructSize = sizeof(OPENFILENAME););//  
+generic(OpenFileName.hwndOwner = hWnd;);//  
+generic(OpenFileName.hInstance = hInst;);//  
+generic(OpenFileName.lpstrFilter = NULL ;);//  
+generic(OpenFileName.lpstrCustomFilter = NULL;);//  
+generic(OpenFileName.nMaxCustFilter = 40;);//  
+generic(OpenFileName.nFilterIndex = 0;);//  
+generic(OpenFileName.lpstrFile =   DefName;);//  
+generic(OpenFileName.nMaxFile = sizeof(filename););//  
+generic(OpenFileName.lpstrFileTitle = filename;);//  
+generic(OpenFileName.nMaxFileTitle = 255;);//  
+generic(OpenFileName.lpstrInitialDir = NULL;);//  
+generic(OpenFileName.lpstrTitle = prompt;);//  
+generic(OpenFileName.nFileOffset = 0;);//  
+generic(OpenFileName.nFileExtension = 0;);//  
+generic(OpenFileName.lpstrDefExt = exten ;);//  
+generic(OpenFileName.lCustData = (LPARAM) NULL;);//  
+generic(OpenFileName.lpfnHook = NULL;);//  
+generic(OpenFileName.lpTemplateName = NULL;);//  
+generic(OpenFileName.Flags = OFN_SHOWHELP | OFN_EXPLORER;);//  
+bend();//
+generic();//  Call the common dialog function. 
+branch(TRACK  if ( !GetOpenFileName(&OpenFileName)));//
+path({);//  
+generic(char buff[255];);//  
+set(struct _stat buf;);//
+set(int result;);//
+set(result = _stat( filename , &buf ););//
+process();//TRACK MessageBox( hWnd, filename ,  " filename ", MB_OK);
+branch(TRACK if( result == 0 ));//TRACK if( (f=fopen(filename,"r")) )
+path({ TRACK);//  
+generic(wsprintf(buff,"%s is in use.  Use it anyway?",filename););//  
+branch(if( (IDYES==MessageBox(hWnd,buff,"Insecta",MB_YESNO)) ));//
+path({);//  
+generic(TRACK);//  
+end(return;);//  
+path(}else{ TRACK);//
+set(strcpy(filename,""); );//
+bend(} );//  
+path(}else{  TRACK);//
+bend(} );//  
+path(}else{ TRACK);//
+generic(MessageBox( hWnd , "File open dialog did not open. Resources may be too low." , "File Open Failure", 0 ););//  
+bend(}  TRACK);//  
+end(});//  
+
+input(void Function() {);//  
+process(MessageBox( OwnerWindow, "DLL Function test", " Generic DLL", MB_OK););//
+end(});//  
+
+input(void Find_Dlg( HWND hWnd , char * string_to_find ){);//
+set(HWND hDlg;);//
+generic(FINDREPLACE fr;);//
+set();//char *string_to_find = "test";
+generic(/* Set all structure fields to zero. */);//
+generic(memset(&fr, 0, sizeof(FINDREPLACE)););//
+generic(fr.lStructSize = sizeof(FINDREPLACE););//
+generic(fr.hwndOwner = hWnd ;);//
+generic(fr.lpstrFindWhat = string_to_find ;);//
+generic(fr.wFindWhatLen = sizeof(  string_to_find ););//
+generic(hDlg = FindText(&fr););//
+process(MessageBox( hDlg , "DLL Find test", " Generic DLL", MB_OK););//
+process(DestroyWindow( hDlg ););//
+end( } );// 
+
+input(BOOL WINAPI DLLMain (HINSTANCE hDLL, DWORD dwReason, LPVOID lpReserved){);//  
+set(hInst = hDLL;);//
+branch( if( dwReason == DLL_PROCESS_ATTACH ));//
+path({);//
+process();//MessageBox( OwnerWindow, "DLL MyDLL attached", " Generic DLL", MB_OK);
+path(}else{);//
+bend(});//
+branch( if( dwReason == DLL_PROCESS_DETACH ));//
+path({);//
+process();//MessageBox( OwnerWindow, "DLL MyDLL detached", " Generic DLL", MB_OK);
+path(}else{);//
+bend(});//
+end(return TRUE;});//  
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    MyDLL.c   //   ;
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 500 7 593 498 9 80   581   4294965897    dll.key  0

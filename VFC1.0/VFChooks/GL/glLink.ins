@@ -1,0 +1,27 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : glLink.ins
+;  File Date : 09:37:38 AM - 01:May:2009
+
+
+input(REM NORMAL BATCH FILE );//
+process();//SET  INCLUDE = c:\MSDEV\INCLUDE
+process();//SET LIB = c:\MSDEV\LIB
+process(SET LIB="C:\Program Files\Microsoft Visual Studio\VC98\LIB);//
+process(PATH="C:\Program Files\Microsoft Visual Studio\VC98\Bin\");//
+process(ECHO .___COPYING %1.obj____________________________________________);//
+process(DEL %1.obj);//
+generic(link.exe  /out:%1.exe  OBJ\*.obj    OBJ\*.res  kernel32.lib comctl32.lib user32.lib gdi32.lib winspool.lib advapi32.lib shell32.lib comdlg32.lib  Opengl32.lib Glu32.lib Glaux.lib);//
+process();//link  /out:%1.exe  *.obj  *.res  /LibPath:c:\msdev\lib\   libc.lib oldnames.lib  kernel32.lib Gdi32.lib User32.lib  Comdlg32.lib Opengl32.lib Glu32.lib Glaux.lib  Advapi32.lib|
+end(PAUSE );//
+end(EXIT );// 
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 8421440
+;    glLINK.bat   REM   
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 124 28 817 571 8 100   438   107    dos.key  0

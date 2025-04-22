@@ -1,0 +1,33 @@
+;  IRL FlowCode Version: Version 10.0
+;  c1995-2015: Visual Flow Coder by 2LResearch
+;
+;  File Name : main.java.vfc
+;  File Date : 11:24:07 AM - 26:Mar:2025
+
+
+input(public class HelloWorldPrinter { );//// //////
+branch();//
+path();//
+
+input(public static void main(String[] args) { );//// //////
+generic(printHelloWorld(); );// ////
+end(} );//// //////
+path();//
+
+input(public static void printHelloWorld() { );//// //////
+loop(for (int i = 0; i < 5; i++) { );// ////
+generic(System.out.println("Hello, World!"); );// ////
+lend(} );//// //////
+end();//
+bend();// 
+end(} );//// //////
+process(main() );//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 13158600 13158600 0 255 255 9895835 6946660 3289650
+;    #   #   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 962 946 1068 739 1 150   399   80    java.key  0

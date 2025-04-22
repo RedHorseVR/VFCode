@@ -1,0 +1,975 @@
+<HTML>
+<HEAD>
+   <TITLE>Essential Lahey Fortran 90 Documentation</TITLE>
+</HEAD>
+<body bgcolor="#ffffff" background="bggrey.gif">
+
+<SCRIPT>
+
+browser = navigator.appName;
+browver = parseInt(navigator.appVersion);
+
+if (browser == "Netscape" && browver >= 3) ver = "net3";
+else ver = "old";
+
+if (ver == "net3") {
+        homeon = new Image(50,22);
+        homeon.src = "bthomerd.gif";
+        homeoff = new Image(50,22);
+        homeoff.src = "bthomebk.gif";
+
+        prodon = new Image(70,22);
+        prodon.src = "btprodrd.gif";
+        prodoff = new Image(70,22);
+        prodoff.src = "btprodbk.gif";
+
+        suppon = new Image(66,22);
+        suppon.src = "btsupprd.gif";
+        suppoff = new Image(66,22);
+        suppoff.src = "btsuppbk.gif";
+
+        freson = new Image(130,22);
+        freson.src = "btfresrd.gif";
+        fresoff = new Image(130,22);
+        fresoff.src = "btfresbk.gif";
+
+}
+function pointon(imgName) {
+        if (ver == "net3") {
+        imgOn = eval(imgName + "on.src");
+        document[imgName].src = imgOn;
+        }
+}
+function pointoff(imgName) {
+        if (ver == "net3") {
+        document[imgName].src = eval(imgName + "off.src");
+        }
+}
+</SCRIPT>
+
+<table border="0" cellpadding="10" cellspacing="0" width="100%">
+<tr>
+  <td valign="top" width="150" align="right">
+  <img src="180x1gy.gif"><br>
+  &nbsp;<br>
+  <A HREF="index.html" onMouseOver="pointon('home'); return false" onMouseOut="pointoff('home'); return false"><IMG
+  BORDER=0 NAME="home" ALT="Lahey Home" SRC="bthomebk.gif" WIDTH="50" HEIGHT="22" align="bottom"></A><br>
+  <A HREF="product.htm" onMouseOver="pointon('prod'); return false" onMouseOut="pointoff('prod'); return false"><IMG
+  BORDER=0 NAME="prod" ALT="Products" SRC="btprodbk.gif" WIDTH="70" HEIGHT="22" align="bottom"></A><br>
+  <A HREF="support.htm" onMouseOver="pointon('supp'); return false" onMouseOut="pointoff('supp'); return false"><IMG
+  BORDER=0 NAME="supp" ALT="Support" SRC="btsuppbk.gif" WIDTH="66" HEIGHT="22" align="bottom"></A><br>
+  <A HREF="other.htm" onMouseOver="pointon('fres'); return false" onMouseOut="pointoff('fres'); return false"><IMG
+  BORDER=0 NAME="fres" ALT="Fortran Resources" SRC="btfresbk.gif" WIDTH="130" HEIGHT="22" align="bottom"></A><br>
+  </td>
+
+  <td valign="top" align="left">
+  <IMG SRC="plainsm.gif" ALT="Lahey Computer Systems, Inc."><br>
+  <font size="+3"><b>Essential Lahey Fortran 90 Documentation</b></font>
+  <hr noshade size="1">
+    </td>
+</tr>
+
+<tr>
+  <td valign="top" width="150">
+  </td>
+
+  <td valign="top" align="left" width="100%">
+<A NAME="top of page"></A>This document is divided into two sections:</P>
+
+<P><B><A HREF="elfdoc.htm#Overview">Overview of Essential Lahey Fortran 90.</A></B> This section
+summarizes the Essential Lahey Fortran 90 philosophy and lists the coding practices enforced
+by and redundant features kept out of Essential Lahey Fortran 90.<BR>
+<B><A HREF="elfdoc.htm#Developing with Essential Lahey Fortran 90">Developing with Essential Lahey Fortran 90.</A></B>
+This section describes the Essential Lahey Fortran 90 development process and how to build applications
+using the Essential Lahey Fortran 90 driver.</P>
+
+<P>This document doesn't teach Fortran. You'll need to know Fortran to
+use Essential Lahey Fortran 90.</P>
+
+<HR noshade size="1">
+<H1><A NAME="Overview"></A>Overview of Essential Lahey Fortran 90</H1>
+
+<H3>Philosophy of Essential Lahey Fortran 90 - <FONT SIZE=+1>A More Disciplined Fortran</FONT></H3>
+
+<UL>
+<P>Enforce structured, Fortran-90-standard coding. Remove redundant features.
+Keep all the power of the Fortran language.</P>
+</UL>
+
+<H3>Stuctured Coding Practice Enforced by Essential Lahey Fortran 90<BR>
+(what you have to do)</H3>
+
+<UL>
+<LI>Fortran 90 free source form required.</LI>
+
+<LI>IMPLICIT NONE required.</LI>
+
+<LI>INTENT required for all subprogram dummy arguments.</LI>
+
+<LI>INTENT(IN) must be specified for function dummy arguments.</LI>
+
+<LI>Explicit interfaces required for all procedures.</LI>
+
+<LI>PROGRAM statement required.</LI>
+
+<LI>If a statement is labeled it must be referenced.</LI>
+
+<LI>RESULT clause required on RECURSIVE FUNCTION statement.</LI>
+
+<LI>Type declaration statements all use double colon syntax.</LI>
+
+<LI>Program unit type and name required on END program unit statement.</LI>
+
+<LI>Type name required on END TYPE statement.</LI>
+
+<LI>POSITION must be specified in OPEN statement for sequential files.</LI>
+
+<LI>CASE DEFAULT must be first or last case when present.</LI>
+
+<LI>STOP statement required to end program.</LI>
+
+<LI>RETURN statement required to return from subprogram.</LI>
+
+<LI>Assumed shape required for array dummy arguments.</LI>
+</UL>
+
+<H3>Unstructured or Redundant Fortran Features Kept Out of Essential Lahey Fortran 90<BR>
+(what you can't use)</H3>
+
+<UL>
+<LI>ALLOCATABLE, INTENT, POINTER, SAVE, DIMENSION, PARAMETER, and TARGET
+statements. Specify these attributes in the type declaration statement
+instead.</LI>
+
+<LI>INTRINSIC and EXTERNAL statements. Use explicit interfaces instead.</LI>
+
+<LI>ASSIGN, Assigned GO TO, Alternate RETURN, CONTINUE, ENTRY, and Computed
+GO TO statements. Use structured programming constructs instead.</LI>
+
+<LI>INCLUDE files. Use modules instead.</LI>
+
+<LI>DATA and BLOCK DATA. Initialize in type declaration statement or assignment
+statement instead.</LI>
+
+<LI>COMMON blocks. Use modules as global data facility instead.</LI>
+
+<LI>EQUIVALENCE. A source of many hard-to-find programming errors.</LI>
+
+<LI>DOUBLE PRECISION statement. Declare double-precision REALs with the
+REAL statement.</LI>
+
+<LI>Statement function statement. Use internal procedures instead.</LI>
+
+<LI>PAUSE statement.</LI>
+
+<LI>PRINT and READ * statements. Use WRITE and READ (*,*) instead.</LI>
+
+<LI>Specific intrinsic functions. Use generics instead.</LI>
+
+<LI>Assumed-size arrays. Use assumed-shape arrays.</LI>
+
+<LI>DO label. Use DO-END DO.</LI>
+
+<LI>Non-INTEGER DO variables and expressions.</LI>
+
+<LI>Multiple statements on a line.</LI>
+
+<LI>LOGICAL case expression.</LI>
+
+<LI>Branch to END IF from outside IF block.</LI>
+
+<LI>WHERE Statement. Use WHERE Construct.</LI>
+
+<LI>BLANK specifier on OPEN or INQUIRE statement.</LI>
+
+<LI>BN, BZ, D, H, P, S, and X edit descriptors. D exponent accepted on
+input at runtime.</LI>
+</UL>
+
+<P>Return to <A HREF="elfdoc.htm#top of page">top of page</A>.</P>
+
+
+<HR noshade size="1">
+<H1><A NAME="Developing with Essential Lahey Fortran 90"></A>Developing with Essential Lahey Fortran 90</H1>
+
+<P>The driver controls compilation, the creation of module libraries, linking,
+and the production of 32-bit, protected-mode programs.</P>
+
+<P>In creating 32-bit protected-mode programs, Essential Lahey Fortran 90 makes use of and binds
+your programs to the Phar Lap TNT DOS-Extender. The DOS-Extender functions
+as a layer between DOS and your application providing access to the extended
+memory on your computer.</P>
+
+<H2>Running Essential Lahey Fortran 90</H2>
+
+<P>To run the driver, type <TT>elf90</TT> followed by a list of one or
+more file names and optional command-line switches:</P>
+
+<UL>
+<PRE>elf90 <I>filenames [switches]</I></PRE>
+</UL>
+
+<P>As needed, the driver searches for the four tools (<TT>ELF90_1.EXE</TT>,
+<TT>386LIB.EXE</TT>, <TT>386LINK.EXE</TT>, and <TT>REBINDB.EXE</TT>) first
+in the directory the driver is located and then, if not found, on the DOS
+path.</P>
+
+<H2>Filenames</H2>
+
+<P>Depending on the extension(s) of the filename(s) specified, the driver
+will invoke the compiler or linker or both. The extension <TT>.OBJ</TT>
+causes the linker to be invoked without first running the compiler.<BR>
+Note: the extension <TT>.MOD</TT> is reserved for compiler-generated module
+files.</P>
+
+<H3>Source Filenames</H3>
+
+<P>One or more source filenames may be specified, either by name or using
+the DOS wildcards <TT>*</TT> and <TT>?</TT>. Filenames must be separated
+by a space.</P>
+
+<P>Example</P>
+
+<UL>
+<PRE>elf90 *.f90</PRE>
+</UL>
+
+<P>If the files <TT>ONE.F90</TT> and <TT>TWO.F90</TT> were in the current
+directory, <TT>ONE.F90</TT> and <TT>TWO.F90</TT> would be compiled and
+linked together, and the stub-bound executable file, <TT>ONE.EXE</TT>,
+would be created because the driver found <TT>ONE.F90</TT> before <TT>TWO.F90</TT>
+in the current directory.</P>
+
+<P>Source filenames are specified as a complete file name or can be given
+without an extension, in which case Essential Lahey Fortran 90 supplies the default extension
+<TT>.F90</TT>.</P>
+
+<H3>Object Filenames</H3>
+
+<P>The default name for an object file is the same as the source file name.
+If a path is specified for the source filename, the same path will be used
+for the object file name. If no path is specified, the current directory
+will be used.</P>
+
+<H3>Output Filenames</H3>
+
+<P>The default name for the executable file produced by the driver is based
+on the first source or object name encountered on the command line. This
+may be overridden by specifying the <TT>-EXE</TT> switch with a new name.
+The default extension for executable files is <TT>.EXE</TT>.</P>
+
+<H2>Switches</H2>
+
+<P>The driver and tools recognize one or more letters preceded by a hyphen
+(<TT>-</TT>) as command-line switches. You may not combine switches: for
+example, <TT>-x</TT> and <TT>-y</TT> may not be entered as <TT>-xy</TT>.
+Case is not significant in switches or their arguments.</P>
+
+<H3>Driver Configuration File (ELF90.FIG)</H3>
+
+<P>In addition to specifying switches on the command line, you may specify
+a default set of compiler and linker switches in the <TT>ELF90.FIG</TT>
+file. When the driver is invoked, the switches in the <TT>ELF90.FIG</TT>
+file are processed before those on the command-line. Command-line switches
+override those in the <TT>ELF90.FIG</TT> file. The driver searches for
+<TT>ELF90.FIG</TT> first in the current directory and then, if not found,
+in the directory in which the driver is located.</P>
+
+<H3>Command Files</H3>
+
+<P>If you have too many switches and files to fit on the command line,
+your can place them in a command file. Enter Essential Lahey Fortran 90 command line arguments
+in a command file exactly the same manner as on the command line. Command
+files may have as many lines as needed. Lines beginning with # are comments.</P>
+
+<P>To process a command file, preface the name of the file with an @ character.
+When Essential Lahey Fortran 90 encounters a command line parameter that begins with @, it opens
+the file and processes the commands in it.</P>
+
+<P>Example</P>
+
+<UL>
+<PRE>elf90 @mycmds</PRE>
+</UL>
+
+<P>In this example, Essential Lahey Fortran 90 reads its commands from the file mycmds.</P>
+
+<P>Command files may be used both with other command-line switches and
+other command files. Multiple command files are processed left to right
+in the order they are encountered.</P>
+
+<H2>Controlling Compilation</H2>
+
+<P>During the compilation phase, the driver submits specified source files
+to the compiler for compilation. If the -c, compile only, switch is specified,
+processing will stop after the compiler runs and modules are created (if
+necessary). Otherwise, processing continues with linking and binding.</P>
+
+<H3>Errors in Compilation</H3>
+
+<P>If the compiler encounters errors, you may receive any of three types
+of error messages.</P>
+
+<UL>
+<LI><B>Abort</B> messages indicate it is not practical to continue compilation.</LI>
+
+<LI><B>Fatal</B> messages indicate the compilation will continue, but no
+object file will be generated.</LI>
+
+<LI><B>Warning</B> messages indicate probable programming errors that are
+not serious enough to prevent execution.</LI>
+</UL>
+
+<P>If no fatal or abort errors are detected by the compiler, the DOS ERRORLEVEL
+is set to zero. Fatal errors detected by the compiler (improper syntax,
+for example) terminate the compilation process. An object file is not created.</P>
+
+<H2>Compiler Switches</H2>
+
+<P>You can control compilation by using any of the following option switches.
+Compiler switches are not case sensitive.</P>
+
+<H3>-[n]c<BR>
+Suppress Linking</H3>
+
+<P>Default: <TT>-nc</TT></P>
+
+<P>Specify <TT>-c</TT> to create object (<TT>.OBJ</TT>), module (<TT>.MOD</TT>),
+module name-map, or module library files without creating an executable.</P>
+
+<H3>-[n]lst<BR>
+Listing</H3>
+
+<P>Default: <TT>-nlst</TT></P>
+
+<P>Specify <TT>-lst</TT> to generate a listing file that contains the source
+program, compiler options, date and time of compilation, and any compiler
+diagnostics. The compiler outputs one listing file for each source file
+specified. By default, listing file names consist of the root of the source
+file name plus the extension .lst.</P>
+
+<P><B>Syntax</B></P>
+
+<UL>
+<P>-<I>[</I>n<I>]</I>lst <I>[</I>(<I>spec=sval[</I>, <I>spec = sval]</I>
+... )<I>]</I></P>
+</UL>
+
+<P><B>Where:<BR>
+</B><I>spec</I> is <TT>w</TT> for page width, <TT>l</TT> for page length,
+or <TT>f</TT> for the listing file name.</P>
+
+<P>For w=<I>sval</I>, the page width specifier, sval is an unsigned integer.
+The minimum page width is 60. If not specified, the page width is 128.<BR>
+<BR>
+For l=<I>sval</I>, the page length specifier, sval is an unsigned integer.
+The minimum page length is 20. If not specified, the page length is 57.
+The page length specifies the maximum number of lines that will print on
+a page. A page length of 0 specifies that all information is appended to
+the same listing page with no breaks and no subsequent headers.<BR>
+<BR>
+For f=<I>sval</I>, the listing file name, sval specifies the listing file
+name to use instead of the default. If a file with this name already exists,
+it is overwritten. If the file can't be overwritten, the compiler aborts.
+The compiler outputs one listing file for each source file specified. If
+the user specifies a listing file name and more than one source file (possibly
+using wild cards) then the driver diagnoses the error and aborts.</P>
+
+<P><B>Example</B></P>
+
+<UL>
+<PRE>elf90 myprog -lst (w=80, l=57)</PRE>
+</UL>
+
+<P>creates the listing file myprog.lst, formats it for a width of 80 columns
+and a length of 57.</P>
+
+<H3>-[n]syn<BR>
+Syntax Check</H3>
+
+<P>Default: <TT>-nsyn</TT></P>
+
+<P>Specify <TT>-syn</TT> to stop processing source files after they have
+been parsed for language errors. This switch gives you a way to check quickly
+whether your program is syntactically and semantically correct. Any errors
+are displayed and written to the listing or cross-reference file(s) if
+specified.</P>
+
+<H3>-[n]xref<BR>
+Cross-Reference Listing</H3>
+
+<P>Default: <TT>-nxref</TT></P>
+
+<P>Specify <TT>-xref</TT> to generate cross-reference information in the
+listing file. If <TT>-xref</TT> is specified but not <TT>-lst</TT>, the
+listings option, then the cross reference information is output to the
+same .lst file but the source is not. By default, cross reference file
+names consist of the root of the source file name plus the extension <TT>.lst</TT>.</P>
+
+<P><B>Syntax</B></P>
+
+<UL>
+<P><I>-[</I>n<I>]</I>xref <I>[</I>(<I>spec=sval[</I>, <I>spec=sval]</I>
+... )<I>]</I><BR>
+</P>
+</UL>
+
+<P><B>Where:<BR>
+</B>spec is <TT>w</TT> for page width, <TT>l</TT> for page length, or <TT>f</TT>
+for the listing file name.</P>
+
+<P>For w=<I>sval</I>, the page width specifier, sval is an unsigned integer.
+The minimum page width is 60. If not specified, the page width is 128.<BR>
+<BR>
+For l=<I>sval</I>, the page length specifier, sval is an unsigned integer.
+The minimum page length is 20. If not specified, the page length is 57.
+The page length specifies the maximum number of lines that will print on
+a page. A page length of 0 specifies that all information is appended to
+the same cross reference page with no breaks and no subsequent headers.<BR>
+<BR>
+For f=<I>sval</I>, the cross reference listing file name, sval specifies
+the cross reference listing file name to use instead of the default. If
+a file with this name already exists, it is overwritten. If the file can't
+be overwritten, the compiler aborts. The compiler outputs one cross reference
+file for each source file specified. If the user specifies a cross reference
+file name and more than one source file (possibly using wild cards) then
+the driver diagnoses the error and aborts.</P>
+
+<P>When <TT>-xref</TT> is specified, the listing file contains two additional
+blocks of information, the Symbol Cross Reference and the Label Cross Reference.</P>
+
+<P>The symbol block contains a sorted list of variable and procedure names,
+the type, the class (array, scalar, function) and context. The label block
+lists the occurrences of all labels and states the reference's context.
+The symbol and label context is defined by the line number of the reference
+and a character representing the following contexts:</P>
+
+<UL>
+<P><TT>d - </TT>DO index<BR>
+<TT>= - </TT>Assignment<BR>
+<TT>i - </TT>input<BR>
+<TT>o - </TT>output<BR>
+<TT>p - </TT>pointer context (pointer assign, [de]allocate, nullify)<BR>
+<TT>r - </TT>procedure argument<BR>
+<TT>s - </TT>specification statement<BR>
+<TT>u - </TT>usage context</P>
+</UL>
+
+<P>Labels use the following:</P>
+
+<UL>
+<P><TT>@ - </TT>FORMAT statement<BR>
+<TT>f - </TT>FORMAT usage<BR>
+<TT>g - </TT>GO TO<BR>
+<TT>s - </TT>specification statement</P>
+</UL>
+
+<P><B>Example</B></P>
+
+<UL>
+<PRE>elf90 myprog -lst -xref (w=80, l=57, i=y)</PRE>
+</UL>
+
+<P>creates the cross reference file myprog.lst, formats it for a width
+of 80 columns and a length of 57, and output cross reference information
+for the source file.</P>
+
+<H2>Controlling Module Library Creation</H2>
+
+<P>The Phar Lap librarian, <TT>386lib.exe</TT>, is only invoked if the
+compiler encounters Fortran modules in the source code. For each successfully
+compiled module, a module file of the form <I>filename</I><TT>.mod</TT>
+is created and, if the module contains executable code or variables, <I>modname</I><TT>.obj</TT>
+is temporarily created. From this <I>filename</I><TT>.obj</TT> file, the
+driver invokes the librarian to create a <I>filename</I><TT>.lib</TT> file
+and an object file library containing the compiled module code. In addition,
+the file <TT>modtable.txt</TT> is created or appended and contains the
+name of the module. The name of this module library is then passed to the
+linker.</P>
+
+<H2>Controlling Linking</H2>
+
+<P>During this phase, the driver submits object files, object file libraries,
+and module libraries to the linker for creation of the stub-bound executable.</P>
+
+<H3>Environment Variable</H3>
+
+<P>Linker switches optionally can be placed in an environment variable
+named <TT>386link</TT>.</P>
+
+<P><B>Example</B></P>
+
+<UL>
+<PRE>set 386link=-lib graph90 -nomap
+elf90 demo.obj sub.obj</PRE>
+</UL>
+
+<P>In this example, the linker reads two switches, <TT>-lib</TT> and <TT>-nomap</TT>,
+from the environment variable, <TT>386link</TT>.</P>
+
+<H3>Default Filename Extensions</H3>
+
+<P>Whether on the command line or in command files, file names are specified
+as a complete file name (filename.ext) or can be given without an extension,
+in which case the linker supplies a default extension. The table below
+lists the default filename extensions:</P>
+
+<P>Default Extensions</P>
+
+<PRE>File Extension   File Type
+    .obj         object file
+    .lib         library file
+    .map         map file
+    .exe         executable file</PRE>
+
+<P>A complete or partial path may be specified with the file name. The
+file path must follow the standard MS-DOS syntax. If no path is specified,
+the current default device and the directory are assumed.</P>
+
+<H3>Searching Rules</H3>
+
+<P>The linker reads individual object files and object module libraries,
+resolves references to external symbols, and writes out a single executable
+file. The linker also creates a map file containing information about the
+segments and public symbols in the program. If an object module or library
+was specified on the command line and contains path information, then it
+must reside at the location specified. If the path was not specified, Essential Lahey Fortran 90
+looks for the files according to the following algorithm:</P>
+
+<P>1. in the current working directory<BR>
+2. in any directories specified with the <TT>-LIBPath</TT> switch (note
+that <TT>-LIBPath</TT> searches for library files only, not object modules),
+or<BR>
+3. in any directories specified by the <TT>-LIBPath</TT> switch included
+in the <TT>386LINK</TT> environment variable.</P>
+
+<H4>Object File Searching Rules</H4>
+
+<P>Object modules specified as individual object files are processed in
+the order in which they appear on the command line.</P>
+
+<H4>Library Searching Rules</H4>
+
+<P>The order in which object modules from libraries are processed is not
+always obvious. Essential Lahey Fortran 90 applies the following rules when searching object
+libraries:</P>
+
+<P>1. Any libraries specified using the <TT>-Lib</TT> switch are searched
+in the order in which they appear in the Essential Lahey Fortran 90 command string before the
+default libraries, <TT>elf90.lib</TT> and <TT>dosx.lib</TT>. The compiler
+writes the Essential Lahey Fortran 90 default library names, <TT>elf90.lib</TT> and <TT>dosx.lib</TT>,
+into each object file it generates.<BR>
+2. Each library is searched until all possible external references, including
+backward references within the library, are resolved.<BR>
+3. If necessary, Essential Lahey Fortran 90 recursively scans the list of libraries until all
+external references are resolved.</P>
+
+<P>This algorithm is particularly important when two different object modules
+in two different libraries each have a public symbol with the same name.
+If both object modules are linked, Essential Lahey Fortran 90 signals a duplicate symbol error
+because they both have public symbols which are referenced elsewhere in
+the program. However, if the only symbol referenced in both object modules
+is the duplicate symbol, then only the first object module encountered
+is linked and no error message is generated. In this latter case, the object
+module which actually gets linked is determined by applying the rules listed
+above.</P>
+
+<H2>Linker Switches</H2>
+
+<P>You can control linking by using any of the switches documented below.
+Note that linker switches may be abbreviated as indicated by the uppercase
+characters in the switch name. For example, the <TT>-LIBPath</TT> switch
+can be specified as either <TT>-libpath</TT> or <TT>-libp</TT>.</P>
+
+<P>Some switches require a number as an argument. By default, all numbers
+are assumed to be decimal numbers. A different radix can be specified by
+appending a radix specifier to the number. The following table lists the
+bases and their radix specifiers:</P>
+
+<PRE>Base    Radix Specifier   Example of 32 in base 10
+  2         B or b                 10000b
+  8         Q or q                    40q
+ 10         none                       32
+ 16         H or h                    20h
+</PRE>
+
+<P>The underscore character (&quot;<TT>_</TT>&quot;) can be used in numbers
+to make them more readable: <TT>80000000h</TT> is the same as <TT>8000_0000h</TT>.</P>
+
+<H3><B>-[NO]BANNER</B></H3>
+
+<P><TT>-BANNER</TT> displays a 386|LINK copyright message with the 386|LINK
+version and serial number. This is the default operation. <TT>-NOBANNER</TT>
+suppresses the 386|LINK copyright message.</P>
+
+<P><B>Syntax</B></P>
+
+<UL>
+<P><TT>-banner</TT></P>
+</UL>
+
+<H3>-Exe</H3>
+
+<P>The default output file name is the name of the first object file, with
+the <TT>.exe</TT> extension appended to it. The output file is not automatically
+placed in the current directory. By default it is placed in the same directory
+as the first object file listed on the command line.</P>
+
+<P>This switch takes a single argument, which is the path and name of the
+output file. If no extension is specified, .exe is assumed. If no path
+information is specified with the file name, then the output file is placed
+in the current directory.</P>
+
+<P><B>Syntax</B></P>
+
+<UL>
+<P><TT>-Exe</TT> <I>filename</I></P>
+</UL>
+
+<P><I>filename</I> is the name of the output file (including path if other
+than the current directory).</P>
+
+<P><B>Example</B></P>
+
+<UL>
+<P><TT>elf90 hello.obj -exe d:\elf90\hello.exe<BR>
+elf90 main.obj -e maintest</TT></P>
+</UL>
+
+<H3>-Lib</H3>
+
+<P>The <TT>-Lib</TT> switch specifies one or more library files. The names
+of the library files immediately follow the switch, separated by either
+spaces or commas. If no filename extension is specified for a library file,
+the linker assumes the extension, <TT>.lib</TT>.</P>
+
+<P>The <TT>-Lib</TT> switch may be used multiple times in a single linker
+command string. the linker builds a list of the library files and processes
+them in the order they were specified on the command line.</P>
+
+<P><B>Syntax</B></P>
+
+<UL>
+<P><TT>-Lib </TT><I>lib1[,lib2 ...]</I></P>
+</UL>
+
+<P><I>lib1</I> and <I>lib2</I> are one or more library files.</P>
+
+<P><B>Example</B></P>
+
+<UL>
+<P><TT>elf90 hello.obj -lib mylib</TT></P>
+</UL>
+
+<P>If a library file is specified as an object input file (i.e., the <TT>-Lib</TT>
+switch is not used), the linker includes all of the object modules in the
+library rather than only those referenced by other parts of the program.</P>
+
+<H3>-LIBPath</H3>
+
+<P>The <TT>-LIBPath</TT> switch allows specification of one or more directories
+to be searched for libraries.</P>
+
+<P><B>Syntax</B></P>
+
+<UL>
+<P><TT>-LIBPath </TT><I>dir1[,dir2 ...]</I></P>
+</UL>
+
+<P><I>dir1</I> and <I>dir2</I> are one or more directories to be searched.</P>
+
+<P><B>Example</B></P>
+
+<UL>
+<P><TT>elf90 main.obj -libpath d:\mylibs -pack<BR>
+elf90 main.obj -libp d:\mylibs,e:\yourlibs -maxreal ffffh</TT></P>
+</UL>
+
+<P>Directory names specified for <TT>-LIBPath</TT> must not end with a
+&quot;\&quot; or &quot;/&quot; delimiter. The linker will affix the directory
+delimiter to the file name being searched for.</P>
+
+<H3>-[NO]Map</H3>
+
+<P>The linker map file is a text file describing the output load image.
+The map file contains the following information:</P>
+
+<UL>
+<LI>command switches specified when the program was linked,</LI>
+
+<LI>names of the input object files,</LI>
+
+<LI>a list of the segments comprising the program, and</LI>
+
+<LI>a list of the public symbols in the program.</LI>
+</UL>
+
+<P>By default, the linker produces a map file each time a program is linked.
+The default name of the map file is the name of the executable file, with
+its extension changed to <TT>.map</TT>. Any path information specifying
+a directory where the executable file is to be placed also applies to the
+map file.</P>
+
+<P>The <TT>-Map</TT> switch renames or relocates the map file. The switch
+takes a single argument, which is the path and name of the map file to
+be produced. If no file name extension is specified, then a default of
+<TT>.map</TT> is assumed. If no path information is specified in the map
+file name, then it is placed in the current directory.</P>
+
+<P>The linker can be prevented from producing a map file with the <TT>-NOMap</TT>
+switch. The switch takes no arguments. The <TT>-NOMap</TT> switch is useful
+to make the linker run faster, since no time is spent writing the map file.
+The switch is also a good way to save disk space, because map files can
+become quite large.</P>
+
+<P><B>Syntax</B></P>
+
+<UL>
+<P><TT>-Map</TT> <I>filename</I></P>
+</UL>
+
+<P><B>Example</B></P>
+
+<UL>
+<P><TT>elf90 moe.obj larry.obj curly.obj -m stooges<BR>
+elf90 hello.obj -nom</TT></P>
+</UL>
+
+<H3>-MAPNames</H3>
+
+<P>The <TT>-MAPNames</TT> switch controls the length of global symbol names
+displayed in the map file. By default, segment, group, class, module, and
+public symbol names are truncated to 12 characters in the map file. The
+switch takes a numeric constant argument which increases the length of
+global symbols in the map file to the specified number of characters.</P>
+
+<P>Increasing the symbol name length may cause the default maximum line
+width of 80 characters to be exceeded. If this occurs, the linker prints
+less information about segments and public symbols. This loss of information
+can be prevented by using the <TT>-MAPWidth</TT> switch.</P>
+
+<P><B>Syntax</B></P>
+
+<UL>
+<P><TT>-MAPNames</TT> <I>nchars</I></P>
+</UL>
+
+<P><I>nchars</I> is the length of global symbols in the map file, expressed
+as number of characters.</P>
+
+<P><B>Example</B></P>
+
+<UL>
+<P><TT>elf90 hello.obj -mapn 30</TT></P>
+</UL>
+
+<H3>-MAPWidth</H3>
+
+<P>The <TT>-MAPWidth</TT> switch controls the maximum line width in the
+program map file. The switch takes a numeric constant argument which is
+the new maximum width for lines in the map file.</P>
+
+<P><B>Syntax</B></P>
+
+<UL>
+<P><TT>-MAPWidth </TT><I>nchars</I></P>
+</UL>
+
+<P><I>nchars</I> is the maximum line width in the map file, expressed as
+number of characters (default = 80).</P>
+
+<P><B>Example</B></P>
+
+<UL>
+<P><TT>elf90 hello.obj -mapn 30 -mapw 120</TT></P>
+</UL>
+
+<H3>-MAXReal and -MINReal</H3>
+
+<P><TT>-MAXReal</TT> specifies the maximum amount of conventional memory
+to leave free. -MINReal specifies the minimum. TNT DOS-Extender guarantees
+that at least the MINReal memory is left free, and that as much as possible,
+up to the MAXReal memory, is left free.</P>
+
+<P><B>Syntax</B></P>
+
+<UL>
+<P><TT>-MAXReal</TT> <I>nparagraphs<BR>
+</I><TT>-MINReal</TT> <I>nparagraphs</I></P>
+</UL>
+
+<P><I>nparagraphs</I> is the maximum or minimum number of 16-byte paragraphs
+of real-mode memory to leave free.</P>
+
+<P><B>Example</B></P>
+
+<UL>
+<P><TT>elf90 joe -minr 128 -maxr 512 hello.exe</TT></P>
+</UL>
+
+<H3>-PUBList</H3>
+
+<P>The <TT>-PUBList</TT> switch controls the ordering of the list of public
+symbols. It has options to control the ordering of public symbols. They
+are:</P>
+
+<UL>
+<LI><B>BYNAME </B>- Sort the list of public symbols which make up the program
+alphabetically. This is the default operation of the linker.</LI>
+
+<LI><B>BYVALUE</B> - Sort the list of public symbols in the program by
+value. This option is useful when using the map file to find out what routine
+or variable resides at a particular memory location.</LI>
+
+<LI><B>BOTH</B> - Produce two listings of the public symbols: one sorted
+alphabetically and one sorted by value.</LI>
+
+<LI><B>NONE</B> - Cause the linker not to list the public symbols which
+make up the program at all. This option is useful for reducing the size
+of the map file.</LI>
+</UL>
+
+<P><B>Syntax</B></P>
+
+<UL>
+<P><TT>-PUBList BYNAME<BR>
+-PUBList BYVALUE<BR>
+-PUBList BOTH<BR>
+-PUBList NONE</TT></P>
+</UL>
+
+<P><B>Example</B></P>
+
+<UL>
+<P><TT>elf90 hello.obj -publ byvalue</TT></P>
+</UL>
+
+<H3>-Stack</H3>
+
+<P>The <TT>-Stack</TT> switch specifies the size of the stack area for
+a program. The switch must be followed by a numeric constant that specifies
+the number of bytes to be allocated to the stack.</P>
+
+<P>If a stack segment is already present in the program, then the <TT>-Stack</TT>
+switch changes the size of the existing segment. The linker, however, will
+only increase the size of the existing stack area. If an attempt is made
+to decrease the size of the stack area, the linker issues an error.</P>
+
+<P>If your program runs out of stack at runtime, increase the stack size
+with <TT>-Stack</TT>. Note that some recursive procedures can use very
+large amounts of stack.</P>
+
+<P><B>Syntax</B></P>
+
+<UL>
+<P><TT>-Stack</TT> <I>nbytes</I></P>
+</UL>
+
+<P><B>Example</B></P>
+
+<UL>
+<P><TT>elf90 hello.obj -s 32768</TT></P>
+</UL>
+
+<H3>-TwoCase and -OneCase</H3>
+
+<P>By default, the linker ignores the case of public symbols that make
+up the program being linked. For example, the symbols <TT>abc</TT>, <TT>ABC</TT>,
+and <TT>aBc</TT> are equivalent in the linker. The <TT>-TwoCase</TT> switch
+enables case-sensitive processing of user-defined symbols. When this switch
+is used, upper- and lower-case versions of the same symbol are considered
+to be different.</P>
+
+<P><TT>-OneCase</TT> enforces default behavior.</P>
+
+<P><B>Example</B></P>
+
+<UL>
+<P><TT>elf90 hello.obj -lib \elf90\graph90 -tc</TT></P>
+</UL>
+
+<H3>-[NO]WARN and -FULLWARN</H3>
+
+<P>The linker detects some conditions that can potentially cause run-time
+problems but are not necessarily errors. Warning messages for these conditions
+can optionally be generated on the display and in the map file. The linker
+supports three warning levels: <TT>-WARN</TT>, <TT>-FULLWARN</TT>, and
+<TT>-NOWARN</TT>.</P>
+
+<P>The <TT>-WARN</TT> switch is the default warning level of the linker.
+It enables warning messages for the following conditions:</P>
+
+<UL>
+<LI>There is no initial stack segment in the program.</LI>
+
+<LI>A TNT DOS-Extender switch was specified, but the output file is not
+an executable file.</LI>
+</UL>
+
+<P><TT>-FULLWARN</TT> enables additional warning messages for the following
+conditions:</P>
+
+<UL>
+<LI>Pieces of a single segment from different object modules having different
+segment attributes.</LI>
+
+<LI>Inconsistent segment grouping in different object modules. -NOWARN
+disables all warning messages.</LI>
+</UL>
+
+<P><B>Example</B></P>
+
+<UL>
+<P><TT>elf90 hello.obj -warn</TT></P>
+</UL>
+
+<H3>-[NO]ZUnInit</H3>
+
+<P>By default, the linker automatically initializes all data areas that
+are not initialized by your Essential Lahey Fortran 90 code to zero when creating the executable
+image.</P>
+
+<P>If you do not care if your uninitialized data areas are initialized
+to zero, use the -NOZUI switch to make your link time up to 50% shorter.</P>
+
+<H2>Controlling Binding</H2>
+
+<P>During this last phase, the stub-bound executable is bound to the DOS-Extender
+creating a stand-alone, 32-bit protected-mode executable program.</P>
+
+<P>By default, the linker automatically stub-binds your program. When you
+run your program from the DOS command line, this stub-loader first starts
+the DOS-Extender, which in turn starts your program.</P>
+
+<P>Note: in order to distribute executable files created with Essential Lahey Fortran 90, you
+must buy the complete <A HREF="elf90.htm">Essential Lahey Fortran 90</A> product.</P>
+
+<H2>Binder Switches</H2>
+
+<H3>-[N]BIND</H3>
+
+<P>Default: <TT>-nbind</TT></P>
+
+<P>Specify <TT>-bind</TT> to instruct the driver to invoke <TT>rebindb.exe</TT>.
+<TT>rebindb.exe</TT> will make a copy of the DOS-Extender that is bound
+into <TT>rebindb.exe</TT> itself and bind that copy to your program.</P>
+
+<P><B>Example</B></P>
+
+<UL>
+<P><TT>elf90 demo -bind</TT></P>
+</UL>
+
+<P>In the example, the driver invokes <TT>rebindb.exe</TT> to create <TT>demo.exe</TT>,
+a fully bound executable program.</P>
+
+<P>Return to <A HREF="elfdoc.htm#top of page">top of page</A>.</P>
+<hr noshade size="1">
+Return to <A HREF="index.html">Lahey home page</A>
+
+  </td>
+</tr>
+</table>
+
+</body>
+</html>

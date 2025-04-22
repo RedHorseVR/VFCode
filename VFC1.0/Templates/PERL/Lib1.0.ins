@@ -1,0 +1,606 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : Lib1.0.ins
+;  File Date : 09:46:25 PM - 16:Nov:2001
+
+end();// 
+
+input(# use );//
+process($server_dir = "/home/sites/www.flowlynx.com/web/WebFlow" ;);//$server_dir =  "C:\\Perl5\\bin";
+process($local_dir = "C:\\Program Files\\Apache Group\\Apache\\htdocs\\eCode\\WebFlow" ;);//$local_dir = "W:\\WWWROOT\\Flowlynxinc\\WebFlow" ;
+process($webflow_dir = "/";);//$webflow_dir = "w:\\wwwroot\\webflow"; 
+
+input(# prototype definitions);// 
+process(sub SendQuery ;);// 
+set(sub GetMultiPartForm;);// 
+set(sub Get_Rec;);// 
+set(sub Read_Counter;);// 
+
+input(# globals);//
+set(local ( @FlowStack ););//
+set($types = "VARIABLE|INPUT|EVENT|PROCESS|SET|OUTPUT|LOOP|LEND|BRANCH|PATH|BEND|END";);//
+set($flowtypes = "input|event|process|set|output|loop|lend|branch|path|bend|end";);//
+end();//
+set($max_files = 100;);//
+end();// 
+end();// 
+
+input(sub LoadStubs {);//
+output(print( STDOUT  " STUBS ARE LOADED \n" ););//
+set($param{file1} = LoadFileAsString( "JOYTOY.c" ););//$param{file1} = LoadFileAsString( "TESTFILE path_complex.cpp" );
+set($language  =  "c.tok";);//$language  =  " master_vbasic.tok";
+generic($inline_comment = "\/\/";);//
+set($flowname = "OUT.ins" ;);//
+set($flowpage = "$flowname.html" ;);//
+end( } );//
+
+input(sub ShowStubs {);//
+output(print( STDOUT  " NO STUBS ARE LOADED \n" ););//
+output(print( "<pre>$flowname\n" ););//
+set(print( "language   : $language   \n" ););//
+set(print( "inline_comment    : $inline_comment   \n" ););//
+set(print( "flowpage    : $flowpage   \n" ););//
+set(print( "flowname   : $flowname  \n" ););//
+set(print( "output_path    : $output_path \n" ););//
+end( } );//
+
+input(sub Old_Main () {);// 
+output(print( "Content-type: text/html\n\n"););// 
+process($param{file1} = "";);//
+process(GetMultiPartForm(););//
+set($flowname = "$filename{file1}.ins" ;);//$flowname = "OUT.ins" ;
+output($output_path = "FlowFiles/" ;);//$output_path = "" ;
+generic($inline_comment = "\/\/";);//
+set($flowname =~ s/"//g;);//
+set($flowname =~ s/://g;);//
+set($flowname =~ s/\\/_/g;);//
+set($flowname =~ s/\n//g;);//
+set($flowname =~ s/\l//g;);//
+set($flowname =~ s/\r//g;);//
+set($flowpage = "$flowname.html" ;);//
+set($language  =  $param{language };);//$language  =  " master_vbasic.tok";
+process($stack_size = push  @FlowStack , "null" ;);//
+process($stack_size = push  @FlowStack , "null" ;);//
+process($stack_size = push  @FlowStack , "null" ;);//
+output();//print( " *** $language ...." );
+branch(if ( $param{file1} eq ""  ));//
+path( { );//
+process(LoadStubs() ;);//
+process(ShowStubs() ;);//
+path(} else { );//
+process();//ShowStubs() ;
+bend( } );//
+process(LoadVFCTokens( "$language" ););//
+output();//PrintVFCtokens();
+process(Parse( $param{file1} , "$language" , "$flowname"  ););///print( "....$param{file1} " );//
+process();//ShowResults( $flowname    ,  "$language" );
+process(open( FP ,  ">$output_path$flowpage" )  or die " not opened\n ";);//
+branch(select( FP ););//
+path();//
+process(ShowResults( $flowname    ,  "$language" ););//
+process(close( FP ); );//
+bend(  );//
+process($out = LoadFileAsString( "$output_path$flowpage" ););//
+set($out =~ s/VALUE=\"$flowname\"/VALUE=\"$output_path$flowname\"/ ;);//point the applet correctly so we can run it via the script output.
+set($out =~ s/open\(\"$flowname\"\)/open\(\"$output_path$flowname\"\)/ ;);//point the download button correctly so we can run it via the script output.
+set($out =~ s/\.\.\/STDs/STDs/ ;);//point the help button correctly so we can run it via the script output.
+process(print( STDOUT $out ););//
+end(} # end);// 
+end();// 
+set($GlobalNextLine = "";);//
+
+input(sub Parse {);//
+set(local ( $codefile , $tokfile , $flowfile ) = @_;);//
+set($index = 0;);//
+set($codefile =~ tr/\t/ /;);//
+process($keyfile =  LoadFileAsString( $tokfile  ););//
+process(open( FP ,  ">$output_path$flowfile" )  ;);//
+set(select( FP ););//
+output();//print( STDIO "TOKFILE: $tokfile\n" );
+set(  @lines = split(/[\r\n\l]/, $codefile ););//
+loop(foreach $line (@lines ){);//
+set($lcnt=$index+1;);//
+set($GlobalNextLine="";);//
+loop(while( $lcnt < $#lines &&  $GlobalNextLine eq "" ) {);//
+set($GlobalNextLine = $lines[$lcnt];);//
+set($GlobalNextLine=~s/^ *//;);//
+set($GlobalNextLine=~s/$inline_comment.*//;);//
+set($lcnt++;);//
+lend( });//
+process(ScanLine ( $line, $keyfile  ););//
+set($index++;;);//
+output();//print( STDOUT  "$#lines ...  $lcnt .... $index ... $GlobalNextLine\n" );
+lend( } );//
+set(select( STDOUT ););//
+set(close( FP );  );//
+end( } );//
+
+input(sub ShowResults {);//
+set(local( $flowname , $language ) = @_;);//
+set(  open(SEARCHFILE, "WebFlow_Output_Template.htm" ););//
+set(  $line = "";);//
+loop(  while(<SEARCHFILE>) {  );//
+set(  $line = $_;  );//
+set($line =~ s/\$titlename/$flowname/g;);//
+set($line =~ s/\$name/$flowname/g;);//
+set($line =~ s/\$language/$language/g;);//
+output(print( $line ););//
+lend(  }   );//# End of SEARCHFILE
+generic(  close (SEARCHFILE);  );//
+end( } );// 
+
+input(sub ProcessKeyCommands {);//
+event($DBSTACK ="";);//$DBSTACK ="yes";
+set(local ( $key ) = @_;);//
+set(local ( $rtn , $N ););//
+set($rtn = "true";);//
+branch(if ( $key=~m/\$\|\$/  ));//
+path( { );//
+set(@cmd = split(/\$\|\$/, $key););//
+set($N=0;);//
+set();//$cmd = $directive[$N];
+loop(foreach $cmd (@cmd){);//
+loop(while( $cmd && $rtn eq "true" && $N>0 ){);//
+output();//print( STDOUT ">>>>>>>>>>>>>>>> $cmd\n " );
+set($cmd =~ s/ //g;);//DOES NOT ALLOW SPACES
+branch(if ( $cmd =~ s/PEEKPUSH// ));//
+path( { );//
+process($value =  $FlowStack[$#FlowStack] ;);//
+branch(if ( $cmd=~ m/$value/ ));//
+path( { );//
+set($rtn = "";);//
+end($rtn; return;);//
+path(} else { );//
+process($stack_size = push  @FlowStack , $cmd ;);//
+output(if($DBSTACK){  print( STDOUT "PEEKPUSH  $cmd ONTO $value ...\n" );});//
+branch( if($DBSTACK));//
+path( { );//
+set($stackvalue = "";);//
+loop(foreach $FlowStack (@FlowStack){);//
+process($stackvalue =  "$stackvalue | $FlowStack";);//
+lend( } );//
+output(print( STDOUT "\tstack is: [[$stackvalue]]\n" ););//
+path( }else{ );//
+bend( } );//
+bend( } );//
+path(} else { );//
+branch(if ( $cmd =~ s/ONLYPUSH// ));//
+path( { );//
+set($stackvalue = "null";);//
+loop(foreach $FlowStack (@FlowStack){);//
+process($stackvalue =  "$stackvalue|$FlowStack";);//
+lend( } );//
+output(if($DBSTACK){ print( STDOUT "ONLYPUSH stack is: $stackvalue\twant to push: $cmd\n" ); });//
+branch(if ( $stackvalue=~ m/$cmd/ ));//if ( $cmd=~ m/$stackvalue/ )
+path( { );//
+set($rtn = "";);//
+end($rtn; return;);//
+path(} else { );//
+process($stack_size = push  @FlowStack , $cmd ;);//
+branch( if($DBSTACK));//
+path( { );//
+output(print( STDOUT "\tPUSH  $cmd  ...\n" ););//
+set($stackvalue = "";);//
+loop(foreach $FlowStack (@FlowStack){);//
+process($stackvalue =  "$stackvalue | $FlowStack";);//
+lend( } );//
+output(print( STDOUT "\tstack is: [[$stackvalue]]\n" ););//
+path( }else{ );//
+bend( } );//
+bend( } );//
+path( }else {);//
+branch(if (  $cmd =~ s/PUSH// ));//
+path( { );//
+process($stack_size = push  @FlowStack , $cmd ;);//
+output(if($DBSTACK){ print( STDOUT "PUSH  $cmd ...\n" ); });//
+branch( if($DBSTACK));//
+path( { );//
+output(print( STDOUT "\tPUSH  $cmd  ...\n" ););//
+set($stackvalue = "";);//
+loop(foreach $FlowStack (@FlowStack){);//
+process($stackvalue =  "$stackvalue | $FlowStack";);//
+lend( } );//
+output(print( STDOUT "\tstack is: [[$stackvalue]]\n" ););//
+path( }else{ );//
+bend( } );//
+path( }else{ );//
+branch( if( $cmd =~ s/PEEKPOP//  ));//
+path( { );//
+process($value =  $FlowStack[$#FlowStack] ;);//
+output(if($DBSTACK){ print( STDOUT " PEEK...$value want to POP $cmd..." ); });//
+branch(if ( $value=~ m/$cmd/ ));//if ( $cmd=~ m/$value/ )
+path( { );//
+process($value = pop ( @FlowStack ) ;);//
+output(if($DBSTACK) { print( STDOUT "\tPOP : $value..\n" ); });//
+branch( if($DBSTACK));//
+path( { );//
+set($stackvalue = "";);//
+loop(foreach $FlowStack (@FlowStack){);//
+process($stackvalue =  "$stackvalue | $FlowStack";);//
+lend( } );//
+output(print( STDOUT "\tstack is: [[$stackvalue]]\n" ););//
+path( }else{ );//
+bend( } );//
+path( }else{ );//
+output(if($DBSTACK){ print( STDOUT "  \n\n" );});//
+set($rtn = "";);//
+end($rtn; return;);//
+bend( } );//
+path( }else{ );//
+branch( if( $cmd =~ s/POPALL//  ));//
+path( { );//
+output(if($DBSTACK){  print( STDOUT " POPALL : $cmd..\n" ); });//
+loop(while( $FlowStack[$#FlowStack] =~ m/$cmd/ ) {);//
+process($value = pop ( @FlowStack ) ;);//
+output(if($DBSTACK){  print( STDOUT "\t\tPOP : $value..\n" ); });//
+branch(if ( $value =~ s/_//g ));//
+path( { );//
+branch(if ( $flowtypes =~ m/$value/ ));//
+path( { );//
+set($value =~ s/branch/bend/;);//
+set($value =~ s/loop/lend/;);//
+set($value =~ s/input/end/;);//
+output(if($DBSTACK){  print( STDOUT "\t\tINSERTING COMPLEMENT SYMBOL : $value..\n" ); });//
+output($GlobalPoppedStack = "$GlobalPoppedStack $value( );\/\/... INSERTED by a POPALL command\n";);//
+bend( } );//
+bend( } );//
+lend(} );//
+branch( if($DBSTACK));//
+path( { );//
+set($stackvalue = "";);//
+loop(foreach $FlowStack (@FlowStack){);//
+process($stackvalue =  "$stackvalue | $FlowStack";);//
+lend( } );//
+output(print( STDOUT "\tstack is: [[$stackvalue]]\n" ););//
+path( }else{ );//
+bend( } );//
+path( }else{ );//
+branch( if( $cmd =~ s/POP//  ));//
+path( { );//
+process($value = pop ( @FlowStack ) ;);//
+output(if($DBSTACK){  print( STDOUT " POP : $value..\n" ); });//
+branch( if($DBSTACK));//
+path( { );//
+set($stackvalue = "";);//
+loop(foreach $FlowStack (@FlowStack){);//
+process($stackvalue =  "$stackvalue | $FlowStack";);//
+lend( } );//
+output(print( STDOUT "\tstack is: [[$stackvalue]]\n" ););//
+path( }else{ );//
+bend( } );//
+path( }else{ );//
+branch(if ($cmd =~ s/PEEKNOT//  ));//
+path( { );//
+process($value =  $FlowStack[$#FlowStack] ;);//
+branch(if ( $cmd=~ m/$value/ ));//
+path( { );//
+set($rtn = "";);//
+output(if($DBSTACK){ print( STDOUT " PEEKNOT: $cmd seeing $value..\n" ); });//
+end($rtn; return;);//
+path( }else{ );//
+bend( } );//
+path( }else{ );//
+branch( if( $cmd =~ s/PEEK//  ));//
+path( { );//
+process($value =  $FlowStack[$#FlowStack] ;);//
+branch(if ( $cmd=~ m/$value/ ));//
+path( { );//
+output(if($DBSTACK){ print( STDOUT " PEEK : $value..\n" ); });//
+path( }else{ );//
+set($rtn = "";);//
+end($rtn; return;);//
+bend( } );//
+path( }else{ );//
+branch( if( $cmd =~ s/NEXTSYMBOLNOT//  ));//
+path( { );//
+branch(if ( $GlobalNextLine=~m/$cmd/  ));//
+path( { );//
+output();//print( STDOUT ">>>>>>> NEXTSYMBOLNOT $cmd ...$GlobalNextLine ... line : $index \n" );
+output();//print( STDOUT "****>>>>>>> NEXTSYMBOLNOT HIT \n" );
+set($rtn = "";);//
+end($rtn; return;);//
+path( }else{ );//
+bend( } );//
+path( }else{ );//
+branch( if( $cmd =~ s/NEXTSYMBOL//  ));//
+path( { );//
+branch(if ( $GlobalNextLine=~m/$cmd/  ));//
+path( { );//
+output();//print( STDOUT ">>>>>>> NEXTSYMBOL $cmd ...$GlobalNextLine ... \n" );
+path( }else{ );//
+set($rtn = "";);//
+end($rtn; return;);//
+bend( } );//
+path( }else{ );//
+bend( } );//
+bend( } );//
+bend( } );//
+bend( } );//
+bend( } );//
+bend( } );//
+bend( } );//
+bend( } );//
+bend( } );//
+bend( } );//
+set($cmd = "";);//
+lend( } );//
+set();//$N = $N+1;
+set($N++;);//
+lend( } );//
+path(} else { );//
+bend( } );//
+end($rtn; });//
+
+input(sub MatchLine {);//
+set(local ( $line, $comment,  $key , $matchcase ) = @_;);//
+set(local ( $rtn , $keycopy ););//
+set($rtn = "";);//
+set($line =~ s/^ *//;);//
+branch(if ( $line eq "" ));//
+path( { );//
+set($rtn;);//
+end(return;);//
+bend( } );//
+set($keycopy = $key;);//
+set(@dkey = split(/\$\|\$/, $key););//
+set($key = $dkey[0];);//
+output();//print( STDOUT ">>>>>>>>>>>>>>>> $key \n.. " );
+branch(if ( $matchcase =~ m/true/ ));//if ( $case_sensitive eq "case_sensitive" )
+path( { );//
+branch(if ( $line =~ m/$key/  ));//
+path( { );//
+set($rtn = $line;);//
+path( }else{ );//
+bend( } );//
+path(} else { );//
+branch(if ( $line =~ m/$key/i ));//
+path( { );//
+set($rtn = $line;);//
+path( }else{ );//
+bend( } );//
+bend( } );//
+branch(if ( $rtn ));//
+path( { );//
+output();//if($DBSTACK){  print( STDOUT "\n-----------------------------------\nMATCHLINE: $line\nNEXTSYM: $GlobalNextLine\n-----------------------------PATTERN: $key\n" );}
+branch(if ( ProcessKeyCommands( $keycopy ) ));//
+path( { );//
+path( }else{ );//
+output();//print( STDOUT "$keycopy was FALSE  process override ... $line \n" );
+set($rtn = "";);//
+bend( } );//
+bend( } );//
+end($rtn;   });//
+
+input(sub ScanLine {);//
+set(local ( $line , $key ) = @_;);//
+set($flowtype = "generic";);//
+set(  @keys = split(/[\r\n\l]/,$key););//
+set($line =~ tr[\r\n\l]//;);//
+set($line =~ tr/\r//;);//
+set($line =~ tr/\l//;);//
+output();//print( STDOUT "." );
+loop(foreach $keys (@keys ){);//
+branch(if ( $keys =~ m/$types/  ));//
+path( { );//
+set($keys =~ s/\[|\]//g;);//
+set($keys =~ tr/[A-Z]/[a-z]/;);//
+set($flowtype = $keys;);//
+output();//print( "$flowtype\n" );
+path( }else{ );//
+branch(if (  $keys =~ m/^\[/  ));//
+path( { );//
+set($flowtype = $keys;);//
+path( }else{ );//
+bend( } );//
+branch(if ( $flowtype =~ m/$flowtypes/  ));//
+path( { );//
+generic(($param, $comment) = split(/$inline_comment/, $line , 2 ););//get the name/value pair strings
+output();//print( STDOUT "|$param\n" );
+set($case = $param{case_sensitive};);//
+set($GlobalPoppedStack = "";);//SET IN ProcessKeyCommands() buffers any flowtypes that need to be automatically popped into the output ... see command: POPALL
+branch(if ( MatchLine($param , $comment , $keys, $case ) ));//if ( $param =~ m/$keys/i   )
+path( { );//
+branch(if ( $last_type eq "branch"  && $flowtype ne "path" ));//
+path( { );//
+output(print( "path( );\/\/ AUTO\n" ););//MAIN FLOWFILE OUTPUT
+path( }else{ );//
+bend( } );//
+output(print( "$flowtype( $param );\/\/ $comment\n" ););//MAIN FLOWFILE OUTPUT
+output(print( "$GlobalPoppedStack" ););//MAIN FLOWFILE OUTPUT
+set($last_type = $flowtype;);//
+end(return;);//
+path( }else{ );//
+bend( } );//
+path( }else{ );//
+bend( } );//
+bend( } );//
+lend( } );//
+output(print( "generic( $param );\/\/ $comment \n" ););//
+end( } );//
+
+input(sub PrintVFCtokens {);//
+set(  @vfctype = split(/\|/, $flowtypes ););//
+output();//print "<pre>"; 
+output(print( "\ntokens for language $language are: \n" ););//
+loop(foreach $vfctype  (@vfctype  ){);//
+output(print( "\n[$vfctype]\n" ););//
+output(print( "$VFCtoken{$vfctype}\n" ););//
+lend( } );//
+output();//print "\n.....</pre>";
+end( } );//
+
+input(sub LoadFileAsString {);//
+output(local ( $file ) = @_;);//
+output(local ( $keyfile ) ;);//
+set(  open( FILE, $file ););//
+loop(  while(<FILE>) {);//
+set(s/^ *\n//;);//
+set(tr/\t/ /;);//
+set(  $keyfile = "$keyfile$_";);//
+lend(  }   );//# End of SEARCHFILE
+generic(  close (SEARCHFILE);  );//
+end($keyfile; });//
+
+input(sub send_mail1 {);//
+process();//&send_mail(  "/usr/lib/sendmail" , "info\@flowlynx.com" , "DEMO 6 Input- $param{EmailList} - $param{Name}" , "Time:$time_string\n------------------------\n$mail_record"  );
+process( local( $sprg, $addr , $sbj, $msg ) = @_; );//
+process(  open( SMAIL, "| $sprg -t"); );//
+process( print( SMAIL  "To: ", $addr, "\n" , "From: ", $param{Email} , "\n" , "Subject: ", $sbj,"\n\n", $msg ););//
+process( close(SMAIL); );//
+end( } );//
+
+input(sub send_mail { );//
+process( local( $to , $from ,  $sbj, $msg ) = @_;);//
+process(  open( SMAIL, "| /usr/lib/sendmail -t"););//
+process( print( SMAIL  "To: ", $to, "\n" , "From: ", $from ,  "\n" , "Subject: ", $sbj , "\n\n", $msg ););//
+process( close(SMAIL); );//
+end( } );//
+
+input(sub SendCMD {);//
+process( local( $cmd , @output ) = @_;);//
+output();//print "Issuing Command>> $cmd \n";
+process(open( CD ,  "$cmd  |" )  || die ("\n ERROR >>>>>>>>$cmd not executed because not able to open \n "););//open( CD ,  "c:\\jdk1.1\\bin\\java.exe  testDbfFile  |" )  || die ("\n >>>>>>>>not opened\n ");
+set(@capture = <CD> ;);//@capture = 'c:\\jdk1.2.2\\bin\\java.exe  testDbfFile' ;
+output();//print "output from command >> @capture\n";
+end(  });//
+
+input(sub LoadVFCTokens {);//
+set(local ( $tokfile ) = @_;);//
+process($keyfile =  LoadFileAsString( $tokfile  ););//
+output();//print( "[[[$tokfile]]]   " );
+output();//print( "[[[$keyfile]]]   " );
+set(  @keys = split(/[\r\n\l]/,$keyfile ););//
+loop(foreach $keys (@keys ){);//
+branch(if ( $keys =~ m/$types/  ));//
+path( { );//
+set($keys =~ s/\[|\]//g;);//
+set($keys =~ s/\<|\>//g;);//
+set($keys =~ s/[\r\n\l]//g;);//
+set($keys =~ s/\l//g;);//
+set($keys =~ s/\r//g;);//
+set($keys =~ tr/[A-Z]/[a-z]/;);//
+set($flowtype = $keys;);//
+output();//print( "<b>$flowtype  </b>" );
+path( }else{ );//
+branch(if ( $flowtype =~ m/$flowtypes/i  ));//
+path( { );//
+output();//print "<pre>{{$flowtype}}::$key\n</pre> ";
+branch(if ( $keys =~ m/^ *\[/  || $keys =~ m/^ *\</  || $keys eq "" ));//
+path( { );//
+output();//print( " $keys " );
+path( }else{ );//
+set($VFCtoken{$flowtype} = "$VFCtoken{$flowtype}$keys\n";);//
+output();//print( "<pre> VFCtoken{ $flowtype } << $VFCtoken{$flowtype} \n</pre> " );
+bend( } );//
+path( }else{ );//
+bend( } );//
+bend( } );//
+lend( } );//
+end( } );//
+
+input(sub __LoadVFCTokens {);//
+set(local ( $tokfile ) = @_;);//
+process($keyfile =  LoadFileAsString( $tokfile  ););//
+set(  @keys = split(/[\r\n\l]/,$keyfile ););//
+loop(foreach $keys (@keys ){);//
+branch(if ( $keys =~ m/$types/  ));//
+path( { );//
+set($keys =~ s/\[|\]//g;);//
+set($keys =~ s/\<|\>//g;);//
+set($keys =~ tr/[A-Z]/[a-z]/;);//
+set($flowtype = $keys;);//
+output();//print( "$flowtype\n" );
+path( }else{ );//
+branch(if ( $flowtype =~ m/$flowtypes/  ));//
+path( { );//
+output();//print "<pre>{{$flowtype}}::$keys</pre> ";
+branch(if ( $keys =~ m/^ *\[/  || $keys =~ m/^ *\</  || $keys eq "" ));//
+path( { );//
+path( }else{ );//
+set($VFCtoken{$flowtype} = "$VFCtoken{$flowtype}$keys\n";);//
+output();//print( " $keys " );
+bend( } );//
+path( }else{ );//
+bend( } );//
+bend( } );//
+lend( } );//
+end( } );//
+
+input(sub GetMultiPartForm {);// 
+set();//local (*in) = @_ if @_;
+generic(local( $I, $key, $val , $F ););//
+generic();//$| = 1;
+generic($param{ User_Number } = "11231 21321 31231" ;);// 
+branch(if ($ENV{'REQUEST_METHOD'} eq 'POST'));// 
+path({);// auto path 
+output( );//print "<pre>"; 
+generic(read(STDIN, $in, $ENV{'CONTENT_LENGTH'}););// How many bytes are we supposed to receive? 
+generic(@lines = split(/[\r\n\l]/, $in););//// make a list of keyword/value pairs////
+set($end_of_record = $lines[0];);//
+set($F = 0;);//
+output();//print( " $end_of_record <hr> " );
+loop(foreach $lines (@lines)  {);//
+branch(if ( $lines =~ s/Content-Disposition: form-data;// ));//
+path( { );//
+branch(if ( $lines =~ s/name=\"// ));//
+path( { );//
+set($lines =~ s/\"//;);//
+set($lines =~ s/ //g;);//
+set($key = $lines;);//
+branch(if ( $key =~ m/filename/ ));//
+path( {);//multi line
+generic(@filekey = split(/;/, $key););// make a list of keyword/value pairs
+set();//$lines =~ s/Content-Type: application\/octet-stream//;
+set($I = 0; );//
+loop(foreach $filekey (@filekey){);//
+set($I = $I+1;  );//
+set($fkey[$I] = $filekey;);//
+lend( } );//
+set($key = $fkey[1];);//
+output();//print ">> $fkey[1]\n";
+output();//print ">> $fkey[2]\n";
+generic(( $value , $filename{ $fkey[1] }  ) = split(/=/, $fkey[2] ););//get the name/value pair strings 
+set($filenames[$F] = $fkey[1];);//
+set($F= $F+1;);//
+output();//print "\nfilename( $fkey[1] ) = $filename{ $fkey[1] }<hr>";
+path( }else{);//single line
+bend( } );//
+path( }else{ );//
+bend( } );//
+path( }else{ );//
+branch(if( $key eq "" || $lines eq "" ));//skip blank lines and onew without keys
+path({);//
+path(} else { );//
+set($key =~ s/ //g;);//
+set($key =~ s/\r//g;);//
+set($key =~ s/\l//g;);//
+set($key =~ s/[\r\n\l]//g;);//
+set($key =~ s/\t//g;);//
+branch(if ( $lines =~ m/$end_of_record/ ));//look for end of records
+path( { );//
+output();//print "<pre>{$key}$param{$key}</pre><hr>" ;
+set($key = "";);//
+path( }else{ );//
+set($param{$key} = "$param{$key}$lines\n";);//
+output();//print( "..... $lines\n" );
+bend( } );//
+bend(} );//
+bend( } );//
+lend( } );//
+loop(foreach $filenames (@filenames){);//
+output(# print get the name/value pair strings);//print( "<h3>filename{ $filenames } name is : $filename{ $filenames } </h3>"  );
+lend( } );//
+process();//SaveFile( "sourcefile.txt" , $in );
+output( );//print "</pre>"; 
+bend(});// 
+end(} );// 
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 0 13158600 0 0 13158600 6579300 255 16777215 0 0 0 0 16777215
+;    Lib1.0.pl   #   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 4294967291 334 880 356 425 134   456   4294954909    perl.key  0

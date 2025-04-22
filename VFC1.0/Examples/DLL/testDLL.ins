@@ -1,0 +1,25 @@
+;-Run
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : testDLL.ins
+;  File Date : 11:37:49 AM - 24:Oct:1997
+
+
+input(MAIN );//
+process();//DLL hWnd MyDLL Find_Dlg( "test" )
+process(DLL hWnd MyDLL GetFileName( name , "*" , "Select a File" ););//
+process();//DLL MyDLL Function
+event(MSGBOX name);//
+end( END );// 
+
+
+define(lib MyDLL);
+define(char name[256]="testDLL.ins");
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 8388608
+;    testDLL   //   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 12 3 483 300 6 99   244   49    insecta.key  0

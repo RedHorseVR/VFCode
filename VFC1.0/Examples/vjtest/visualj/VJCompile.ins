@@ -1,0 +1,37 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : VJCompile.ins
+;  File Date : 10:17:04 PM - 10:Aug:1997
+
+
+input(REM   Batch file process to set up and run java compiler on %1 in its own environment);//
+   process(ECHO OFF );//
+   generic(SET INCLUDE=);//
+   generic(SET LIB=);//
+   generic(SET HOMEDRIVE=);//
+   generic(SET HOMEPATH=);//
+   generic(SET JAVA_HOME=);//
+   process(set PATH=);//
+   process(set TMPDIR=);//
+   process(set DJGPP=);//
+   process(set ADA_INCLUDE_PATH=);//
+   process(set ADA_OBJECTS_PATH=);//
+   process(set GW-GNAT=);//
+   process(prompt %1:);//
+   process(ECHO Compiling ******** ______________________________________);//
+   process(ECHO ON );//
+   process(set  CLASSPATH = C:\WINDOWS\java\classes;C:\WINDOWS\java\trustlib;C:\WINDOWS\java\packages;C:\Program Files\DevStudio\SharedIDE\bin;C:\JDK1.1\LIB;C:\BDK\BEANBOX\classes;C:\liquid_real\lib\;C:\Program );//set  CLASSPATH
+   process(ECHO OFF );//
+   generic("C:\Program Files\DevStudio\SharedIDE\bin\JVC.EXE"  %1);//
+   process(ECHO Finished %1 ______________________________________);//
+end();//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    VJCompile.BAT   REM   
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 731 625 740 527 17 100   364   4294967144    dos.key  0

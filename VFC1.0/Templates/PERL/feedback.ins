@@ -1,0 +1,247 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : feedback.ins
+;  File Date : 10:21:57 AM - 16:May:2000
+
+
+input(#!/usr/bin/perl --);//
+
+input(# variable definitions);//
+process(sub send_mail; );//
+set(sub GetParams;);//
+set(sub gets ;);//
+set(sub search ;);//
+set(sub add ;);//
+process(sub validate;);//
+end();//
+
+input(sub send_mail { );//
+process( local( $sprg, $addr , $sbj, $msg ) = @_; );//
+process(  open( SMAIL, "| $sprg -t"); );//
+process( print( SMAIL  "To: ", $addr, "\n" , "From: ", $param{Email} , "\n" , "Subject: ", $sbj,"\n\n", $msg ););//
+process( close(SMAIL); );//
+end( } );//
+
+input(sub ThemeOpen {);//
+generic(print"<html><head><title>CGI Output</title></head>";);//
+generic(print"<body background=\"back2.gif\" bgcolor=\"#FFFFFF\" >";);//
+output(print "<center>";);//
+generic(print "<img src=\"logo1.gif\" alt=\"logo1.gif (4050 bytes)\" > ";);//
+output(print "</center>";);//
+output(print "<h3>";);//
+end(} );//
+
+input(sub ThemeClose {);//
+output(print "</h3>";);//
+generic(print "</body></html> ";);//
+end( } );//
+
+input(# main);//
+set({);//
+generic(print "Content-type: text/html\n\n";);//
+process(ThemeOpen(););//
+generic();//$param{ Category } = "web" ;
+generic();//$param{ Name } = "Joe" ;
+generic();//$param{ Telephone } = "555-1212" ;
+generic();//$param{ Email } = "No Email entered" ;
+set();//req'ed fields above
+generic($param{ Title} = "No Title entered" ;);//
+generic($param{ Company } = "NoCompany" ;);//
+generic($param{ Address } = "No Address entered" ;);//
+generic($param{ FAX } = "No FAX entered" ;);//
+generic($param{ EmailList } = "No" ;);//$param{ GotoFTP } = "NoFTP" ;
+generic($param{ GotoFTP } = "No FTP" ;);//$param{ GotoFTP } = "NoFTP" ;
+process(GetParams;);//
+process(validate;);// checks for required fields
+process(ThemeClose(););//
+branch(if ( $param{Company} ));//
+path( { );//
+set($lead_name = "$param{Company}.$param{Name}.$time_string.$param{Need}.html";);//
+path( }else{ );//
+set($lead_name = "$param{Name}.$time_string.$param{Need}.html";);//
+bend( } );//
+generic($lead_name =~ tr/+/ /;);// translate "+" to a space
+generic($lead_name =~ tr/:/ /;);// translate "+" to a space
+generic($lead_name =~ tr/ /_/;);// translate "+" to a space
+branch(open( LFP ,  ">>leads/$lead_name" ););//
+path(select( LFP ););//
+process(ThemeOpen(););//
+output(print( "$lead_sheet" ););//
+process(ThemeClose(););//
+bend(close(LFP););//
+end(} );//
+
+input(sub validate{);//
+branch(if ( $param{Category} ));//
+path( { );//
+branch(if (  $param{Name}  ));//
+path( { );//
+branch(if (  $param{Phone}  ));//
+path( { );//
+branch(if (  $param{Email}  ));//
+path( { );//
+output(print( "<center><hr><h1> Thankyou  $param{ Name } !</h1><hr></center>" ););//
+process(add;);// adds form data to database.dat and prints verification
+path(} else { );//
+output(print( "<hr><H1>4: Not all required fields have been filled in. Please press Back and enter all the required fields. </H1><hr>" ););//
+bend( } );//
+path(} else { );//
+output(print( "<hr><H1>2: Not all required fields have been filled in. Please press Back and enter all the required fields. </H1><hr>" ););//
+bend( } );//
+path(} else { );//
+output(print( "<hr><H1>1:  Not all required fields have been filled in. Please press Back and enter all the required fields. </H1><hr>" ););//
+bend( } );//
+path(} else { );//
+output(print( "<hr><H1>0: Not all required fields have been filled in. Please press Back and enter all the required fields. </H1><hr>" ););//
+bend( } );//
+end( } );//
+
+input(sub add {);//
+set($time_string = scalar localtime; );//
+set($time_stats = "$time_string\t$ENV{REMOTE_HOST}\t$ENV{HTTP_USER_AGENT}\t$ENV{SERVER_NAME}";);//
+branch($qualify_record =);//
+path("$param{Benefit}\t$param{HasUsed}\t$param{Uses}\t$param{Considering}\t$param{Need}\t");//
+set(."$param{FutureNeed}\t$param{Months}\t$param{ProjectBudget}\t$param{Budget}\t$param{ProjectAuthority}\t$param{Authority}");//
+bend(;);//
+branch($contact_record =);//
+path("$param{Name}\t$param{Title}\t$param{Company}\t$param{Address}\t$param{Phone}\t$param{FAX}\t$param{Email}");//
+bend(;);//
+branch($other_record =);//
+path("$param{Category}\t$param{Comments}");//
+bend(;);//
+branch(open( FP ,  ">>inforeq.tsv " )  or die "database not opened\n ";);//
+path(select( FP ););//
+process(flock( FP ,  8 );  # locks FP exclusive );//
+output( print( "$qualify_record\t$contact_record\t$other_record\t$time_stats\n" ););//
+process(flock( FP ,  3 );  #unlocks FP );//
+bend( close( FP ); );//
+branch(open( FP ,  ">>inforeq_email_list.tsv " )  or die "database not opened\n ";);//
+path(select( FP ););//
+process(flock( FP ,  8 );  # locks FP exclusive );//
+output( print( "$param{Email}\n" ););//
+process(flock( FP ,  3 );  #unlocks FP );//
+bend( close( FP ); );//
+set($mail_record = "Catagory:\t$param{Category}\nName:\t$param{Name}\nTitle:\t$param{Title}\nCompany:\t$param{Company}\nAddress:\t$param{Address}\n");//
+set(."Phone:\t$param{Telephone}\nFAX:\t$param{FAX}\nEmail:\t$param{Email}\nNeed?:\t$param{Need}\nComments:\t$param{Comments}\n");//
+set(."Budget:\t$param{Budget}\nProject Authority:\t$param{ProjectAuthority}\n$ Authority:\t$param{Authority}\nImmediate\?:\t$param{Need}\nCan Benefit\?\t$param{Benefit}\n" ;);//
+process(&send_mail(  "/usr/sbin/sendmail" , "info\@flowlynx.com" , "INFO REQ - $param{Need} - $param{Name}" , "Time:$time_string\n------------------------\n$mail_record"  ););//
+end( } );//
+
+input(sub search {);//
+process(open( FP ,  "database.tsv" )  or die "database.tsv not opened\n ";);//
+set($count = 0;);//
+loop(while( length( $param{fname} ) > 0) {);//
+process(gets(););//
+generic($temp1 = $param{fname} ;);//
+generic();//$temp1 =~ tr/A-Z/a-z/;
+generic($temp2 = $data ;);//
+generic();//$temp2 =~ tr/A-Z/a-z/;
+branch(if ( index(  $temp2 ,  $temp1  ) != -1  ));//
+path( { );//
+set($count++;);//
+process(print "$data\n";);//
+path(} else { );//
+process(print ">>> $data\n";);//
+bend( } );//
+branch(if ( eof(FP) ));//
+path( { );//
+process(print "<hr><h2><i>$count matches found for [$param{fname}]</t></h2> ";);//
+end(return; );//
+bend( } );//
+lend(} );//
+process(print "<h2><i>$param{name} ... Null  length search string ... no files matched.</t></h2> ";);//
+end( } );//
+
+input(sub gets  {);//
+set($data = "";);//
+loop(while( $char = getc( FP ) ) {);//
+branch(if (  $char eq "\n"  ));//
+path( { );//
+end(return;);//
+path(} else { );//
+process($data = join("",$data,$char););//
+bend( } );//
+lend(} );//
+end( } );//
+
+input(sub GetParams{);//
+generic();// flush stdout buffer
+generic($| = 1;);//
+generic();// Print this MIME data no matter what
+generic();// check for the POST method
+branch(if ($ENV{'REQUEST_METHOD'} eq 'POST'));//
+path({);// auto path
+output(print "<h3>FORM DATA ENTERED IS:</h3><p>\n";);//
+set($time_string = scalar localtime; );//
+output($lead_sheet =  "<h3>DATE AND TIME FORM SUBMITTED: $time_string</h3><p>\n";);//
+generic(read(STDIN, $buffer, $ENV{'CONTENT_LENGTH'}););// How many bytes are we supposed to receive?
+generic(@pairs = split(/&/, $buffer););// make a list of keyword/value pairs
+generic();// cycle through each pair and decipher the values
+output(print "\n<center><table border=1 width=\"80%%\">\n" ;);//
+output($lead_sheet = join("",$lead_sheet, "\n<center><table border=1 width=\"80%%\">\n") ;);//
+loop(foreach $pair (@pairs){);//
+generic(($name, $value) = split(/=/, $pair););//get the name/value pair strings
+generic($value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;);// decipher ASCI hexidecimal escaped characters, if any
+generic($count = $value =~ tr/+/ /;);// translate "+" to a space
+generic($count = $value =~ tr/\n/ /;);// translate "\n" to a space
+generic($count = $value =~ tr/\r/ /;);// translate "\n" to a space
+generic($count = $value =~ tr/|/ /;);// translate "\n" to a space
+generic($param{$name} = $value;);//// add the pair to a list keyed on the name of the variable////
+output($lead_sheet = join("",$lead_sheet, "\t<tr>") ;);//
+branch(print "\t<tr>" ;);//
+path(printf "\t<td width=\"50%%\">";);//
+set(print "<b>$name</b>" ;);//
+output($lead_sheet = join("", $lead_sheet , "\t<td width=\"50%%\"><b>$name</b>") ;);//
+path(printf "\t<td width=\"50%%\">" ;);//
+set(print "<b>$param{$name}</b>";);//
+output($lead_sheet = join("", $lead_sheet , "\t<td width=\"50%%\"><b>$param{$name}</b>" ) ;);//
+bend(print "</tr>\n";);//
+output($lead_sheet = join("" , "$lead_sheet</tr>" ) ;);//
+process();//print "$name = \t$param{ $name }\n" ;
+process();//print " \n" ;
+lend(});//
+output(print "</table></center>\n" ;);//
+output($lead_sheet = join( "", $lead_sheet, "</table></center><p>\n") ;);//
+output(print "<p>";);//
+process(print( "<h4>" ););//
+output( print( "<i><pre>Please verify that the information you entered is correct.\nYou may hit Back to make corrections.\n</I>" ););//
+process(print( "</h4>" ););//
+path(} else { );//
+output(print "No params passed\n";);//
+bend(});//
+end(} );//
+
+input(sub _GetParams {);//
+generic();// flush stdout buffer
+generic($| = 1;);//
+generic();// Print this MIME data no matter what
+generic(print "Content-type: text/html\n\n";);//
+generic();// check for the POST method
+branch(if ($ENV{'REQUEST_METHOD'} eq 'POST'));//
+path({);// auto path
+generic(read(STDIN, $buffer, $ENV{'CONTENT_LENGTH'}););// How many bytes are we supposed to receive?
+generic(@pairs = split(/&/, $buffer););// make a list of keyword/value pairs
+generic();// cycle through each pair and decipher the values
+loop(foreach $pair (@pairs){);//
+generic(($name, $value) = split(/=/, $pair););//get the name/value pair strings
+generic($value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;);// decipher ASCI hexidecimal escaped characters, if any
+generic(# $count = $value =~ tr/+/ /;);// translate "+" to a space
+generic($param{$name} = $value;);//// add the pair to a list keyed on the name of the variable////
+branch(if ( $value eq "0" ));//
+path( { );//
+generic($param{$name} = "-";);//replace zeros
+bend( } );//
+process();////print "---> $name = $param{ $name }  " ;////
+lend(});//
+bend(});//
+end(} );//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 0 13158600 0 0 13158600 65280 16777215 0 0 0 65535 65280 4194432
+;    feedback.pl   #   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 91 74 946 1074 46 109   539   4294965790    perl.key  0

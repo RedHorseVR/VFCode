@@ -1,0 +1,5 @@
+C:\perl5\docs
+Chapter 1 - Perl
+Chapter 2 - PerlIS
+Chapter 3 - PerlScript
+Chapter 4 - Perl-Win32

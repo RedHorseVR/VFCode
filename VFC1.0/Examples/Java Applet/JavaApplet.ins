@@ -1,0 +1,107 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : JavaApplet.ins
+;  File Date : 05:11:43 PM - 12:Aug:1997
+
+
+input(/** recipe log **/);//<--- part of framework
+   process(/** <TIME_STAMP>  inserted an image img1.gif  using segment: 'Animate images.sg'  **/);//
+   process(/**<TIME_STAMP> added Cross Hairs segments using: 'CrossHair.sg'  **/);//
+   process(/** <TIME_STAMP> LANGUAGE: Java ;   started Applet / Application  JavaApplet.class   using frame: 'Basic Applet.fm'   **/);//
+end();//
+
+input(/** Imports **/);//<--- part of framework
+   generic(import java.awt.*;);//  
+   generic(import java.applet.*;);//  
+   generic(import java.net.*;);//  
+   set();//import Resource;
+end(/*------------*/);//
+
+input(public class JavaApplet  extends Applet {);//  <----- start of class definition  has drawing vars for lines
+
+input(/** class data **/);//<--- used in framework
+   generic(URL CodeBase;);//
+   set();//Resource Res;
+   generic(int CrossSize =  200; );//
+   generic(int CrossXPos = 10; );//
+   generic(int CrossYPos = 10; );//
+   set( Image im;);//
+   set( Image im2;);//
+   set(int ImageXPos = 10;);//
+   set(  int ImageYPos = 10;);//
+   set(  int Image = 0;);//
+end(/** end variables **/ );//
+
+input(/** methods **/);//<--- used in framework
+   event(void drawCrossHair( Graphics g, int x, int y, int size ){);//
+   generic(g.drawLine( x - size, y, x +size, y););//  
+   generic(g.drawLine( x, y - size , x, y + size ););//  
+   end(} );//  
+   event(boolean processCrossHairPosition( Event e ){);//
+   branch(switch (e.id){);//  
+      path(case Event.MOUSE_DOWN:);//  
+      path(case Event.MOUSE_DRAG:);//
+         generic(CrossXPos = e.x;);//  
+         generic(CrossYPos = e.y;);//  
+         generic(repaint(););//  
+         end(return true;);//  
+         set();//
+   bend(} );//  
+end(return false;} );//
+end();//
+
+input(public void init(){);//  
+   generic(im = getImage(getCodeBase(),"img1.gif "););//  
+   generic(im2 = getImage(getCodeBase(),"img2.gif "););//  
+   set(CodeBase = getCodeBase(););//
+   set();//Res  = new Resource( this , CodeBase );
+end(} );//  
+
+input(public static void main(String args[]){);//  
+   generic(JavaApplet  Obj = new JavaApplet(););//  create the object application 
+   process(//setup frame using MAIN controls);//Obj.Res.initMAINframe( Obj , "Main Window" ) ;
+end(} );//  
+
+input(public void paint(Graphics g){);//  
+   branch(if( Image==1));//
+      path({);//
+         set(Image=0;);//
+         generic(g.drawImage(im, ImageXPos, ImageYPos+50, this ););//
+      path(}else{);//
+         set(Image=1;);//
+         generic(g.drawImage(im2, ImageXPos, ImageYPos+50, this ););//
+   bend(});//
+   process(drawCrossHair( g, CrossXPos, CrossYPos, CrossSize ););//
+end(} );//  
+
+input(public boolean handleEvent(Event e){);//  
+   branch(if( processCrossHairPosition( e ) ));//
+      path({);//
+         end(return true;);//
+   bend(});//
+   branch(switch (e.id){);//  
+      path(case Event.ACTION_EVENT:);//
+         branch(if( "OK".equals(e.arg) || "CLOSE".equals(e.arg)  ));//
+            path({ );// 
+               process(System.exit(0););// THIS LOGIC CALL CAUSES A SECURITY EXCEPTION WHEN USED IN APPLET MODE
+               end(return true; );//
+         bend(} );// 
+         end(break; );//
+      path(case Event.WINDOW_DESTROY:);//
+         generic(System.exit(0););//  THIS FAILS TO FIRE IN APPLICATION MODE
+         end(return true;);//
+         set();//
+   bend(} );//  
+end(return false; });//
+
+input(}       /** end of class definition **/);// <------------ end of class definition
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    JavaApplet.java   //   ...
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 83 131 499 212 52 80   194   4294965800    jdk11.key  0

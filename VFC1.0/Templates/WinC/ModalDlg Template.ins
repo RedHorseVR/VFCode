@@ -1,0 +1,57 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : ModalDlg Template.ins
+;  File Date : 02:54:57 AM - 18:Jan:1999
+
+
+input(//BEGIN_INSECTA_TEMPLATE);//NOTE:  ALL MAP_VARIABLES MUST START WITH A '$'
+event(//MAP_VARIABLE $appname=ModalDlgENTER: Enter the resource name for dialog (This must match the name in your resource editor.));//
+set(//SET_INSECTA_FILENAME    $appname.ins);//
+set(//SET_EXPORT_FILENAME    $appname.cpp);//
+set(//SET_LANGUAGE_KEY    cpp.key);//
+end(//END_INSECTA_TEMPLATE );//
+
+input(/* includes */);//FILE:resource.h
+generic(#include <windows.h>);//  
+generic(#include "resource.h");//FILE:  "resource.h"
+end(/*------------*/);// 
+
+input(/* $appname Modal Dialog  */);//
+set(#define START_MODAL_$appname_DlgProc(hWnd)   DialogBox( hInst  , "$ModalDlg" , hWnd , (DLGPROC) $_DlgProc ););//
+set(LRESULT CALLBACK $appname_DlgProc(HWND hDlg,UINT uMessage,WPARAM wParam,LPARAM lParam););//
+
+input(        LRESULT CALLBACK $appname_DlgProc(HWND hDlg,UINT uMessage,WPARAM wParam,LPARAM lParam){);//  
+branch(switch (uMessage){);//  
+path(case WM_INITDIALOG:);//
+set({ );//
+end(return TRUE;);//
+set(});//
+path(case WM_COMMAND:);//  
+branch(switch(wParam ){);//
+path(case IDCANCEL:);//  
+set({ );//
+generic(EndDialog( hDlg , FALSE ););//  
+end(break; );//
+set(});//
+path(case IDOK:);//  
+set({ );//
+generic(EndDialog( hDlg , TRUE ););//  
+end(return TRUE;);//  
+set(});//
+path(default:);//
+end(break; );//
+set();//
+bend(} );//  
+bend(} );//  
+end(return FALSE;);//  
+end(} );//  
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    project.cpp   //   //
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 257 92 759 649 4 107   405   4294967011    template.key  0

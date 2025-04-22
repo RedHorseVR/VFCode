@@ -1,0 +1,33 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : PAS.ins
+;  File Date : 12:58:37 PM - 31:Oct:1996
+
+
+input(program calc;);//
+	output( #include "external test array");//this is statement may not work on all compilers
+
+input(procedure makeUpper( variable : integer ;  var fileID: integer ) : integer;);//
+	generic(var i : integer;);//
+	set(i := 0);//
+	output(begin);//
+	loop(repeat);//
+		set(i := i+1);//
+		branch(if ( variable = test(i)  ));//
+			path(then);//
+				generic(fIleID := TestFileID(i));//
+			path(else begin);//
+				generic(fIleID := 0);//
+		bend(end;);//
+	lend(until ( i = MAX ););//
+end(end.);//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 4194432
+;    pas.pas   (*   *)
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 570 334 455 437 20 79   207   43    pascal.key  0

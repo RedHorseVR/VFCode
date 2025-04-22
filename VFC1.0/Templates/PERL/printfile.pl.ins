@@ -1,0 +1,32 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : printfile.pl.ins
+;  File Date : 05:15:15 PM - 13:Jul:2009
+
+
+input(#!/usr/bin/perl --);// 
+end();// 
+
+input(# main);// 
+set({);// 
+process($cmd_line = $ENV{'QUERY_STRING'} ;);//GetParams();
+process(  ($cmd_line) = @ARGV;);//$cmd_line = $ENV{'QUERY_STRING'} ;
+output(print( STDOUT  " $cmd_line  \n" ););//
+generic(open (MYFILE, $cmd_line  ););//
+loop(while (<MYFILE>) { );//
+generic(chomp; );//
+generic(print "$_\n"; );//
+lend(} );//
+generic(close (MYFILE); );//
+output();//SendCMD( "dir"  ) ;
+end(} # end);// 
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 255 0 255 255 65535 65280 3289700
+;       //   ...
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 132 132 640 355 1 100   100   50    default.key  0

@@ -1,0 +1,47 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : resource.ins
+;  File Date : 11:56:46 AM - 17:Jan:1997
+
+set(#define APSTUDIO_READONLY_SYMBOLS);//
+generic(#include "C:\MSDEV\INCLUDE\WINRES.h");//
+generic(#undef APSTUDIO_READONLY_SYMBOLS);//
+generic();//
+
+input(MENU    MENU DISCARDABLE);//
+   branch(BEGIN);//
+      path(MENUITEM "&About",                      1000);//
+   bend(END);//
+end();//
+
+input(ABOUTBOX DIALOG  DISCARDABLE  0, 0, 114, 64);//
+   set(STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU);//
+   generic(CAPTION "About Box");//CAPTION "About B"
+   generic(FONT 8, "MS Sans Serif");//
+   branch(BEGIN);//
+      path();// auto path
+         generic(DEFPUSHBUTTON   "OK",IDOK,5,5,50,14);//
+         generic(PUSHBUTTON      "Cancel",IDCANCEL,60,5,50,14);//
+   bend(END);//
+end();//
+
+input(MAIN DIALOG DISCARDABLE  0, 0, 187, 98);//
+   set(STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU);//
+   generic(CAPTION "Main Applet Window");//
+   generic(FONT 8, "MS Sans Serif");//
+   branch(BEGIN);//
+      path();// auto path
+         generic(DEFPUSHBUTTON   "OK",IDOK,131,6,50,14);//
+         generic(PUSHBUTTON      "Cancel",IDCANCEL,131,23,50,14);//
+   bend(END);//
+end();//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    resource.rc   //   //
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 17 17 492 355 0 100   259   22    resource.key  0

@@ -1,0 +1,99 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : LinkRequest.ins
+;  File Date : 01:07:22 PM - 02:May:2000
+
+
+input(#!/usr/bin/perl --);// 
+
+input(# forward declairations );//
+process(sub send_mail; );//
+set(sub GetUserRecord;);//
+set(sub Get_Rec;);//
+set(sub VerifyUserNumber;);//
+set(sub GetParams;);//
+set(sub gets ;);//
+set(sub search ;);//
+set(sub add ;);//
+process(sub validate;);//
+end();//
+
+input(sub send_mail { );//
+process( local( $sprg, $addr , $sbj, $msg ) = @_; );//
+process(  open( SMAIL, "| $sprg -t"); );//
+process( print( SMAIL  "To: ", $addr, "\n" , "Subject: ", $sbj,"\n\n", $msg ););//
+process( close(SMAIL); );//
+end( } );//
+
+input(sub ThemeOpen {);//
+generic(print"<html><head><title>CGI Output</title></head>";);//
+generic(print"<body background=\"_themes/flowlynx/background2.gif\" bgcolor=\"#FFFFFF\" >";);//
+output(print "<center>";);//
+generic(print "<img src=\"images/logo1.gif\" alt=\"logo1.gif (4050 bytes)\" > ";);//
+output();//print "</center>";
+output(print "<h3>";);//
+end(} );//
+
+input(sub ThemeClose {);//
+output(print "</h3>";);//
+generic(print "</body></html> ";);//
+end( } );//
+
+input(# main);//
+set({);//
+output(print "Content-type: text/html\n\n"; );//
+process(ThemeOpen(););//
+output(print( "Thank You  !  " ););//
+process(GetParams;);//
+process(&send_mail(  "/usr/sbin/sendmail" , "web\@flowlynx.com" , "NEW LINK FROM: $param{name}" , "$param{name}\n$param{email}\n$param{URL}"  ););//
+branch(open( FP ,  ">>linklist.tsv " )  or die "database not opened\n ";);//
+path(select( FP ););//
+process(flock( FP ,  8 );  # locks FP exclusive );//
+output( print( "$param{URL}    \t$param{name}   \t$param{email} \n" ););//
+process(flock( FP ,  3 );  #unlocks FP );//
+bend( close( FP ); );//
+process(ThemeClose(););//
+end(} );//
+
+input(sub GetParams{);//
+generic();// flush stdout buffer
+generic($| = 1;);//
+generic();// Print this MIME data no matter what
+generic();// check for the POST method
+branch(if ($ENV{'REQUEST_METHOD'} eq 'POST'));//
+path({);// auto path
+output();//print "<h3>FORM DATA IS:</h3><pre>\n";
+generic(read(STDIN, $buffer, $ENV{'CONTENT_LENGTH'}););// How many bytes are we supposed to receive?
+generic(@pairs = split(/&/, $buffer););// make a list of keyword/value pairs
+generic();// cycle through each pair and decipher the values
+loop(foreach $pair (@pairs){);//
+generic(($name, $value) = split(/=/, $pair););//get the name/value pair strings
+generic($value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;);// decipher ASCI hexidecimal escaped characters, if any
+generic($count = $value =~ tr/+/ /;);// translate "+" to a space
+generic($count = $value =~ tr/\n/ /;);// translate "\n" to a space
+generic($count = $value =~ tr/\r/ /;);// translate "\n" to a space
+generic($count = $value =~ s/\t/ /g;);// translate "\n" to a space
+generic($count = $value =~ tr/|/ /;);// translate "\n" to a space
+generic($param{$name} = $value;);//// add the pair to a list keyed on the name of the variable////
+process();//print "$name = \t$param{ $name }\n" ;
+process();//print " \n" ;
+lend(});//
+output(print "</pre>"; );//
+path(} else { );//
+output(print "No params passed\n";);//
+generic($param{ User_Number } = "11231 21321 31231" ;);//$param{ User_Number } = "11231 213321 31231" ;
+generic($param{ First_Name } = "Joe" ;);//
+generic($param{ Email } = "joe\@blow.com" ;);//$param{ Phone } = "555-1212" ;
+generic($param{ Last_Name } = "Blow" ;);//
+bend(});//
+end(} );//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 255 0 255 255 65535 65280 16512
+;    LinkRequest.pl   #   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 94 101 793 714 24 100   456   4294966808    perl.key  0

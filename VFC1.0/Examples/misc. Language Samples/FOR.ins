@@ -1,0 +1,26 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : FOR.ins
+;  File Date : 10:55:14 AM - 24:Oct:1997
+
+
+input(SUBROUTINE  TEST(  VAR, FILE  ));//
+loop(DO I=1,MAX);//
+branch(IF(VAR.EQ.TESTMATRIX(I)));//
+path(THEN);// auto path
+generic(FILEID=TESTFILEID(I));//
+path(ELSE);//
+set(FILEID = 0);//
+bend(ENDIF);//
+lend(ENDDO);//
+end(END);//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 6558740
+;    for.for   !   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 122 238 521 330 1 90   278   60    fortran.key  0

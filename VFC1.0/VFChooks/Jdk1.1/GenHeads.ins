@@ -1,0 +1,34 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : GenHeads.ins
+;  File Date : 11:24:08 PM - 16:Jan:1999
+
+
+input(REM  );//
+generic(SET INCLUDE=);//
+generic(SET LIB=);//
+generic(SET HOMEDRIVE=);//
+generic(SET HOMEPATH=);//
+generic(SET JAVA_HOME=);//
+process(set PATH=);//
+process(set TMPDIR=);//
+process(set DJGPP=);//
+process(set ADA_INCLUDE_PATH=);//
+process(set ADA_OBJECTS_PATH=);//
+process(set GW-GNAT=);//
+end();//
+process(ECHO on);//
+generic(SET CLASSPATH=.;C:\Jdk1.1\LIB;C:\bdk\beanbox\classes\sun\beanbox);//SET CLASSPATH=.;C:\JAVA1.1\LIB;C:\BDK\BEANBOX\classes
+process(C:\Jdk1.1\bin\javah.exe %1);//
+process(C:\Jdk1.1\bin\javah.exe -stubs %1);//
+end();//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    GenHeads.BAT   REM   
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 178 374 572 277 16 100   292   4294966969    dos.key  0

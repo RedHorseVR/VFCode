@@ -1,0 +1,22 @@
+BOUNDING COMPLEXITY REPORT FOR FILE: untitled.vfc
+
+FILE COMPLEXITY: 1 
+# OBJECTS IN FILE: 0 
+# FUNCTIONS IN FILE: 0 
+# LOGICAL PATHS: 0 
+
+# LOOPING PATHS: 0 
+
+  ~ File Object Statistics ~
+# Input(): 0
+# event() ~ function: 0 
+# event ~ synchronous: 0 
+# process: 0 
+# set: 0 
+# output: 0 
+# loop: 0 
+# lend: 0 
+# branch: 0 
+# path: 0 
+# bend: 0 
+# end: 0 

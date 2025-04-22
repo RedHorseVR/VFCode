@@ -1,0 +1,133 @@
+;  Insecta Robotica Language Version 2.0 - April 1996 Beta 
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : delphi.ins
+;  File Date : 02:22:47 PM - 21:Apr:2002
+
+generic();//**************************************************************)
+generic();//       TITLE: LOCATE.PAS Copyright (c) 1995 Datacraft, Inc.  *)
+generic();// DESCRIPTION: Primary component unit for dbLocate. Makes     *)
+generic();//              calls to ABOUT.DCU and FINDER.DCU and requires *)
+generic();//              the corresponding *.dfm files for compilation. *)
+generic();//                                                             *)
+generic();//              The Search Engine Source is available. See     *)
+generic();//              DBLOCATE.WRI                                   *)
+generic();//                                                             *)
+generic();//**************************************************************)
+generic(unit Locate;);//
+generic(interface);//
+generic(uses);//
+generic(SysUtils, WinTypes, WinProcs,Classes,Forms, Dialogs,DBTAbles,Dsgnintf;);//
+generic(type);//
+generic(ETDBLocateError = class(Exception););//
+generic(TLocateEvent = procedure (Sender : TObject) of object;);//
+generic(TDBLocate = class(TComponent));//
+generic(private);//
+generic({ Private declarations });//
+generic(pAbout    : string;);//
+generic(protected);//
+generic({ Protected declarations });//
+generic(public);//
+generic({ Public declarations });//
+generic(pUseDisplayLabels : boolean;);//
+generic(pShowHints : Boolean;);//
+generic(pSearchTable : TTable;);//
+generic(procedure execute;);//
+generic(procedure close;);//
+generic(published);//
+generic({ Published declarations });//
+generic(property SearchTable : TTable     {Table to be searched});//
+generic(read pSearchTable);//
+generic(write pSearchTable;);//
+generic(property About : string           {Design time about box});//
+generic(read pAbout);//
+generic(write pAbout;);//
+generic(property UseDisplayLabels : boolean   {Use display labels or natural field names});//
+generic(read pUseDisplayLabels);//
+generic(write pUseDisplayLabels);//
+generic(default false;);//
+generic(property ShowHints : boolean     {Show hints on search form});//
+generic(read pShowHints);//
+generic(write pShowHints);//
+generic(default false;);//
+end(end;);//
+generic(TAboutShow = class(TPropertyEditor));//
+output(public);//
+end();//
+
+input(function GetAttributes: TPropertyAttributes; override;);//
+	generic(procedure Edit; override;);//
+end(end;);//
+output(TSearchTable = class(TComponentProperty););//
+generic(procedure Register;);//
+generic(implementation);//
+generic(uses finder,about;);//
+end();//
+
+input(function TAboutShow.GetAttributes: TPropertyAttributes;);//
+	output(begin);//
+	generic(Result := [paDialog];);//
+end(end;);//
+
+input(procedure TAboutShow.edit;);//
+	output(begin);//
+	generic(try);//
+	generic(Application.CreateForm(TAboutBox, AboutBox););//
+	generic(AboutBox.showmodal;);//
+	generic(except);//
+	generic(on e : exception do);//
+	generic(messageDlg(e.message,mtError,[mbOk],0););//
+end(end;);//
+end(end;);//
+
+input(procedure TDBLocate.close;);//
+	output(begin);//
+	generic(try);//
+	generic(findForm.close;);//
+	generic(except);//
+	generic({do nothing});//
+end(end;);//
+end(end;);//
+
+input(procedure TDBLocate.execute;);//
+	output(begin);//
+	generic(try);//
+	branch(if searchTable = nil);//
+		path(then);//
+			process(raise ETDBLocateError.create('SearchTable property is not assigned'););//
+	bend();//
+	branch(if not searchTable.active);//
+		path(then);//
+			process(raise ETDBLocateError.create('Specified search table is not active.'););//
+	bend();//
+	branch(if searchTable.indexFieldcount = 0);//
+		path(then);//
+			process(raise ETDBLocateError.create('Specified search table must be indexed.'););//
+	bend();//
+	generic(Application.CreateForm(TFindForm, FindForm););//
+	generic(findForm.tb := SearchTable;);//
+	generic(findForm.UDN := useDisplayLabels;);//
+	generic(findForm.showHint := showHints;);//
+	generic(findForm.show;);//
+	generic(except);//
+	generic(on e : exception do);//
+	generic(messageDlg(e.message,mtError,[mbOk],0););//
+end(end;);//
+end(end;);//
+
+input(procedure Register;);//
+	output(begin);//
+	generic(RegisterPropertyEditor(TypeInfo(String),TDBLocate,'About',TAboutShow););//
+	generic(RegisterPropertyEditor(TypeInfo(TTable),TDBLocate,'SearchTable',TSearchTable););//
+	generic(RegisterComponents('Samples', [TDBLocate]););//
+end(end;);//
+end(end.);//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 6558740
+;    *.txt   (*   *)
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 328 51 653 581 81 100   339   4294964627    pascal.key  0

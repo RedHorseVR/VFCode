@@ -1,0 +1,109 @@
+;  IRL FlowCode Version: Version 10.0
+;  c1995-2015: Visual Flow Coder by 2LResearch
+;
+;  File Name : keras_model.ins
+;  File Date : 01:53:00 PM - 15:Apr:2019
+
+
+input(//BEGIN_INSECTA_TEMPLATE);//NOTE:  ALL MAP_VARIABLES MUST START WITH A '$'
+event(//MAP_VARIABLE $appname=kerasNeuralNetENTER: Enter the application's name (Do not use spaces or punctuation.));//
+event(//MAP_VARIABLE $model = myNet  ENTER:  name of functional network model.);//
+set(//SET_INSECTA_FILENAME    $appname.py.vfc);//
+set(//SET_EXPORT_FILENAME    $appname.py);//
+set(//SET_LANGUAGE_KEY    python.key);//
+end(//END_INSECTA_TEMPLATE );//
+event(import keras);//
+event(import numpy as np);//
+generic(from keras.models import Sequential);//
+generic(from keras.models import load_model);// ////
+generic(from keras.layers import Dense, Dropout, Flatten);//
+generic(from keras.layers import Conv2D, MaxPooling2D);//
+generic(from keras.optimizers import SGD);//
+end();//
+
+input(class $model():);//
+branch( );//
+path( );//
+
+input(def  __init__( self , filename = "" ):);//
+branch(if filename==""  :);//
+path( );//
+generic(self.model= Sequential());//
+set();// # input: 100x100 images with 3 channels -> (100, 100, 3) tensors.
+generic();//# this applies 32 convolution filters of size 3x3 each.
+generic(self.model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(100, 100, 3))));//
+generic(self.model.add(Conv2D(32, (3, 3), activation='relu')));//
+generic(self.model.add(MaxPooling2D(pool_size=(2, 2))));//
+generic(self.model.add(Dropout(0.25)));//
+generic(self.model.add(Conv2D(64, (3, 3), activation='relu')));//
+generic(self.model.add(Conv2D(64, (3, 3), activation='relu')));//
+process(self.model.add(MaxPooling2D(pool_size=(2, 2))));//
+generic(self.model.add(Dropout(0.25)));//
+generic(self.model.add(Flatten()));//
+generic(self.model.add(Dense(256, activation='relu')));//
+generic(self.model.add(Dropout(0.5)));//
+generic(self.model.add(Dense(10, activation='softmax')));//
+set();//
+generic(sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True));// 
+set(self.model.compile(loss='categorical_crossentropy', optimizer=sgd));//
+path(else: );//
+branch(if '.h5' in filename:);//
+path();//
+process(self.model = load_model( filename  ));//
+path(else:);//
+process(self.model = load_model( filename + '.h5' ));//
+bend( );//
+bend( );//
+end(   );//
+path( );//
+
+input(def model( self ):);//
+end(return self.model);//
+
+input(def  train( self,  x, y,  batch_size = 32, epochs = 10 ):);//
+generic(hist = self.model.fit( x, y, batch_size, epochs));// 
+end(return hist);//
+
+input(def  test( self,  x, y, batch_size = 32 ):);//
+generic(score = self.model.evaluate( x, y, batch_size=32));// 
+end(return score);//
+
+input(def  save( self , filename ):);//
+branch(if '.h5' in filename:);//
+path();//
+process(self.model.save( filename ));//
+path(else:);//
+process(self.model.save( filename + '.h5' ));//
+bend( );//
+end( );//
+
+input(def  load( self , filename ):);//
+branch(if '.h5' in filename:);//
+path();//
+process(self.model = load_model( filename  ));//
+path(else:);//
+process(self.model = load_model( filename + '.h5' ));//
+bend( );//
+end( );//
+bend( );//
+end( #end class );//
+set();//  Generate dummy data 
+generic(x_train = np.random.random((100, 100, 100, 3)));// 
+generic(x_test = np.random.random((20, 100, 100, 3)));// 
+generic(y_train = keras.utils.to_categorical(np.random.randint(10, size=(100, 1)), num_classes=10));// 
+generic(y_test = keras.utils.to_categorical(np.random.randint(10, size=(20, 1)), num_classes=10));// 
+event(net = $model());//
+process(hist = net.train( x_train , y_train ));//
+process(score = net.test( x_test , y_test ));//
+output(print( '----------DONE----------'));//
+output(print( score ));//
+output(print( hist.history ));//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    //      
+; INSECTA
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 304 201 996 1091 35 39   331   88    template.key  0

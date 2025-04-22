@@ -1,0 +1,275 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : search.ins
+;  File Date : 04:19:27 PM - 18:Dec:2000
+
+
+input(#!/usr/bin/perl --);//  
+generic(    );//# --- require the setup file
+output(#include setup.pl);//
+output(#include cgi_lib.pl);//require "cgi_lib.pl";
+generic(    );//# ----------------------------------------------------------------------
+generic(    );//#
+generic(    );//# search.cgi
+generic(    );//#
+generic(    );//# search engine script that can be set to search an entire site, but
+generic(    );//# exclude named directories, files, or files of a certain pattern.
+generic(    );//#
+generic(    );//# CGI Magic April 10th 1997
+generic(    );//#
+generic(    );//# version 1.01
+generic(    );//#
+generic(    );//# CHMOD this script 755
+generic(    );//#
+generic(    );//# this script is an adaption of the work of Gunther Brznieks, and adds
+generic(    );//# various pretty bits plus the ability to run a single search engine
+generic(    );//# and setup script from one place on the site, accessing it from
+generic(    );//# individual html forms, each of which can "hide" local unwanted files
+generic(    );//# from view.
+generic(    );//#
+generic(    );//# as always, this script is given to you free to use for whatever purpose
+generic(    );//# you wish, with the request that you email us at
+generic(    );//#
+generic(    );//# users@spells.com
+generic(    );//#
+generic(    );//# to let us know the url where you are using it, so we may learn from your
+generic(    );//# adaptions. By using this script you absolve the authors and their agents
+generic(    );//# from all liability for any damage actual or consequential that may arise
+generic(    );//# from its use.
+generic(    );//#
+generic(    );//# ----------------------------------------------------------------------
+generic(    );//# --- set the path to the library files
+end();//
+
+input(sub ThemeOpen {);//
+generic(print"<html><head><title>Search Output</title></head>";);//
+generic(print"<body background=\"back2.gif\" bgcolor=\"#FFFFFF\" >";);//
+output(print "<center>";);//
+generic(print "<img src=\"logo1.gif\" alt=\"logo1.gif \"> ";);//
+output(print "</center>";);//
+end(} );//
+
+input(sub ThemeClose {);//
+output(print "</h3>";);//
+generic(print "</body></html> ";);//
+end( } );//
+
+input(# program );//
+set(  $lib = ".";  );//
+generic(    );//# --- require cgi-lib.pl
+generic(    );//# --- define the default self-reference to this script
+branch(  if ($search_script eq "") {  );//
+path();//
+set(  $search_script = "search.pl";);//
+bend(  }  );//
+generic(    );//# --- get the essential cgi header from cgi-lib.pl
+output(print "Content-type: text/html\n\n"; );//&PrintHeader;
+process(ThemeOpen(););//
+process(GetParams(););//  &ReadParse;  
+output();//print "Hello world\n"; 
+process(Search(););//
+process(ThemeClose(););//
+end();//
+
+input(sub GetParams{);//
+generic();// flush stdout buffer
+generic($| = 1;);//
+generic();// Print this MIME data no matter what
+generic();// check for the POST method
+branch(if ($ENV{'REQUEST_METHOD'} eq 'POST'));//
+path({);// auto path
+output();//print "<h3>FORM DATA IS:</h3><pre>\n";
+generic(read(STDIN, $buffer, $ENV{'CONTENT_LENGTH'}););// How many bytes are we supposed to receive?
+generic(@pairs = split(/&/, $buffer););// make a list of keyword/value pairs
+generic();// cycle through each pair and decipher the values
+loop(foreach $pair (@pairs){);//
+generic(($name, $value) = split(/=/, $pair););//get the name/value pair strings
+generic($value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;);// decipher ASCI hexidecimal escaped characters, if any
+generic($count = $value =~ tr/+/ /;);// translate "+" to a space
+generic($count = $value =~ tr/\n/ /;);// translate "\n" to a space
+generic($count = $value =~ tr/\r/ /;);// translate "\n" to a space
+generic($count = $value =~ tr/|/ /;);// translate "\n" to a space
+generic($in{$name} = $value;);//// add the pair to a list keyed on the name of the variable////
+output();//print "<pre>$name = \t$in{ $name }\n</pre>" ;
+process();//print " \n" ;
+lend(});//
+path(} else { );//
+output();//print "No params passed\n";
+generic($in{ keywords } =  $ENV{'QUERY_STRING'}  ;);//$param{ Phone } = "555-1212" ;
+bend(});//
+end(} );//
+
+input(sub Search{);//
+generic(    );//# --- use cgi-lib.pl to read and parse the incoming data
+generic(    );//# --- set variables to incoming data values
+set(  $keywords = $in{'keywords'};  );//
+set(  $exact_match = $in{'exact_match'};  );//
+set(  $hidden_files = $in{'hidden_files'};  );//
+set(  $user = $in{'user'};  );//
+generic(    );//# --- the complete list of files that are NOT to be displayed in a search
+generic(    );//# --- is created by joining $hidden_files (data input) and $banned_files
+generic(    );//# --- as listed in the setup script
+set(  $unwanted_files = ($hidden_files . "|" . $banned_files);  );//
+generic(    );//# --- create an array called @unwanted_files by splitting incoming
+generic(    );//# --- keywords at the | delimiter
+set(  @unwanted_files = split(/\|+/,$unwanted_files);  );//
+generic(    );//# --- create an array called @keyword_list by splitting incoming
+generic(    );//# --- keywords at the word boundaries (\s+ splits on whitespace)
+set(  @keyword_list = split(/\s+/,$keywords);  );//
+generic(    );//# --- look at the incoming keywords, and if there are none, then output
+generic(    );//# --- a message telling the user that they must input one or more keywords
+branch(  if ($keywords eq "") {  );//
+path();//
+output();//print( " **** $user  \n" );
+set();//  &PrintNoKeywordMessage($user);  
+generic(print  ("<h2><center>$user Search Engine Error</center></h2>"););//
+generic(  print ("<b>You MUST enter one or more keywords to use this search engine. </b> "););//
+generic(print ("  <a href=search.htm>Return to the search input form. </a>"););//
+generic(    );//# --- exit the program to wait for a valid search form to be posted back
+end(  exit;  );//
+path(} else { );//
+bend(  }  );//
+output(  &PrintHeaderHTML($user);  );//
+set(  $number_of_hits = 0;  );//
+set(  $cur_dir = 1;);//  $cur_dir = 0;  
+set(  @dirs = ($root_web_path);  );//
+process(GetDirArray;);//only search dirs in dirs.txt file
+set(  $root_web_path = $dirs[0];);//  $root_web_path = "/home/sites/www.flowlynx.com/web/vbtest";
+output();//print( "root= $root_web_path \n\n" );
+set(  $end_of_all_files = 0;  );//
+loop(  while ( $dirs[$cur_dir] ) {);//
+generic($directory = "$root_web_path/$dirs[$cur_dir]" ;);//
+output();//print "Scanning dir ($directory)\n";
+process(  opendir("DIR$cur_dir", $directory ););//GetDirArray(@dir);
+set(  $filename = &GetNextEntry("DIR$cur_dir", $directory ););//
+loop(while( $filename ){);//
+process(SearchFile(););//
+set(  $filename = &GetNextEntry("DIR$cur_dir", $directory ););//
+lend( } );//
+set(  $cur_dir++;);//
+lend(  }  );//
+generic(    );//# --- if there are no keywords found, print appropriate message
+branch(  if ($number_of_hits == 0) {  );//
+path();//
+generic(  &PrintNoHitsBodyHTML;  );//
+path(} else { );//
+set(  &PrintFooterHTML($number_of_hits, $html_url);  );//
+bend(  }  );//
+generic(    );//# --- and print the page footer including the number of hits
+generic(    );//# --- subroutine to find the keywords ---------------------------------
+end( } );//
+end(  );// AUTO 
+
+input(sub SearchFile {);//
+set($fullpath = "$root_web_path/$dirs[$cur_dir]/$filename";);//
+output();//print "<pre>search file $fullpath <LineNumber> \n</pre>";
+generic(    );//# --- Fourth situation: check to see whether the file is listed in the
+generic(    );//# --- unwanted file list. If it is, ignore it.
+set(  $unwanted_file = 0;  );//
+loop(  foreach (@unwanted_files) {  );//
+branch(  if ($fullpath =~ /$_/) {  );//
+path();//
+set(  $unwanted_file = 1;  );//
+bend(  }  );//
+lend(  }  );//
+branch(  if ($unwanted_file) {  );//
+path();//
+output();//print "Blocked '$fullpath'  from search \n";
+path(} else { );//
+generic(    );//# --- Fifth situation: if we drop through to here, we have found a file
+generic(    );//# --- to search. Check that it is readable (-r).
+branch(  if (-r $fullpath) {  );//
+path();//
+path(} else { );//
+end();//  return;
+bend(  }  );//
+generic(    );//# --- now find the keywords we are looking for
+output();//print "searching file $fullpath\n";
+generic(    );//# --- make an array @not_found_words which contains the keywords from
+generic(    );//# --- @keyword_list. If @not_found_words is empty, then all keywords
+generic(    );//# --- have been found.
+set(  @not_found_words = @keyword_list;  );//
+set(  $are_we_in_head = 0;  );//
+set(  open(SEARCHFILE, $fullpath);  );//
+output();//print "<pre>search file $fullpath <LineNumber> \n</pre>";
+set(  $headline = "";  );//
+loop(  while(<SEARCHFILE>) {  );//
+output();//print ".";
+set(  $line = $_;  );//
+set(  $headline .= $line if ($are_we_in_head == 0);  );//
+generic(  $are_we_in_head = 1  );//
+branch(  if (($line =~ m!</head>!i) || ($line =~ m!</title>!i));  );//
+path();//
+set(  &FindKeywords($exact_match, $line, *not_found_words);  );//
+bend();//
+lend(  }   );//# End of SEARCHFILE
+generic(  close (SEARCHFILE);  );//
+branch(  if (@not_found_words < 1)  );//
+path(  {  );//
+generic(    );//# --- get the <title></title> information
+set(  $headline =~ s/\n/ /;  );//
+set(  $headline =~ m!<title>(.*)</title>!i;  );//
+set(  $title = $1;  );//
+branch(  if ($title eq "") {  );//
+path();//
+set(  $title = "This Page Has No Title";  );//
+bend(  }  );//
+set();//  $fullpath =~ s!$root_web_path/!!;  
+set(  &PrintBodyHTML( "../$dirs[$cur_dir]/$filename", "$dirs[$cur_dir]/$filename"););//  &PrintBodyHTML( "$filename", $title);
+set(  $number_of_hits++;  );//
+bend(  }  );//
+bend(  }  );//
+end( } );//
+
+input(  sub FindKeywords {  );//
+set(  local($exact_match, $line, *not_found_words) = @_;  );//
+set(  local($x, $match_word);  );//
+branch(  if ($exact_match eq "on") {  );//
+path();//
+loop(  for ($x = @not_found_words; $x > 0; $x--) {  );//
+generic(    );//# --- \b matches on a word boundary
+set(  $match_word = $not_found_words[$x - 1];  );//
+branch(  if ($line =~ /\b$match_word\b/i) {  );//
+path();//
+set(  splice(@not_found_words,$x - 1, 1);  );//
+bend(  }  );//
+lend(  }  );//
+path(  } else {  );//
+loop(  for ($x = @not_found_words; $x > 0; $x--) {  );//
+set(  $match_word = $not_found_words[$x - 1];  );//
+branch(  if ($line =~ /$match_word/i) {  );//
+path();//
+set(  splice(@not_found_words,$x - 1, 1);  );//
+bend(  }  );//
+lend(  }  );//
+bend(  }  );//
+end(  }  );//
+generic(    );//# --- subroutine to get the next entry --------------------------------
+end(  );// AUTO 
+
+input(  sub GetNextEntry {  );//
+set(  local($dirhandle, $directory) = @_;  );//
+output();//print "GetNextEntry( $dirhandle , $directory )  ...<LineNumber> \n";
+loop(  while ($filename = readdir($dirhandle)) {  );//
+output();//print "getting next entry ... $filename <LineNumber> \n";
+branch(   if (  $filename =~/html.?/i || $filename =~/htm.?/i ) {);//  if (($filename =~ /html.?/i) || ($filename =~ /htm.?/i) || (!($filename =~ /^\.\.?$/) && -d "$directory/$filen
+path();//
+output();//print "searching $directory/$filename\n";
+end(  last;  );//
+bend(  }  );//
+lend(  }  );//
+generic(    );//# --- filename will be true if it is a directory or a filename
+set(  $filename;  );//
+end(  }  );//
+generic(    );//# ---------------------------------------------------------------------
+end();//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 16777215 16777215 255 4278255615 16711680 16711680 255 16777215 255 255 16777215 65280 0
+;    search.pl   #   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 363 165 765 711 127 91   217   4294961984    perl.key  0

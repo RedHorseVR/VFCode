@@ -1,0 +1,27 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : GetFileName Definition Template.ins
+;  File Date : 01:59:24 AM - 20:Jan:1999
+
+
+input(//BEGIN_INSECTA_TEMPLATE  );//
+event(//MAP_VARIABLE $name=exportENTER: Enter the new DLL Export Definition File name);//
+event(//MAP_VARIABLE $function=GetFileNameENTER: Enter a function name to export);//
+set(//SET_INSECTA_FILENAME $name.ins );//
+set(//SET_LANGUAGE_KEY    def.key);//
+set(//SET_EXPORT_FILENAME  $name.def);//
+end( //END_INSECTA_TEMPLATE );// 
+
+input(EXPORTS);//FILE:GetFileName.ins
+set($function @2);//
+end();//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    ;   //   //
+; INSECTA
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 708 526 640 400 8 100   298   4294967223    template.key  0

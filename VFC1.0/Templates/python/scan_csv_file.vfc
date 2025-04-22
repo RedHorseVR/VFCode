@@ -1,0 +1,47 @@
+;  IRL FlowCode Version: Version 10.0
+;  c1995-2015: Visual Flow Coder by 2LResearch
+;
+;  File Name : scan_csv_file.vfc
+;  File Date : 09:13:07 PM - 18:Jul:2024
+
+
+input(//BEGIN_INSECTA_TEMPLATE);//NOTE:  ALL MAP_VARIABLES MUST START WITH A '$'
+event(//MAP_VARIABLE $appname=scan_csv ENTER: Enter the application's name (Do not use spaces or punctuation.));//
+event(//MAP_VARIABLE $testfile = test.txt ENTER:  name of functional network model.);//
+set(//SET_INSECTA_FILENAME    $appname.py.vfc);//
+set(//SET_EXPORT_FILENAME    $appname.py);//
+set(//SET_LANGUAGE_KEY    python.key);//
+end(//END_INSECTA_TEMPLATE );//
+event(import csv);// ////
+end();// // Function to read the CSV file and print first and last values from each row//
+
+input(def print_first_last_values(file_path):);// ////
+branch(with open(file_path, newline='', encoding='utf-8') as csvfile:);//// //////
+path();//
+generic(reader = csv.reader(csvfile));// ////
+loop(for row in reader:);// ////
+branch(if row:  );// // Ensure the row is not empty//
+path();//
+output(print(f"First value: {row[0]}, Last value: {row[-1]}"));// ////
+bend();//
+lend();//
+bend();//
+end();//
+branch(if __name__ == '__main__':);//
+path();//
+output(print( '--------------------- Running  $appname.py on $testfile' ));//
+
+input(print_first_last_values( $test_file ));// ////
+output(print( '--------DONE---------' ));//
+path(else: );//
+output(print( '--------------------- Loading Import file  $appname.py '));//
+bend( );//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    //   #   .
+; INSECTA
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 1449 547 1255 1079 1 119   672   4294966982    python.key  0

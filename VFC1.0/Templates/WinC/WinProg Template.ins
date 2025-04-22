@@ -1,0 +1,104 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : WinProg Template.ins
+;  File Date : 08:42:37 AM - 28:Jan:1999
+
+
+input(//BEGIN_INSECTA_TEMPLATE);//NOTE:  ALL MAP_VARIABLES MUST START WITH A '$'
+event(//MAP_VARIABLE $appname=WinProgENTER: Enter the application's name (Do not use spaces or punctuation.));//
+event(//MAP_VARIABLE $key=vc4.keyENTER: Verify the keyfile.  Use vc4.key for MSVC++ 4.x  OR vc6.key for Visual Studio 6.0);//
+set(//SET_LANGUAGE_KEY    $key);//
+set(//SET_INSECTA_FILENAME    $appname.ins);//
+set(//SET_EXPORT_FILENAME    $appname.c);//
+end(//END_INSECTA_TEMPLATE );//
+
+input(/* includes */);//FILE:$appname.h
+generic(#include <windows.h>);//
+
+input(/* defines */ );//
+set(#define  START_BACKGROUND     GRAY_BRUSH);//
+set(#define STARTWIDTH  400);//
+set(#define STARTHEIGHT  300);//
+set(#define STARTPOSITION_X   CW_USEDEFAULT);//
+set(#define STARTPOSITION_Y   CW_USEDEFAULT);//
+set(#define  WINDOW_CLASS    "$appname_WClass");//
+set(#define  WINDOW_NAME  "$appname - Hello New World !");//
+set(#define  WINDOW_STYLE   WS_OVERLAPPEDWINDOW);//
+set(#define  SHOWSTATE   SW_SHOW);//
+
+input(/* globals */);//
+generic(HANDLE hInst; );//
+set(HWND MainWindow;);//
+generic(    WNDCLASS  wc; );//
+
+input(/* prototypes */ );//
+set();//int WINAPI WinMain(HANDLE, HANDLE, LPSTR, int);
+set(int CALLBACK  $appname(HWND, UINT, WPARAM, LPARAM););//
+end();//
+
+input(int WINAPI  $appname(HWND hWnd,UINT message,WPARAM wParam,LPARAM lParam) {);//
+branch(switch (message) { );//
+path(case WM_COMMAND:   );//
+branch(switch(wParam) { );//
+path(case IDCANCEL: );//
+process(DestroyWindow(hWnd););//
+end(break; );//
+set();//
+bend(} );// 
+path(case WM_CREATE:);//
+end(   break; );//
+set();//
+path(case WM_DESTROY:);//
+generic(PostQuitMessage(0););//  
+end(   break; );//
+set();//
+path(default: );//
+end(return (DefWindowProc(hWnd, message, wParam, lParam)););//
+set();//
+bend(});//
+end(return FALSE;} );//
+
+input(int CALLBACK WinMain(HANDLE hInstance, HANDLE hPrevInstance, LPSTR lpCmdLine,int nCmdShow) {);//
+generic(    MSG msg; );//
+branch(if (!hPrevInstance)   );//
+path({);//
+generic(    wc.style = 0; );//
+generic(    wc.lpfnWndProc = (WNDPROC) $appname;);//
+generic(    wc.cbClsExtra = 0; );//
+generic(    wc.cbWndExtra = 0; );//
+generic(    wc.hInstance = hInstance; );//
+generic(    wc.hIcon = LoadIcon(hInstance, "Icon"););//    wc.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(ID_ICON) );
+generic(    wc.hCursor = LoadCursor(NULL, IDC_ARROW); );//
+generic(    wc.hbrBackground = GetStockObject( START_BACKGROUND ););//
+generic(    wc.lpszMenuName =  "Menu";);//    wc.lpszMenuName =  MAKEINTRESOURCE(ID_MENU);
+generic(    wc.lpszClassName =WINDOW_CLASS;);//
+branch(if (!RegisterClass(&wc)));//
+path({ );//
+end(return (FALSE);   );//
+bend( });//
+generic(MainWindow = CreateWindow( WINDOW_CLASS, WINDOW_NAME,  WINDOW_STYLE,STARTPOSITION_X,);//
+generic(STARTPOSITION_Y, STARTWIDTH, STARTHEIGHT ,NULL,NULL,hInstance,NULL););//
+branch(if ( ! MainWindow  ));//
+path({ );//
+end(return (FALSE); );//
+path(}else{ );//
+generic(    ShowWindow( MainWindow , SHOWSTATE  ););//
+generic(    UpdateWindow( MainWindow ););//
+bend( });//
+path(}else{ );//
+bend( });//
+loop(while ( GetMessage(&msg, NULL, 0, 0)  ) {);//
+generic(    TranslateMessage(&msg);   );//
+generic(    DispatchMessage(&msg); );//
+lend(} );//
+end(return (msg.wParam);} );//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    //   //   //
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 790 386 580 381 6 110   318   66    template.key  0

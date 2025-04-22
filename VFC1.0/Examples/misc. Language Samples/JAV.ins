@@ -1,0 +1,83 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : JAV.ins
+;  File Date : 10:54:30 AM - 24:Oct:1997
+
+generic(/* A quick sort demonstration algorithm);//  
+generic(* SortAlgorithm.java, Thu Oct 27 10:32:35 1994);//  
+generic(* @author James Gosling);//  
+generic(* @version 1.6, 31 Jan 1995 */);//  
+end(/*------------*/);//
+
+input(class QSortAlgorithm extends SortAlgorithm {);//  <----- start of class definition  
+end(/*------------*/);// 
+
+input(void sort(int a[], int lo0, int hi0){);//  
+generic(int lo = lo0;);//  
+generic(int hi = hi0;);//  
+generic(pause(lo, hi););//  
+branch(if (lo >= hi));//
+path({);//  
+end(return;);//  
+bend(} );//  
+generic(int mid = a[(lo + hi) / 2];);//  
+loop(while (lo < hi){);//  
+loop(while (lo<hi && a[lo] < mid){);//  
+generic(lo++;);//  
+lend(} );//  
+loop(while (lo<hi && a[hi] > mid){);//  
+generic(hi--;);//  
+lend(} );//  
+branch(if (lo < hi));//
+path({);//  
+generic(int T = a[lo];);//  
+generic(a[lo] = a[hi];);//  
+generic(a[hi] = T;);//  
+generic(pause(););//  
+bend(} );//  
+lend(} );//  
+branch(if (hi < lo));//
+path({);//  
+generic(int T = hi;);//  
+generic(hi = lo;);//  
+generic(lo = T;);//  
+bend(} );//  
+generic(sort(a, lo0, lo););//  
+generic(sort(a, lo == lo0 ? lo+1 : lo, hi0););//  
+end(} );//  
+end(/*------------*/);// 
+
+input(void sort(int a[]){);//  
+generic(sort(a, 0, a.length-1););//  
+end(} );//  
+
+input(}       /* end of class definition */ );// <------------ end of class definition
+end();//  
+generic(/*);//  
+generic(* @(#)QSortAlgorithm.java 1.6 95/01/31 James Gosling);//  
+generic(*);//  
+generic(* Copyright (c) 1994 Sun Microsystems, Inc. All Rights Reserved.);//  
+generic(*);//  
+generic(* Permission to use, copy, modify, and distribute this software);//  
+generic(* and its documentation for NON-COMMERCIAL purposes and without);//  
+generic(* fee is hereby granted provided that this copyright notice);//  
+generic(* appears in all copies. Please refer to the file "copyright.html");//  
+generic(* for further important copyright and licensing information.);//  
+generic(*);//  
+generic(* SUN MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF);//  
+generic(* THE SOFTWARE, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED);//  
+generic(* TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A);//  
+generic(* PARTICULAR PURPOSE, OR NON-INFRINGEMENT. SUN SHALL NOT BE LIABLE FOR);//  
+generic(* ANY DAMAGES SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR);//  
+generic(* DISTRIBUTING THIS SOFTWARE OR ITS DERIVATIVES.);//  
+generic(*/);//  
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    jav.java   //   ...
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 45 146 332 613 8 68   168   4294967147    java.key  0

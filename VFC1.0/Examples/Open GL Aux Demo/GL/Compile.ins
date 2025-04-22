@@ -1,0 +1,29 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : Compile.ins
+;  File Date : 05:40:42 AM - 01:Jul:1997
+
+
+input(REM C COMPILE);//
+   process();//DEL %1.obj
+   process();//c:\msdev\bin\CL %1  /Ic:\MSDEV\INCLUDE /IC:\SSVPARSE\INCLUDE  /nologo /W3 /GX /D "WIN32" /D "_CONSOLE" /D "MSDOS" /c  |more
+   process();//c:\msdev\bin\CL %1  /Ic:\MSDEV\INCLUDE /nologo /W3 /GX /D "WIN32" /c  |more
+   process();//c:\msdev\bin\CL %1  /Ic:\MSDEV\INCLUDE /IC:\SSVPARSE\INCLUDE  /nologo /W3 /GX /D "WIN32" /D "_CONSOLE" /D "MSDOS" /c  |more
+   process(ECHO ._______________________________________________);//
+   process(ECHO ON );//
+   process();//DEL %1.obj
+   process(c:\msdev\bin\CL %1  /Ic:\MSDEV\INCLUDE /I. /IF:\US&R\DEVELOP\_Insecta_\insecta2  /nologo /W3 /GX /D "WIN32" /c  |more);//c:\msdev\bin\CL "%1"  /Ic:\MSDEV\INCLUDE /IC:\SSVPARSE\INCLUDE  /nologo /W3 /GX /D "WIN32" /D "_CONSOLE" /D "MSDOS" /c  |m
+   process(ECHO OFF );//
+   process(ECHO ._______________________________________________);//
+   process(ECHO COMPILE FINISHED);//
+end(EXIT );// 
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 12632256 4227200
+;    compile.bat   REM   
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 111 620 935 504 6 130   443   4294967215    dos.key  0

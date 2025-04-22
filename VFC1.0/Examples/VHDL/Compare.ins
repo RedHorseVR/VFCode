@@ -1,0 +1,68 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : Compare.ins
+;  File Date : 01:45:46 AM - 12:May:1997
+
+
+input( -- Module  Compare.vhd --);//  FILE:Compare.vhd 
+end();//
+generic();//  Use the file "Testcomp.ins" to test this -- FILE:   Testcomp.ins..  ------------
+generic();// -----------------------------------------..   8-bit comparator..   This example i
+generic();// s a simple combinational circuit..   described using the dataflow level of abstra
+generic();// ction...   Three architectures are provided for this 8-bit..   comparator, repres
+generic();// enting an equality comparator,..   a 'less than' magnitude comparator, and a 'gre
+generic();// ater..   than' magnitude comparator. The test bench for..   this example demonstr
+generic();// ates how these three alternative..   architectures can be selected and used...   
+generic();// This module is synthesizable: to synthesize a..   comparator, you must select one
+generic();//  of the three..   architectures as the top-level architecture, then..   invoke sy
+generic();// nthesis...   A test bench has been provided (in testcomp.vhd)..   that verifies t
+generic();// he operation of the circuit. To use..   the test bench with this circuit, you mus
+generic();// t compile..   this source file (compare.vhd) into the library..   'work' (the def
+generic();// ault library)...   Copyright 1995, Accolade Design Automation, Inc...  Library   
+set( library ieee; );// Load the ieee 1164 library.. 
+process( use ieee.std_logic_1164.all; );// --  Make the ieee package 'visible'..  
+
+input( entity compare is );// --  Define the top-level interface (ports) for the circuit.....  
+   process( port( A, B: in std_ulogic_vector(0 to 7); EQ: out std_ulogic ); );// 
+end( end compare; );// 
+
+input( architecture equality of compare is );//  contents --  Now define the contents of the entity..... 
+   output( begin );// 
+   branch(  EQ <= '1' when);// EQ <= '0' when
+      path();// 
+         set( (A = B) );//  --  Concurrent assignment..  
+      path( else );// 
+         set( '0';);//  '1';
+   bend();// 
+end( end equality; );// 
+
+input( architecture less_than of compare is );// 
+   output( begin );// 
+   branch( EQ <= '1' when );// 
+      path();// 
+         set( (A < B) );//  --  Concurrent assignment.. 
+      path( else );// 
+         set( '0'; );// 
+   bend();// 
+end( end less_than; );// 
+
+input( architecture greater_than of compare is );// 
+   output( begin );// 
+   branch( EQ <= '1' when );// 
+      path();// 
+         set( (A > B) );//  --  Concurrent assignment..  
+      path( else );// 
+         set( '0'; );// 
+   bend();// 
+end( end greater_than; );// 
+end();//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 0 13158600 0 0 13158600 8388672 8388863 16776960 0 0 8388608 8388608 12632256
+;    Compare.vhd   --   ..
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 825 78 651 423 27 85   291   4294966847    vhdl.key  0

@@ -1,0 +1,397 @@
+;  IRL FlowCode Version: Version 10.0
+;  c1995-2015: Visual Flow Coder by 2LResearch
+;
+;  File Name : dhry.vfc.bak
+;  File Date : 11:06:34 PM - 04:Oct:2024
+
+
+input(/* defines */ );//
+set( #define TRUE 1);// 
+set( #define FALSE 0);// 
+set( #define NULL 0);// 
+generic();// /* Accuracy of timings and human fatigue controlled by next two lines */
+set( #define LOOPS  5000 /* Use this for slow or 16 bit machines */);// 
+generic();// /* #define LOOPS 50000  /* Use this for slow or 16 bit machines */
+generic();// /* Compiler dependent options */
+generic();// /* #undef NOENUM   /* Define if compiler has no enum's */
+branch(#ifdef NOSTRUCTASSIGN);//
+path();//
+set( #undef  NOSTRUCTASSIGN);// 
+bend(#endif);//
+generic();// /* #define NOSTRUCTASSIGN  /* Define if compiler can't assign structures */
+generic();// /* define only one of the next three defines */
+generic();// /*#define GETRUSAGE  /* Use getrusage(2) time function */
+generic();// /* #define TIMES   /* Use times(2) time function */
+generic();// /*#define TIME   /* Use time(2) time function */
+generic();// /* define the granularity of your times(2) function (when used) */
+set( #define HZ  60 /* times(2) returns 1/60 second (most) */);// 
+generic();// /*#define HZ 100  /* times(2) returns 1/100 second (WECo) */
+generic();// /* for compatibility with goofed up version */
+generic();// /*#define GOOF   /* Define if you want the goofed up version */
+branch( #ifdef GOOF );//
+path();//
+set( char Version[] ="1.0";);// 
+path( #else );//
+set( char Version[] ="1.1";);// 
+bend( #endif );//
+branch( #ifdef NOSTRUCTASSIGN);//
+path();//
+set( #define structassign(d, s)  memcpy(&(d), &(s), sizeof(d)));// 
+path( #else );//
+set( #define structassign(d, s)   d = s);// 
+bend( #endif );//
+branch( #ifdef NOENUM);// 
+path();//
+generic(#define Ident1 1);//
+generic(#define Ident2 2);//
+generic(#define Ident3 3);//
+generic(#define Ident4 4);//
+generic(#define Ident5 5);//
+set( typedef int Enumeration;);// 
+path( #else );//
+set( typedef enum{Ident1, Ident2, Ident3, Ident4, Ident5} );// 
+set( Enumeration; );// 
+bend( #endif );//
+
+input(/* typedefs */);//
+set( typedef int OneToThirty;);// 
+set( typedef int OneToFifty;);// 
+set( typedef char CapitalLetter;);// 
+set( typedef char String30[31];);// 
+set( typedef int Array1Dim[51];);// 
+set( typedef int Array2Dim[51][51];);// 
+set( typedef struct Record RecordType; );// 
+set( typedef RecordType *RecordPtr; );// 
+set( typedef int boolean;);// 
+event( struct Record {);// 
+set( struct Record *PtrComp;);// 
+set( Enumeration Discr;);// 
+set( Enumeration  EnumComp;);// 
+set( OneToFifty  IntComp;);// 
+set( String30  StringComp;);// 
+end( }; );//
+branch( #ifndef  REG);//
+path();//
+set( #define REG);// 
+bend( #endif );//
+set( extern EnumerationFunc1(); );// 
+set( extern booleanFunc2(); );// 
+branch( #ifdef DEBUG );//
+path();//
+set( #define dprintf  printf);// 
+path( #else );//
+set( #define dprintf(s) );// 
+bend( #endif );//
+end();//
+
+input(/* prototypes */ );//
+set();//
+set( void printf(char *fmt, ...) ;);// 
+set( void strcpy(char *fmt, char *s2 ) ;);// 
+generic(int strcmp(char *StrParI1, char *StrParI2););//
+set(void  main() ;);//
+set(void  Proc0() ;);//
+set(void  Proc1(REG RecordPtr PtrParIn););//
+set(void  Proc2(OneToFifty  *IntParIO););// 
+set(void  Proc3( RecordPtr *PtrParOut ););// 
+set(void  Proc4() ;);// 
+set(void  Proc5() ;);//
+set(void  Proc6( REG Enumeration EnumParIn, REG Enumeration *EnumParOut ););//
+set(void  Proc7( OneToFifty IntParI1, OneToFifty IntParI2, OneToFifty *IntParOut ););// 
+set(void  Proc8(Array1Dim Array1Par, Array2Dim Array2Par, OneToFifty IntParI1, OneToFifty IntParI2););// 
+set(Enumeration Func1(CapitalLetter  CharPar1, CapitalLetter CharPar2 ););//void  Func1(CapitalLetter  CharPar1, CapitalLetter CharPar2);
+set(boolean Func2(String30 StrParI1, String30 StrParI2););// 
+set(boolean Func3( REG Enumeration  EnumParIn ););// 
+end();//
+
+input(void   main());// 
+set( { );// 
+set(   printf ("dhrystone - 1.1 (C/1.1, 01/06/86)\n"); );// 
+generic();// /* SCW MOD */
+set( Proc0(); );// 
+end( } );// 
+event( RecordType x1, x2; );//
+generic();//  * Package 1
+set( int IntGlob;);// 
+set( boolean BoolGlob;);// 
+set( char Char1Glob;);// 
+set( char  Char2Glob;);// 
+set( Array1Dim  Array1Glob;);// 
+set( Array2Dim  Array2Glob;);// 
+set( RecordPtr  PtrGlb;);// 
+set( RecordPtr PtrGlbNext;);// 
+end();//
+
+input(void   Proc0());// 
+set( { );// 
+generic(OneToFifty  IntLoc1;);//
+generic(REG OneToFifty  IntLoc2;);//
+generic(OneToFifty  IntLoc3;);//
+generic();//REG char  CharLoc;
+generic(REG char  CharIndex;);//
+generic(Enumeration   EnumLoc;);//
+generic(String30  String1Loc;);//
+generic(String30  String2Loc;);//
+set( register unsigned int i;);//
+set( dprintf("Proc0\n"); );// 
+set( PtrGlbNext =(RecordPtr) &x1; );// 
+set( PtrGlb =(RecordPtr) &x2; );// 
+set( PtrGlb->PtrComp =PtrGlbNext; );// 
+set( PtrGlb->Discr =Ident1; );// 
+set( PtrGlb->EnumComp =Ident3; );// 
+set( PtrGlb->IntComp =40; );// 
+set( strcpy(PtrGlb->StringComp, "DHRYSTONE PROGRAM, SOME STRING"); );// 
+branch( #ifndef  GOOF);// 
+path();//
+set( strcpy(String1Loc, "DHRYSTONE PROGRAM, 1'ST STRING"); );// 
+generic();// /*GOOF*/
+bend( #endif );//
+set( Array2Glob[8][7] =10; );// 
+generic();// /* Was missing in published program */
+loop( for (i = 0; i < LOOPS; ++i) { );// 
+set( Proc5(); );// 
+set( Proc4(); );// 
+set( IntLoc1 =2; );// 
+set( IntLoc2 =3; );// 
+set( strcpy(String2Loc, "DHRYSTONE PROGRAM, 2'ND STRING"); );// 
+set( EnumLoc =Ident2; );// 
+set( BoolGlob =! Func2(String1Loc, String2Loc); );// 
+loop( while (IntLoc1 < IntLoc2) { );// 
+set( IntLoc3 =5 * IntLoc1 - IntLoc2; );// 
+set( Proc7(IntLoc1, IntLoc2, &IntLoc3); );// 
+set( ++IntLoc1; );// 
+lend( } );// 
+set( Proc8(Array1Glob, Array2Glob, IntLoc1, IntLoc3); );// 
+set( Proc1(PtrGlb); );// 
+loop( for (CharIndex = 'A'; CharIndex <= Char2Glob; ++CharIndex) if );// 
+branch( (EnumLoc == Func1(CharIndex, 'C')) );// 
+path();///auto path//
+set( Proc6(Ident1, &EnumLoc); );// 
+bend();// 
+lend( IntLoc3 =IntLoc2 * IntLoc1; );// 
+set( IntLoc2 =IntLoc3 / IntLoc1; );// 
+set( IntLoc2 =7 * (IntLoc3 - IntLoc2) - IntLoc1; );// 
+set( Proc2(&IntLoc1); );// 
+lend( } );// 
+set( printf("Dhrystone done\n"); );// 
+end( } );// 
+
+input(void   Proc1(PtrParIn)REG RecordPtr PtrParIn;);// 
+set( { );// 
+set(   #define NextRecord  (*(PtrParIn->PtrComp)));// 
+set( dprintf("Proc1\n"); );// 
+set( structassign(NextRecord, *PtrGlb); );// 
+set( PtrParIn->IntComp =5; );// 
+set( NextRecord.IntComp =PtrParIn->IntComp; );// 
+set( NextRecord.PtrComp =PtrParIn->PtrComp; );// 
+set(  Proc3(&NextRecord.PtrComp););// Proc3(NextRecord.PtrComp); 
+branch( if (NextRecord.Discr == Ident1) );// 
+path( { );// 
+set(   NextRecord.IntComp =6; );// 
+set( Proc6(PtrParIn->EnumComp, &NextRecord.EnumComp); );// 
+set( NextRecord.PtrComp =PtrGlb->PtrComp; );// 
+set( Proc7(NextRecord.IntComp, 10, &NextRecord.IntComp); );// 
+set( } );// 
+path(   else );// 
+set( structassign(*PtrParIn, NextRecord); );// 
+bend();// 
+set( #undef NextRecord);// 
+end( } );// 
+
+input(void   Proc2(IntParIO)OneToFifty  *IntParIO;);// 
+set( { );// 
+set(   REG OneToFifty  IntLoc;);// 
+set( REG Enumeration EnumLoc;);// 
+set( dprintf("Proc2\n"); );// 
+set( IntLoc =*IntParIO + 10; );// 
+loop( for(;;) { );// 
+branch( if (Char1Glob == 'A') );// 
+path( { );// 
+set(   --IntLoc; );// 
+set( *IntParIO =IntLoc - IntGlob; );// 
+set( EnumLoc =Ident1; );// 
+bend();// 
+set( } );// 
+branch(   if (EnumLoc == Ident1) );// 
+path();///auto path//
+end( break; );// 
+set();// 
+bend();// 
+lend( } );// 
+end( } );// 
+
+input(void   Proc3( RecordPtr*PtrParOut ));// 
+set( { );// 
+set(   dprintf("Proc3\n"); );// 
+branch( if (PtrGlb != NULL) );// 
+path();///auto path//
+set( *PtrParOut =PtrGlb->PtrComp; );// 
+path( else );// 
+set( IntGlob =100; );// 
+bend();// 
+set( Proc7(10, IntGlob, &PtrGlb->IntComp); );// 
+end( } );// 
+
+input(void   Proc4());// 
+set( { );// 
+set(   REG boolean BoolLoc;);// 
+set( dprintf("Proc4\n"); );// 
+set( BoolLoc =Char1Glob =='A'; );// 
+set( BoolLoc |=BoolGlob; );// 
+set( Char2Glob ='B'; );// 
+end( } );// 
+
+input(void   Proc5());// 
+set( { );// 
+set(   dprintf("Proc5\n"); );// 
+set( Char1Glob ='A'; );// 
+set( BoolGlob =FALSE; );// 
+end( } );// 
+
+input(void   Proc6(REG Enumeration EnumParIn , REG Enumeration *EnumParOut ));// 
+set( { );// 
+set(   dprintf("Proc6\n"); );// 
+set( *EnumParOut =EnumParIn; );// 
+branch( if (! Func3(EnumParIn) ) );// 
+path();///auto path//
+set( *EnumParOut =Ident4; );// 
+bend();// 
+branch( switch (EnumParIn) { );// 
+path( case Ident1: );// 
+set( *EnumParOut =Ident1; );// 
+end( break; );// 
+set();// 
+path( case Ident2: );// 
+branch( if (IntGlob > 100) );// 
+path();///auto path//
+set( *EnumParOut =Ident1; );// 
+path( else );// 
+set( *EnumParOut =Ident4; );// 
+bend();// 
+end( break; );// 
+set();// 
+path( case Ident3: );// 
+set( *EnumParOut =Ident2; );// 
+end( break; );// 
+set();// 
+path( case Ident4: );// 
+end( break; );// 
+set();// 
+path( case Ident5: );// 
+set( *EnumParOut =Ident3; );// 
+bend( } );// 
+end( } );// 
+
+input(void   Proc7(IntParI1, IntParI2, IntParOut)OneToFifty IntParI1; OneToFifty IntParI2; OneToFifty *IntParOut;);// 
+set( { );// 
+set(   REG OneToFifty IntLoc;);// 
+set( dprintf("Proc7\n"); );// 
+set( IntLoc =IntParI1 + 2; );// 
+set( *IntParOut =IntParI2 + IntLoc; );// 
+end( } );// 
+
+input(void   Proc8(Array1Par, Array2Par, IntParI1, IntParI2)Array1Dim Array1Par; Array2Dim Array2Par; OneToFifty IntParI1; OneToFifty IntParI2;);// 
+set( { );// 
+set(   REG OneToFifty IntLoc;);// 
+set( REG OneToFifty IntIndex;);// 
+set( dprintf("Proc8\n"); );// 
+set( IntLoc =IntParI1 + 5; );// 
+set( Array1Par[IntLoc] =IntParI2; );// 
+set( Array1Par[IntLoc+1] =Array1Par[IntLoc]; );// 
+set( Array1Par[IntLoc+30] =IntLoc; );// 
+loop( for (IntIndex = IntLoc; IntIndex <= (IntLoc+1); ++IntIndex) Array2Par[IntLoc][IntIndex] =IntLoc; );// 
+lend();//
+set( ++Array2Par[IntLoc][IntLoc-1]; );// 
+set( Array2Par[IntLoc+20][IntLoc] =Array1Par[IntLoc]; );// 
+set( IntGlob =5; );// 
+end( } );// 
+
+input(Enumeration Func1( CapitalLetter  CharPar1 , CapitalLetter CharPar2 ));//  Enumeration Func1(CharPar1, CharPar2)  CapitalLetter  CharPar1; CapitalLetter CharPar2;
+set( { );// 
+set(   REG CapitalLetter  CharLoc1;);// 
+set( REG CapitalLetter  CharLoc2;);// 
+set( dprintf("Func1\n"); );// 
+set( CharLoc1 =CharPar1; );// 
+set( CharLoc2 =CharLoc1; );// 
+branch( if (CharLoc2 != CharPar2) );// 
+path();///auto path//
+end( return (Ident1); );// 
+bend();// 
+end( return (Ident2); );// 
+end( } );// 
+
+input(boolean Func2(String30 StrParI1, String30 StrParI2));// 
+set( { );// 
+set(   REG OneToThirty  IntLoc;);// 
+set( REG CapitalLetter  CharLoc;);// 
+set( dprintf("Func2\n"); );// 
+set( IntLoc =1; );// 
+loop( while (IntLoc <= 1) if );// 
+branch( (Func1(StrParI1[IntLoc], StrParI2[IntLoc+1]) == Ident1) );// 
+path( { );// 
+set(   CharLoc ='A'; );// 
+set( ++IntLoc; );// 
+bend();// 
+lend( } );// 
+branch( if (CharLoc >= 'W' && CharLoc <= 'Z') );// 
+path();///auto path//
+set( IntLoc =7; );// 
+bend();// 
+branch( if (CharLoc == 'X') );// 
+path();///auto path//
+end( return(TRUE); );// 
+set();// 
+path( else );// 
+set( { );// 
+branch(   if (strcmp(StrParI1, StrParI2) > 0) );// 
+path( { );// 
+set(   IntLoc +=7; );// 
+end( return (TRUE); );// 
+set();// 
+set( } );// 
+path(   else );// 
+end( return (FALSE); );// 
+set();// 
+bend();// 
+bend(});// 
+end(});// 
+
+input(boolean Func3(REG Enumeration  EnumParIn ));// 
+set( { );// 
+set(   REG Enumeration EnumLoc;);// 
+set( dprintf("Func3\n"); );// 
+set( EnumLoc =EnumParIn; );// 
+branch(if (EnumLoc == Ident3));//
+path({);//
+end( return (TRUE););//
+bend(} );//
+end(return (FALSE););//
+end(});//
+branch(#ifdef NOSTRUCTASSIGN);//
+path();//
+
+input(memcpy(d, s, l));//
+generic(register char *d;);//
+generic(register char *s;);//
+generic(register int l;);//
+generic({);//
+loop(while (l--) *d++ = *s++;);//
+lend();//
+end(});//
+bend(#endif);//
+end();//
+
+input(void  strcpy(char *d, char *s));//
+generic({);//
+loop(while (*d++ = *s++));//
+lend(;);//
+end(});//
+
+input(int strcmp(char *d, char *s));//
+generic({);//
+loop(while (*d && *d == *s));//
+lend(d++, s++;);//
+generic(return *d == *s; /* not correct but good enough for this pgm */);//
+end(});//
+
+

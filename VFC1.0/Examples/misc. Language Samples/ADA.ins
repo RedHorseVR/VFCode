@@ -1,0 +1,95 @@
+;  Insecta Robotica Language Version 2.0 - April 1996 Beta 
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : ADA.ins
+;  File Date : 02:18:28 PM - 21:Apr:2002
+
+
+input(-- Comments --);//
+	generic();// A83A06A.ADA
+	generic();//                             Grant of Unlimited Rights
+	generic();//
+	generic();//     Under contracts F33600-87-D-0337, F33600-84-D-0280, MDA903-79-C-0687 and
+	generic();//     F08630-91-C-0015, the U.S. Government obtained unlimited rights in the
+	generic();//     software and documentation contained herein.  Unlimited rights are 
+	generic();//     defined in DFAR 252.227-7013(a)(19).  By making this public release, 
+	generic();//     the Government intends to confer upon all recipients unlimited rights
+	generic();//     equal to those held by the Government.  These rights include rights to
+	generic();//     use, duplicate, release or disclose the released technical data and
+	generic();//     computer software in whole or in part, in any manner and for any purpose
+	generic();//     whatsoever, and to have or permit others to do so.
+	generic();//
+	generic();//                                    DISCLAIMER
+	generic();//
+	generic();//     ALL MATERIALS OR INFORMATION HEREIN RELEASED, MADE AVAILABLE OR
+	generic();//     DISCLOSED ARE AS IS.  THE GOVERNMENT MAKES NO EXPRESS OR IMPLIED 
+	generic();//     WARRANTY AS TO ANY MATTER WHATSOVER, INCLUDING THE CONDITIONS OF THE
+	generic();//     SOFTWARE, DOCUMENTATION OR OTHER INFORMATION RELEASED, MADE AVAILABLE 
+	generic();//     OR DISCLOSED, OR THE OWNERSHIP, MERCHANTABILITY, OR FITNESS FOR A
+	generic();//     PARTICULAR PURPOSE OF SAID MATERIAL.
+	generic();//*
+	generic();// CHECK THAT A STATEMENT LABEL INSIDE A BLOCK BODY CAN BE THE
+	generic();//    SAME AS A VARIABLE, CONSTANT, NAMED LITERAL, SUBPROGRAM,
+	generic();//    ENUMERATION LITERAL, TYPE, OR PACKAGE DECLARED IN THE
+	generic();//    ENCLOSING BODY.
+	generic();// RM 02/12/80
+	generic();// JBG 5/16/83
+	generic();// JBG 8/21/83
+	generic();// JRK 12/19/83
+	generic(WITH REPORT; USE REPORT;);//
+
+input(PROCEDURE  A83A06A  IS);//
+	generic(LAB_VAR            :  INTEGER;);//
+	generic(LAB_CONST          :  CONSTANT INTEGER := 12;);//
+	generic(LAB_NAMEDLITERAL   :  CONSTANT := 13;);//
+	process(TYPE  ENUM  IS        ( AA , BB , LAB_ENUMERAL ););//
+
+input(TYPE  LAB_TYPE  IS    NEW INTEGER;);//
+
+input(PROCEDURE  LAB_PROCEDURE  IS);//
+	output(BEGIN);//
+	generic(NULL;);//
+end(END LAB_PROCEDURE;);//
+generic(FUNCTION  LAB_FUNCTION  RETURN INTEGER  IS);//
+output(BEGIN);//
+generic(RETURN 7;);//
+end(END LAB_FUNCTION;);//
+
+input(PACKAGE  LAB_PACKAGE  IS);//
+	generic(INT : INTEGER;);//
+	end(END LAB_PACKAGE;);//
+	output(BEGIN);//
+	generic(TEST ("A83A06A", "CHECK THAT STATEMENT LABELS INSIDE A BLOCK " &);//
+	generic("BODY CAN BE THE SAME AS IDENTIFIERS DECLARED "&);//
+	generic("OUTSIDE THE BODY"););//
+	output(LAB_BLOCK_1 :   BEGIN  NULL;  END     LAB_BLOCK_1;);//
+	loop(LAB_LOOP_1  :   LOOP   EXIT;  END LOOP LAB_LOOP_1;);//
+	lend();//
+	output(BEGIN);//
+	generic(<< LAB_VAR >>                    );// OK.
+	output(BEGIN NULL; END;);//
+	generic(<< LAB_ENUMERAL >>        NULL;  );// OK.
+	generic(<< LAB_PROCEDURE >>                   );// OK.
+	loop(FOR  I  IN  INTEGER  LOOP);//
+		generic(<< LAB_CONST >>      NULL;  );// OK.
+		generic(<< LAB_TYPE >>       NULL;  );// OK.
+		generic(<< LAB_FUNCTION >>   EXIT;  );// OK.
+	lend(END LOOP;);//
+	generic(<< LAB_NAMEDLITERAL >>    NULL;  );//
+	generic(<< LAB_PACKAGE >>         NULL;  );//
+	end(END;);//
+	generic(LAB_BLOCK_2 :                          );// OK.
+	output(BEGIN  NULL;  END LAB_BLOCK_2;);//
+	loop(LAB_LOOP_2  :                          );// OK.
+	lend(LOOP   EXIT;  END LOOP LAB_LOOP_2;);//
+	generic(RESULT;);//
+end(END A83A06A;);//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 0 13158600 0 0 13158600 8421376 0 8388863 0 0 16777215 0 32896
+;    *.txt   --   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 434 109 365 439 47 100   209   4294965879    ada-9x.key  0

@@ -1,0 +1,31 @@
+;  IRL FlowCode Version: Version 10.0
+;  c1995-2015: Visual Flow Coder by 2LResearch
+;
+;  File Name : python_basic.ins.bak
+;  File Date : 11:03:57 AM - 27:Sep:2023
+
+
+input(//BEGIN_INSECTA_TEMPLATE);//NOTE:  ALL MAP_VARIABLES MUST START WITH A '$'
+event(//MAP_VARIABLE $appname=python_app   ENTER: Enter the application's name (Do not use spaces, extension or punctuation.));//
+event(//MAP_VARIABLE $keyfile =python.key);//
+event(//MAP_VARIABLE $Resource=Ui_Resources.ui  ENTER: Enter the UI resourece file name);//
+event();////MAP_VARIABLE $model = myNet  ENTER:  name of functional network model.
+set(//SET_INSECTA_FILENAME    $appname.py.vfc);//
+set(//SET_EXPORT_FILENAME    $appname.py);//
+set(//SET_LANGUAGE_KEY    python.key);//
+end(//END_INSECTA_TEMPLATE );//
+generic();// ////
+generic();// ////
+event(from PyQt5 import uic);//
+event(from PyQt5.QtWidgets import QApplication);//
+generic(Form, Window = uic.loadUiType("$Resource"));//
+end();//
+branch(if __name__ == '__main__':);//
+path();//
+output(print( '---------- RUNNING  $appname -----------');//
+output(print( '----------DONE----------'));//
+path(else: );//
+output(print( '---------- IMPORTING FROM $appname -----------');//
+bend( );//
+
+

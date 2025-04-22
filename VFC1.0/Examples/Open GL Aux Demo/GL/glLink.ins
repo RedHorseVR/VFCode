@@ -1,0 +1,21 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : glLink.ins
+;  File Date : 01:40:55 PM - 16:Aug:1997
+
+
+input(REM NORMAL BATCH FILE );//
+   process();//SET  INCLUDE = c:\MSDEV\INCLUDE
+   process();//SET LIB = c:\MSDEV\LIB
+   process(c:\msdev\bin\link  /out:%1.exe  *.obj  *.res  /LibPath:c:\msdev\lib\   libc.lib oldnames.lib  kernel32.lib Gdi32.lib User32.lib  Comdlg32.lib Opengl32.lib Glu32.lib Glaux.lib  Advapi32.lib|);//
+end(EXIT );// 
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 8421440
+;    glLINK.bat   REM   
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 157 385 817 246 4 100   124   47    dos.key  0

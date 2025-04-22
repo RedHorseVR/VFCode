@@ -1,0 +1,52 @@
+;  IRL FlowCode Version: Version 10.0
+;  c1995-2015: Visual Flow Coder by 2LResearch
+;
+;  File Name : Test.vfc
+;  File Date : 10:44:26 PM - 04:Oct:2024
+
+set(PRAGMA LIST(Off););//PRAGMA LIST(On);
+generic(WITH Ada.Text_IO; USE Ada.Text_IO;);//
+
+input(PROCEDURE Factorial IS);//
+branch();//
+path();///auto path//
+
+input(FUNCTION Factorial(N : Integer) RETURN Integer IS);//
+output(BEGIN);//
+branch(IF N <= 1 THEN);//
+path();// auto path
+end(RETURN 1;);//
+path(ELSE);//
+generic(RETURN N * Factorial(N - 1););//
+bend(END IF;);//
+branch(EXCEPTION);//
+path(WHEN Numeric_Error =>);//
+generic(Put(" !"););//
+generic(return -1;);//
+bend();//
+end(END Factorial;);//
+path();//
+output(BEGIN);//
+loop(FOR I IN 2 .. 8 LOOP);//
+generic(Put("Factorial of "););//Put("Fatorial de ");
+generic(Put( Integer'IMAGE(I) ););//
+generic(Put(" = "););//Put(" e' ");
+generic(Put_Line( Integer'IMAGE( Factorial(I) ) ););//
+lend(END LOOP;);//
+loop(FOR I IN 2 .. 8 LOOP);//
+generic(Put("Factorial of "););//Put("Fatorial de ");
+generic(Put( Integer'IMAGE(I) ););//
+generic(Put(" = "););//Put(" e' ");
+generic(Put_Line( Integer'IMAGE( Factorial(I) ) ););//
+lend(END LOOP;);//
+bend();//
+end(END Factorial;);//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 0 13158600 0 0 13158600 6579300 0 16777215 0 0 0 0 65535
+;    TEST.ADA   --   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 1645 246 1096 889 22 130   406   22    ada.key  0

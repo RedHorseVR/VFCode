@@ -1,0 +1,30 @@
+;  Insecta Robotica Language Version 2.0 - February 1996 Beta 
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : lingo.ins
+;  File Date : 02:24:21 PM - 20:Mar:2002
+
+
+input(on playqt);//
+	set(  set the movierate of sprite 6 to 1);//
+	set(  set the stoptime of sprite 6 = the duration of cast (the castnum of sprite 6));//
+	loop(  repeat while the movietime of sprite 6 < the duration of cast (the castnum of sprite 6));//
+		process(    go to the frame);//notes on perf.
+		generic(    updatestage);//
+		branch(    if the mousedown then exit  );//fixed
+			path();// auto path
+			lend(  end repeat);//
+			set(  set the visible of sprite 6 = 0);//
+			generic(  go to THE frame + 1);//
+			set(  set the visible of sprite 6 = 1);//
+	bend(end if);//
+end(end palyqt);//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 0 13158600 0 0 13158600 6579300 0 16777215 0 0 0 0 16777215
+;    lingo.txt   --   ;
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 513 160 385 456 0 100   208   54    lingo.key 

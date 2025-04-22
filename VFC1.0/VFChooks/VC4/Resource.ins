@@ -1,0 +1,21 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1996: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : Resource.ins
+;  File Date : 11:28:25 PM - 10:Nov:1998
+
+
+input(REM NORMAL BATCH FILE );//
+process(SET  INCLUDE = C:\PROGRA~1\DEVSTU~1\VC\INCLUDE);//
+generic(C:\PROGRA~1\DEVSTU~1\VC\bin\rc -Ic:C:\PROGRA~1\DEVSTU~1\VC\INCLUDE  -DWIN32 -DWINVER=0x0400 -r  %1);//
+set();//
+end(EXIT );// 
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    Resource.BAT   REM   
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 125 347 804 328 2 100   419   74    dos.key  0

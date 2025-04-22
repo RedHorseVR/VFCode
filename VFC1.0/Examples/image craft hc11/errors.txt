@@ -1,0 +1,2 @@
+crt.s,crt.s(12): symbol Undefined on pass 2
+crt.s,crt.s(12): symbol Undefined on pass 2

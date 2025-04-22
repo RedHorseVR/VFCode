@@ -1,0 +1,99 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : DIRSCAN.ins
+;  File Date : 04:23:49 PM - 18:Dec:2000
+
+
+input(#!/usr/bin/perl --);//  
+end();//
+set($I = 0; );//
+set( $FLAG = 0;);//
+
+input(  sub ScanDir { local($directory) = @_;);//
+set(local( $DIR ););//
+set($I = $I+1;  );//
+set($DIR = "DIR$I";);//
+output(print "<UL><LI>\n";);//print "<<$directory>>\n";
+process(  opendir($DIR, "$root_web_path/$directory" ););//
+loop(  while ( $filename = readdir( $DIR ) ) {);//
+branch(if ( $filename =~ m/^\./   ||  $filename =~ m/$cur_dir/  ));//
+path( { );//
+path( }else{ );//
+set($J = 1;);//
+loop(while( $J < $I ) {);//
+output(print( "  " ););//
+lend( $J=$J+1;});//
+set($relpath = "$directory/$filename" ;);//
+set($relpath =~ s/$cur_dir\///;);//
+branch(if ( $directory eq "$cur_dir" ));//
+path( { );//
+branch(if ( $FLAG == 0 ));//
+path( { );//
+set($FLAG = 1;);//
+output(print "<OBJECT type=\"text/sitemap\"><param name=\"Name\" value=\"Title\"><param name=\"Local\" value=\"Home.htm\"></OBJECT>\n";);//
+output(print "<OBJECT type=\"text/sitemap\"><param name=\"Name\" value=\"Contents\"><param name=\"Local\" value=\"Contents.html\"></OBJECT>\n";);//
+path(} else { );//
+bend( } );//
+path( }else{ );//
+output();//print "<OBJECT type=\"text/sitemap\"><param name=\"Name\" value=\"$filename\"><param name=\"Local\" value=\"$relpath\"></OBJECT>\n";
+bend( } );//
+branch(if (   opendir("DIR_TEST", "$root_web_path/$directory/$filename" )   ));//
+path( { );//
+process(closedir( "DIR_TEST" ););//
+output();//print "$filename---";
+branch( if ( $filename =~ m/Chapter/   ));//
+path( { );//
+output(print "<OBJECT type=\"text/sitemap\"><param name=\"Name\" value=\"$filename\"><param name=\"Local\" value=\"$relpath\"></OBJECT>\n";);//
+output(print( TOC   "<PRE>\n<A  hREF=\"$relpath\">\"$filename\"</A>\n</PRE>" ) ;);//
+process(ScanDir( "$directory/$filename" ););//
+path( }else{ );//
+bend( } );//
+path( }else{ );//
+output();//print "$filename\n";
+branch(if ( $directory eq "$cur_dir" ));//
+path( { );//
+path( }else{ );//
+branch(if ( $relpath =~ m/\.html/ ));//
+path( { );//
+output(print "<OBJECT type=\"text/sitemap\"><param name=\"Name\" value=\"$filename\"><param name=\"Local\" value=\"$relpath\"></OBJECT>\n";);//
+path( }else{ );//
+bend( } );//
+bend( } );//
+bend( } );//
+bend( } );//
+lend(  }  );//
+process(closedir( $DIR ););//
+output(print( "</UL>\n" ););//print( "... close $DIR: $directory\n" );
+end(});//
+
+input(# program );//
+output(print "Content-type: text/html\n\n"; );//
+generic($root_web_path = $ENV{ 'PATH'  };);//
+generic($root_web_path = "C:\\perl5\\docs";);//
+generic($cur_dir  = "";);//
+output(print( "ROOT =  $root_web_path\n\n------\n " ););//
+output(print( "... SCANNING DIR: $cur_dir\n" ););//
+process( open( TOC,  ">Contents.html" )  ;);//
+branch(if( open( FP ,  ">SiteMap.hhc" )  ));//
+path({);///auto path//
+set(select( FP ););//
+output(print( "<OBJECT type=\"text/site properties\"><param name=\"FrameName\" value=\"right\"></OBJECT>\n" ););//
+process(ScanDir( $cur_dir ););//
+process(close( FP ); );//
+set(select( STDOUT ););//
+output(print( "... done \n" ););//
+path(} else { );//
+output(print "Hello world\n"; );//
+bend(});//
+set(close( TOC ););//
+end( # end );//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 255 0 255 255 65535 65280 9633792
+;    DIRSCAN   #   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 185 312 1021 647 65 119   522   4294965530    perl.key  0

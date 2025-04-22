@@ -1,0 +1,24 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : cmpDLL.ins
+;  File Date : 03:35:11 AM - 20:Jan:1999
+
+
+input(REM Compile DLL);//
+process(SET INCLUDE="C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE");//
+process(PATH="C:\Program Files\Microsoft Visual Studio\VC98\Bin;C:\Program Files\Microsoft Visual Studio\COMMON\MSDEV98\Bin");//
+process(CL.EXE %1  /nologo /W3 /GX /D "WIN32" /c /I"C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE");//
+process(ECHO ._______________________________________________);//
+process(ECHO COMPILE FINISHED);//
+end(EXIT );// 
+end(EXIT );// 
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    cmpDLL.BAT   REM   
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 341 729 960 357 3 100   469   72    dos.key  0

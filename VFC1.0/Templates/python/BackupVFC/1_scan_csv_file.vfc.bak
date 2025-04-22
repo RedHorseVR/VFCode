@@ -1,0 +1,31 @@
+;  IRL FlowCode Version: Version 10.0
+;  c1995-2015: Visual Flow Coder by 2LResearch
+;
+;  File Name : scan_csv_file.vfc.bak
+;  File Date : 09:06:26 PM - 18:Jul:2024
+
+
+input(//BEGIN_INSECTA_TEMPLATE);//NOTE:  ALL MAP_VARIABLES MUST START WITH A '$'
+event(//MAP_VARIABLE $appname=scan_csv ENTER: Enter the application's name (Do not use spaces or punctuation.));//
+event(//MAP_VARIABLE $testfile = test.txt ENTER:  name of functional network model.);//
+set(//SET_INSECTA_FILENAME    $appname.py.vfc);//
+set(//SET_EXPORT_FILENAME    $appname.py);//
+set(//SET_LANGUAGE_KEY    python.key);//
+end(//END_INSECTA_TEMPLATE );//
+event();//import keras
+event();//import numpy as np
+generic();//from keras.models import Sequential
+generic();//from keras.models import load_model
+generic();//from keras.layers import Dense, Dropout, Flatten
+generic();//from keras.layers import Conv2D, MaxPooling2D
+generic();//from keras.optimizers import SGD
+end();//
+branch(if __name__ == '__main__':);//
+path();//
+output(print( '--------------------- Running  $appname.py on $testfile' ));//
+output(print( '--------DONE---------' ));//
+path(else: );//
+output(print( '--------------------- Loading Import file  $appname.py '));//
+bend( );//
+
+

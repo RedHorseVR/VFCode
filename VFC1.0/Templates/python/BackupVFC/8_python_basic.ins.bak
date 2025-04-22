@@ -1,0 +1,22 @@
+;  IRL FlowCode Version: Version 10.0
+;  c1995-2015: Visual Flow Coder by 2LResearch
+;
+;  File Name : python_basic.ins.bak
+;  File Date : 12:56:47 AM - 24:Sep:2023
+
+
+input(//BEGIN_INSECTA_TEMPLATE);//NOTE:  ALL MAP_VARIABLES MUST START WITH A '$'
+event();////MAP_VARIABLE $appname=python_app.py   ENTER: Enter the application's name (Do not use spaces or punctuation.)
+event(//MAP_VARIABLE $keyfile =python.key);//
+event();////MAP_VARIABLE $model = myNet  ENTER:  name of functional network model.
+set();////SET_INSECTA_FILENAME    $appname.py.vfc
+set();////SET_EXPORT_FILENAME    $appname.py
+set();////SET_LANGUAGE_KEY    python.key
+end(//END_INSECTA_TEMPLATE );//
+event(import pytorch);//
+event(import numpy as np);//
+end();//
+set();//  Generate dummy data 
+output(print( '----------DONE----------'));//
+
+

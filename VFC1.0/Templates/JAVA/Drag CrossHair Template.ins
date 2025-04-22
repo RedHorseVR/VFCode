@@ -1,0 +1,57 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : Drag CrossHair.ins
+;  File Date : 07:15:08 PM - 30:Oct:1996
+
+
+input(//BEGIN_INSECTA_TEMPLATE );//
+end(//END_INSECTA_TEMPLATE );//
+
+input(/** recipe log **/);//<--- part of framework
+	process(/**<TIME_STAMP> added Cross Hairs segments using: 'CrossHair.sg'  **/);//
+end(//AFFIRM_END);//
+
+input(/** class data **/);//<--- used in framework
+	generic(int CrossSize =  200; //AFFIRM_SET);//  
+	generic(int CrossXPos = 10; //AFFIRM_SET);//  
+	generic(int CrossYPos = 10; //AFFIRM_SET);//  
+end(//AFFIRM_END   );//
+
+input(/** methods **/);//<--- used in framework
+	end(//AFFIRM_END   );//
+	event(void drawCrossHair( Graphics g, int x, int y, int size ){);//
+	generic(g.drawLine( x - size, y, x +size, y););//  
+	generic(g.drawLine( x, y - size , x, y + size ););//  
+	end(} );//  
+	event(boolean processCrossHairPosition( Event e ){);//
+	branch(switch (e.id){);//  
+		path(case Event.MOUSE_DOWN:);//  
+		path(case Event.MOUSE_DRAG:);//
+			generic(CrossXPos = e.x;);//  
+			generic(CrossYPos = e.y;);//  
+			generic(repaint(););//  
+			end(return true;);//  
+			set();//
+	bend(} );//  
+end(return false;} );//
+
+input(public void paint(Graphics g){);//  
+	process(drawCrossHair( g, CrossXPos, CrossYPos, CrossSize ););//
+end(} //AFFIRM_END);//  
+
+input(public boolean handleEvent(Event e){);//  
+	branch(if( processCrossHairPosition( e ) ));//
+		path({);//
+			end(return true;);//
+	bend(});//
+end(return false; }//AFFIRM_END);//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    //   //   //
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 190 83 562 857 9 100   277   4294967235    template.key  0

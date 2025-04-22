@@ -1,0 +1,35 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : HTML Java Link Template.ins
+;  File Date : 05:16:00 PM - 25:Jan:1999
+
+
+input(//BEGIN_INSECTA_TEMPLATE);//NOTE:  ALL MAP_VARIABLES MUST START WITH A '$'
+event(//MAP_VARIABLE $appname=JavaAppletENTER: Enter the applet's name (Do not use spaces or punctuation.));//
+set(//SET_INSECTA_FILENAME    HTML_$appname.ins);//
+set(//SET_EXPORT_FILENAME    $appname.html);//
+set(//SET_LANGUAGE_KEY   html.key);//
+end(//END_INSECTA_TEMPLATE );//
+
+input(<title>HYPER LINK TO $appname</title>);//FILE: $appname.ins
+process(<h1> );//
+process(<i> );//
+set($appname Applet Page);//
+process(</i> );//
+process(</h1> );//
+end(<hr>);//
+event(<applet code=$appname.class width=400 height=400>);//
+end(</applet>);//
+process(<hr>);//
+
+input(<a href="$appname.java"> Export source code from $appname.ins </a>);//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    //   //   //
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 443 182 618 712 17 108   290   4294967186    template.key  0

@@ -1,0 +1,124 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : Queens.ins
+;  File Date : 10:46:25 PM - 10:Aug:1997
+
+
+input((defun threat (i j a b));//
+   generic((or (= i a)                       );//Same row
+   generic((= j b)                       );//Same column
+   generic((= (- i j) (- a b))           );//One diag.
+   generic((= (+ i j) (+ a b))));//the other diagonal
+end());//
+
+input((defun conflict (n m board));// Is poistion (n,m) on the board safe for a queen ?
+   branch((cond ((null board) nil));//
+      path();// auto path
+         generic(((threat n m (caar board) (cadar board)) t));//
+      path((t (conflict n m (cdr board))));//
+   bend());//
+end());//
+
+input((defun queens (size));// Place queens on a board of size SIZE
+   generic((prog (n m board soln));//
+   process((setq soln 0)                   );//Solution #
+   process((setq board ()));//
+   process((setq n 1)                      );//Try the first row
+   loop(loop-n     );//
+      process((setq m 1)                      );//Column 1
+      loop(loop-m     );//
+         branch((cond ((conflict n m board));//
+            path();// auto path
+               end((go un-do-m)));//
+         bend() );// Check for conflict
+         process((setq board (cons (list n m) board))       );// Add queen to board
+         branch((cond ((> (setq n (1+ n)) size)            );//
+            path();///auto path//
+               process((print-board (reverse board) (setq soln (1+ soln)))));//
+         bend() );// Print it
+         end((go loop-n));//
+         generic(un-do-n     );//
+         branch((cond ((null board) (return 'Done)));//
+            path();// auto path
+         bend());//       ; Tried all possibilities
+         process((setq m (cadar board))                     );// No, Undo last queen placed
+         process((setq n (caar board)));//
+         process((setq board (cdr board))  );//
+         generic(un-do-m);//
+         end((cond ((> (setq m (1+ m)) size)  (go un-do-n)));//
+      lend((t (go loop-m)))));//
+end());//
+generic();//Print a board
+
+input((defun print-board  (board soln));//
+   generic((prog (size));//
+   process((setq size (length board))            );//we can find our own size
+   generic((princ "\f\n\t\tSolution: "));//
+   generic((princ soln));//
+   generic((princ "\n\n\t"));//
+   generic((print-header size 1));//
+   generic((princ "\n"));//
+   generic((print-board-aux board size 1));//
+   generic((princ "\n"));//
+   generic());//
+   generic());//
+   generic();// Put Column #'s on top
+
+input((defun print-header (size n));//
+   branch((cond ((> n size) (princ "\n")));//
+      path((t );//
+         generic((prog () (patom n));//
+         generic((princ " ") );//
+         generic((print-header size (1+ n)))));//
+   bend());//
+   generic());//
+
+input((defun print-board-aux (board size row));//
+   generic((princ "\n"));//
+   branch((cond ((null board) ()));//
+      path((t );//
+         generic((prog () );//
+         generic((princ row)                  );//print the row #
+         generic((princ "\t"));//
+         generic((print-board-row (cadar board) size 1) );//Print the row
+         generic((print-board-aux (cdr board) size (1+ row)))));//
+   bend()  );// Next row
+   generic());//
+
+input((defun print-board-row (column size n));//
+   branch((cond ((> n size)()));//
+      path((t (prog () );//
+         branch((cond ((equal column n) (princ "Q")));//
+            path((t );//
+               generic((princ ".")));//
+         bend());//
+         generic((princ " ") );//
+         generic((print-board-row column size (1+ n)))));//
+   bend());//
+end());//
+set();//
+generic();// Place n queens on a board (graphical version)
+generic();//  See Winston and Horn Ch. 11
+generic();// 
+generic();// Usage:
+generic();//       (queens <n>)
+generic();//          where <n> is an integer -- the size of the board - try (queens 4)
+generic();//
+generic();// I do not know who the original Author of this is but it was found with some
+generic();// XLISP example lisp programs. This has been slightly modified to run on   
+generic();// PC-LISP V2.13.
+generic();//
+generic();//               Peter Ashwood-Smith
+generic();//               August 22nd, 1986
+generic();// Do two queens threaten each other ?
+end();//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    Queens.lsp   ;   ;
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 655 119 656 852 1 100   319   57    lisp.key  0

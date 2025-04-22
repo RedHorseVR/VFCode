@@ -1,0 +1,35 @@
+;  IRL FlowCode Version: Version 8.0 - mAY 2009
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : Compile.ins
+;  File Date : 04:01:11 PM - 19:Oct:2009
+
+
+input(REM C COMPILE);//
+process();//DEL %1.obj
+process();//c:\msdev\bin\CL %1  /Ic:\MSDEV\INCLUDE /IC:\SSVPARSE\INCLUDE  /nologo /W3 /GX /D "WIN32" /D "_CONSOLE" /D "MSDOS" /c  |more
+process();//c:\msdev\bin\CL %1  /Ic:\MSDEV\INCLUDE /nologo /W3 /GX /D "WIN32" /c  |more
+process();//SHELL=c:\windows\command.com  /e:1025
+process();//C:\PROGRA~1\DEVSTU~1\VC\BIN\VCVARS32.BAT
+process(SET INCLUDE="C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE");//
+process(PATH="C:\Program Files\Microsoft Visual Studio\VC98\Bin\");//PATH="C:\Program Files\Microsoft Visual Studio\VC98\Bin\;C:\Program Files\Microsoft Visual Studio\cOMMON\MSDev98\Bin\"
+process(PATH );//
+process(MKDIR obj);//SET LIB = c:\MSDEV\LIB
+process(CD  );//
+process(CL.EXE %1  /nologo /W3 /GX /D "WIN32" /c /I"C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE");//"C:\PROGRAM FILES\DEVSTUDIO\VC\bin\CL.exe" %1  /Ic:\MSDEV\INCLUDE  /Ic:\JDK1.1\INCLUDE /Ic:\JDK1.1\INCLUDE\WIN32   /I. /IF:\US&R\DEVELOP\_Insect
+process();//DEL obj\*.obj
+process(COPY *.obj   obj\*.obj);//
+process(DEL *.obj);//
+process(ECHO ._______________________________________________);//
+process(ECHO COMPILE FINISHED);//
+end(PAUSE );//
+end(EXIT );// 
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 12632256 4227200
+;    Compile.BAT   REM   
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 4294967292 4294967292 1032 608 13 130   527   4294967081    dos.key  0

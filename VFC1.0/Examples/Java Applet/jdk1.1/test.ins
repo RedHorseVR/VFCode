@@ -1,0 +1,23 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : test.ins
+;  File Date : 05:47:54 PM - 08:Jul:1997
+
+
+input(REM  );//
+   process(SET  "JAVA_HOME=C:\Jdk1.1");//
+   generic(SET CLASSPATH=.;C:\JDK1.1\LIB;C:\BDK\BEANBOX\classes);//
+   process(SET CLASSPATH=C:\liquid_real\lib\lrcore.zip;%CLASSPATH%);//
+   process(C:\Jdk1.1\bin\appletviewer.exe %1);//
+   process();//PAUSE 
+end(EXIT );//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    test.bat   REM   
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 932 309 517 349 5 100   260   58    dos.key  0

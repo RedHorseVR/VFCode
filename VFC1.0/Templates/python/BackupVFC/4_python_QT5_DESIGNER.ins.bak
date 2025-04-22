@@ -1,0 +1,35 @@
+;  IRL FlowCode Version: Version 10.0
+;  c1995-2015: Visual Flow Coder by 2LResearch
+;
+;  File Name : python_QT5_DESIGNER.ins.bak
+;  File Date : 04:04:25 PM - 29:Sep:2023
+
+
+input(//BEGIN_INSECTA_TEMPLATE);//NOTE:  ALL MAP_VARIABLES MUST START WITH A '$'
+event(//MAP_VARIABLE $appname=python_app   ENTER: Enter the application's name (Do not use spaces, extension or punctuation.));//
+event(//MAP_VARIABLE $keyfile =python.key);//
+set(//SET_INSECTA_FILENAME    $appname.py.vfc);//
+set(//SET_EXPORT_FILENAME    $appname.py);//
+set(//SET_LANGUAGE_KEY    $keyfile);//
+end(//END_INSECTA_TEMPLATE );//
+generic();// ////
+generic();// ////
+event(from PyQt5 import uic);//
+event(from PyQt5.QtWidgets import QApplication);//
+generic(Form, Window = uic.loadUiType("$appname.ui"));//
+end();//
+branch(if __name__ == '__main__':);//
+path();//
+output(print( '---------- RUNNING  $appname -----------'));//
+generic(app = QApplication([]) );// ////
+generic(window = Window() );// ////
+generic(form = Form() );// ////
+generic(form.setupUi(window) );// ////
+generic(window.show() );// ////
+generic(app.exec());// ////
+output(print( '----------DONE----------'));//
+path(else: );//
+output(print( '---------- IMPORTING FROM $appname -----------' ));//
+bend( );//
+
+

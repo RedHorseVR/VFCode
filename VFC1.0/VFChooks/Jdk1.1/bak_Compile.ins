@@ -1,0 +1,19 @@
+;  IRL FlowCode Version: Version 8.0 - mAY 2009
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : \bak_Compile.ins
+;  File Date : 12:27:35 AM - 18:Nov:2009
+
+
+input(REM   Batch file process to set up and run java compiler on %1 in its own environment);//
+process(ECHO on);//
+process(PROMPT );//
+process(SET  "JAVA_HOME=C:\Program Files\Java\jdk1.6.0_13\bin");//
+generic(SET CLASSPATH=".;C:\Program Files\Java\jdk1.6.0_13\LIB;");//
+process(ECHO Running Javac ...);//
+generic("C:\Program Files\Java\jdk1.6.0_13\bin\javac" %1);// 
+process(ECHO Done.);//
+end(PAUSE );//
+end(EXIT );//
+
+

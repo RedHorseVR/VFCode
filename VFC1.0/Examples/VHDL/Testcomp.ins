@@ -1,0 +1,74 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : Testcomp.ins
+;  File Date : 01:46:17 AM - 12:May:1997
+
+
+input( -- F:\US&R\INSECT~2\VHDLTE~1\TESTCOMP.VHD --  );//  FILE:F:\US&R\INSECT~2\VHDLTE~1\TESTCOMP.VHD 
+end();//
+generic();//  -----------------------------------------------------..   Test bench for 8-bit c
+generic();// omparator..   This test bench verifies the operation of the..   comparator. There
+generic();//  are three alternate architectures..   provided in the comparator source file (co
+generic();// mpare.vhd),..   so this test bench will make use of configuration..   specificati
+generic();// ons to create three unique instances of the..   lower-level entity, each represen
+generic();// ting one of the..   three types of comparators...   Copyright 1995, Accolade Desi
+set( library ieee; );// gn Automation, Inc...   Load the ieee 1164 library.. 
+process( use ieee.std_logic_1164.all; );// --  Make the package 'visible'..  
+process( use work.compare; );// --  Make the contents of 'work' available..  
+
+input( entity testcomp is );//   The top level entity of the test bench has no ports..... 
+end( end testcomp; );// 
+
+input( architecture stimulus of testcomp is );// 
+   process( component compare );//   First, declare the lower-level entity (compare)..... 
+   process( port (a,b: in std_ulogic_vector(0 to 7); );// 
+   set( EQ: out std_ulogic); );// 
+end( end component; );// 
+set( signal a,b: std_ulogic_vector(0 to 7); );//   Next, declare some local signals to assign values to..... 
+set( signal EQ,LT,GT: std_ulogic; );// 
+process( for COMP1: compare use entity work.compare(equality); );//   Now, create the three unique configurations..... 
+process( for COMP2: compare use entity work.compare(less_than); );// 
+process( for COMP3: compare use entity work.compare(greater_than); );// 
+output( begin );// 
+process( COMP1: compare port map(A,B,EQ); );//   Create the three instances of the comparator circuit..... 
+process( COMP2: compare port map(A,B,LT); );// 
+process( COMP3: compare port map(A,B,GT); );// 
+
+input( process );//   Now run a process to apply some stimulus over time..... 
+   set( constant PERIOD: time := 40 ns; );// 
+   output( begin );// 
+   set( A <= "00001111"; );//  ... 0F.. 
+   set( B <= "11110000"; );//  ... F0.. 
+   output( wait for PERIOD; );// 
+   set( A <= "11111111"; );//  ... FF.. 
+   set( B <= "11111111"; );//  ... FF.. 
+   output( wait for PERIOD; );// 
+   set( A <= "10101010"; );//  ... AA.. 
+   set( B <= "01010101"; );//  ... 55.. 
+   output( wait for PERIOD; );// 
+   set( A <= "10101010"; );//  ... AA.. 
+   set( B <= "10101010"; );//  ... AA.. 
+   output( wait for PERIOD; );// 
+   set( A <= "11111010"; );//  ... FA.. 
+   set( B <= "01011111"; );//  ... 5F.. 
+   output( wait for PERIOD; );// 
+   set( A <= "00000000"; );//  ... 00.. 
+   set( B <= "00000000"; );//  ... 00.. 
+   output( wait for PERIOD; );// 
+   output( wait; );// 
+end( end process; );// 
+end( end stimulus; );// 
+generic();//  --------------------------------------------------------------------------------
+generic();// --------------..   Exported By Insecta Version 2.0 - October 1996 Beta 3..   Inse
+generic();// cta File: Test Compare.ins..   Export  File: Testcomp.vhd..   Export  Date: 01:30
+end();//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 0 13158600 0 0 13158600 8388672 8388863 16776960 0 0 8388608 8388608 12632256
+;    TESTCOMP.VHD   --   ..
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 999 138 394 821 1 85   189   4294966523    vhdl.key  0

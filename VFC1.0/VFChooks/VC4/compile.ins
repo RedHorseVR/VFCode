@@ -1,0 +1,26 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : compile.ins
+;  File Date : 11:27:44 PM - 19:Jan:1999
+
+
+input(REM C COMPILE);//
+process(MKDIR obj);//SET LIB = c:\MSDEV\LIB
+process(ECHO OFF );//
+process(ECHO ._______________________________________________);//
+process(c:\msdev\bin\CL %1.C  /Ic:\MSDEV\INCLUDE  /I. /nologo /W3 /GX /D "WIN32" /c);//c:\msdev\bin\CL "%1"  /Ic:\MSDEV\INCLUDE /IC:\SSVPARSE\INCLUDE  /nologo /
+process(COPY %1.obj   obj\%1.obj);//
+process(DEL %1.obj);//
+process(ECHO OFF );//
+process(ECHO COMPILE FINISHED);//
+end(EXIT );// 
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 12632256 4227200
+;    compile.bat   REM   
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 184 438 775 470 5 130   393   44    dos.key  0

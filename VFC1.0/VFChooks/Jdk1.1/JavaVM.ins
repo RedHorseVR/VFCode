@@ -1,0 +1,23 @@
+;  IRL FlowCode Version: Version 8.0 - mAY 2009
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : JavaVM.ins
+;  File Date : 11:39:18 PM - 17:Nov:2009
+
+
+input(REM  );//
+process(SET  "JAVA_HOME=C:\Program Files\Java\jdk1.6.0_13\bin");//
+generic(SET CLASSPATH=".;C:\Program Files\Java\jdk1.6.0_13\LIB;");//
+process(java.exe %1);//
+end(PAUSE );//
+process();//PAUSE 
+end();//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    JavaVM.BAT   REM   
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 34 490 642 404 2 100   342   60    dos.key  0

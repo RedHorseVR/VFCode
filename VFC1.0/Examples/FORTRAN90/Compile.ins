@@ -1,0 +1,24 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : Compile.ins
+;  File Date : 05:27:36 PM - 12:Aug:1997
+
+
+input(REM   Batch file process to set up and run compiler in its own environment);//
+   set(SET LIB=);//
+   set(SET PATH=C:\ELF90);//
+   set(SET  LIB=C:\ELF90);//ECHO COMPILING
+   process(COPY C:\ELF90\TNT.EXE);//   required dos extender file
+   process(COPY C:\ELF90\dosstyle.dll);//   required dos style library. 
+   generic(C:\ELF90\Elf90.exe  %1);//
+end(EXIT );//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    COMPILE.BAT   REM   
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 747 90 560 349 6 100   271   68    dos.key  0

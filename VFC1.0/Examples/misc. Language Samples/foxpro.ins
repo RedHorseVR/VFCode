@@ -1,0 +1,53 @@
+;  Insecta Robotica Language Version 2.0 - August 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : foxpro.ins
+;  File Date : 03:45:37 PM - 30:Sep:2002
+
+
+input(PROCEDURE Prt_MCk);//
+	generic(PARAMETER pr_out);//
+	branch(IF EMPTY(pr_out));//
+		path();// auto path
+			generic(pr_out = 'PREVIEW');//
+	bend(ENDIF);//
+	branch(IF NOT FILE(gcdbfpath+'mer_cks.dbf'));//
+		path();// auto path
+			event(WAIT WINDOW 'Need to create merchant check record set');//
+			end(RETURN);//
+	bend(ENDIF);//
+	branch(IF USED('mer_cks'));//
+		path();// auto path
+			generic(SELECT mer_cks);//
+		path(ELSE);//
+			generic(SELECT 0);//
+			generic(USE gcDbfPath + 'mer_cks');//
+	bend(ENDIF);//
+	generic(GO TOP);//
+	set(SET ESCAPE OFF);//
+	loop(SCAN);//
+		event(WAIT WINDOW 'Position next check in printer'+CHR(13)+;);//
+		generic('or press <ESC> to exit ..');//
+		set(SET ESCAPE OFF);//
+		branch(IF LASTKEY() = 27);//
+			path();// auto path
+				generic(EXIT);//
+		bend(ENDIF);//
+		generic(* LABEL FORM mer_cks next 1 &pr_out);//
+		generic(report form mer_cks next 1 &pr_out);//
+	lend(ENDSCAN);//
+	set(SET ESCAPE ON);//
+	branch(IF USED('wc_case'));//
+		path();// auto path
+			generic(SELECT wc_case);//
+	bend(ENDIF);//
+end(RETURN);//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 0 13158600 0 0 13158600 6579300 0 16777215 0 0 0 0 16777215
+;    test.fox   &&   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 4294967292 4294967292 1288 1032 22 90   685   45    foxpro.key  0

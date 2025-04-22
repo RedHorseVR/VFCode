@@ -1,0 +1,28 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : LinkCLIB.ins
+;  File Date : 12:07:17 AM - 06:Jun:1997
+
+
+input(REM NORMAL BATCH FILE );//
+   process();//SET  INCLUDE = c:\MSDEV\INCLUDE
+   process();//SET LIB = c:\MSDEV\LIB
+   process(ECHO OFF );//
+   process(DEL y_tab.obj);//
+   process(ECHO ._______________________________________________);//
+   process(ECHO ON );//
+   generic(c:\msdev\bin\link /out:%1.exe *.obj *.res /LibPath:c:\msdev\lib\  kernel32.lib comctl32.lib user32.lib gdi32.lib winspool.lib advapi32.lib shell32.lib comdlg32.lib  *.lib);//c:\msdev\bin\link /out:%1.exe *.obj *.res  /LibPat
+   process(ECHO OFF );//
+   process(ECHO ._______________________________________________);//
+   process(ECHO LINK FINISHED);//
+end(EXIT );// 
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    linkCLIB.bat   REM   
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 20 20 897 561 8 100   407   56    dos.key  0

@@ -1,0 +1,89 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : QSORT.ins
+;  File Date : 09:51:24 PM - 10:Aug:1997
+
+
+input( unit qsort; );// 
+   branch(interface);//
+      path();//
+      
+input( implementation);//
+         set(  const max = 100;);// const max = 50;
+         set( type list = array[1..max] of integer; );// 
+         set( var data: list; );// 
+         set( i: integer; );// 
+      path();//
+      
+input( procedure quicksort(var a: list; Lo,Hi: integer); );// 
+         branch();//
+            path();//
+            
+input( procedure sort(l,r: integer); );//
+               branch();// 
+                  path( var );// 
+                     set( i,j,x,y: integer; );// 
+               bend();// 
+               branch( begin );//
+                  path();//
+                     set( i:=l; );// 
+                     set( j:=r; );// 
+                     set( x:=a[(l+r) DIV 2]; );// 
+                     loop( repeat);// 
+                        loop( while a[i]<x do);// 
+                        lend( i:=i+1; );//
+                        loop( while x<a[j] do );// 
+                        lend( j:=j-1; );//
+                        branch(if i<=j then);//
+                           path(begin);//
+                              set(y:=a[i]; a[i]:=a[j]; a[j]:=y;);//
+                              generic(i:=i+1; j:=j-1;);//
+                        bend(end;);//
+                     lend(until i>j;);//
+                     branch( if l<j );// 
+                        path( then );//
+                           set( sort(l,j); );// 
+                     bend();// 
+                     branch( if i<r );// 
+                        path( then );//
+                           set( sort(i,r); );// 
+                     bend();// 
+               bend(end;);//
+            path(begin {quicksort};);//
+               process(sort(Lo,Hi););//
+               end(end;);//
+               set();//
+         bend();//
+      path();//
+      
+input(begin {qsort});//
+         process(writeln;);//
+         process(writeln;);//
+         process(Write('Now generating some random numbers...'););//Write('Now generating 1000 random numbers...');
+         process(writeln;);//
+         generic(Randomize;);//
+         loop(for i:=1 to max do begin);//
+            process(data[i]:=Random(30000););//
+            process(Write(data[i]:8););//Randomize;
+         lend(end;);//
+         process(writeln;);//
+         process(writeln;);//
+         process(Write('Now sorting random numbers...'););//
+         process(writeln;);//
+         process(quicksort(data,1,max););//
+         loop(for i:=1 to max do);//
+            process(Write(data[i]:8););//Randomize;
+         lend();//
+         end(end.);//
+         set();//
+   bend();//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 255 0 255 255 10485760 0 65535
+;    QSORT.PAS   {   }
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 603 155 596 464 1 105   284   30    delphi.key  0

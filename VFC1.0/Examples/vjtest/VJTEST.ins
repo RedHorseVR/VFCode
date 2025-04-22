@@ -1,0 +1,217 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : VJTEST.ins
+;  File Date : 05:09:52 PM - 12:Aug:1997
+
+
+input( /**  C:\WINDOWS\PROFILES\LUIS\DESKTOP\VJTEST\VJTEST~1.JAV  **/  );//  FILE:C:\WINDOWS\PROFILES\LUIS\DESKTOP\VJTEST\VJTEST~1.JAV 
+end();//
+set( import java.applet.*; );// 
+set( import java.awt.*; );// 
+set( import vjtestFrame; );// 
+event( public class vjtest extends Applet implements Runnable { );// 
+set( private Thread m_vjtest = null;);// 
+set( private Graphics m_Graphics; );// 
+set( private Image m_Images[];);// 
+set( private int m_nCurrImage; );// 
+set( private int m_nImgWidth =0; );// 
+set( private int m_nImgHeight =0; );// 
+set( private boolean m_fAllLoaded =false; );// 
+set( private final int NUM_IMAGES =18; );// 
+generic();// // STANDALONE APPLICATION SUPPORT:
+generic();// //  m_fStandAlone will be set to true if applet is run standalone
+generic();// //--------------------------------------------------------------------------
+set( private boolean m_fStandAlone =false; );// 
+
+input( public static void main(String args[]) );// 
+   set( { );// 
+   set(   vjtestFrame frame =new vjtestFrame("vjtest"); );// 
+   generic();// // Must show Frame before we size it so insets() will return valid values
+   generic();// //----------------------------------------------------------------------
+   set( frame.show(); );// 
+   set( frame.hide(); );// 
+   set( frame.resize(frame.insets().left + frame.insets().right + 320, frame.insets().top + frame.insets().bottom + 240); );// 
+   set( vjtest applet_vjtest =new vjtest(); );// 
+   set( frame.add("Center", applet_vjtest); );// 
+   set( applet_vjtest.m_fStandAlone =true; );// 
+   set( applet_vjtest.init(); );// 
+   set( applet_vjtest.start(); );// 
+   set( frame.show(); );// 
+end( } );// 
+
+input( public vjtest() );// 
+   set( { );// 
+end(   } );// 
+
+input( public String getAppletInfo() );// 
+   set( { );// 
+end(   return "Name: vjtest\r\n" + "Author: Luis Lopez\r\n" + "Created with Microsoft Visual J++ Version 1.1"; );// 
+end( } );// 
+
+input( public void init() );// 
+   set( { );// 
+   set(   resize(320, 240); );// 
+end( } );// 
+
+input( public void destroy() );// 
+   set( { );// 
+end(   } );// 
+
+input(private synchronized   void displayImage(Graphics g));// 
+   set( { );// 
+   branch(   if (!m_fAllLoaded) );// 
+      path();//
+         end( return; );// 
+         set();// 
+   bend();// 
+   set( g.drawImage(m_Images[m_nCurrImage], (size().width - m_nImgWidth) / 2, (size().height - m_nImgHeight) / 2, null); );// 
+   branch(try );//
+      path( {  );//
+         process();//wait(200);
+      path(}  catch(InterruptedException e) {);//
+         set( g.drawString("! Interrupted ...", 10, 20););// 
+   bend( } );//
+end( } );// 
+
+input( public void paint(Graphics g) );// 
+   generic();// // ANIMATION SUPPORT:
+   generic();// //  The following code displays a status message until all the
+   generic();// // images are loaded. Then it calls displayImage to display the current
+   generic();// // image.
+   generic();// //----------------------------------------------------------------------
+   set( { );// 
+   branch(   if (m_fAllLoaded) );// 
+      path( { );// 
+         set(   Rectangle r =g.getClipRect(); );// 
+         set( g.clearRect(r.x, r.y, r.width, r.height); );// 
+         set( displayImage(g); );// 
+         set( } );// 
+      path(   else );// 
+         set( g.drawString("Loading images...", 10, 20); );// 
+   bend();// 
+end( } );// 
+
+input( public void start() );// 
+   set( { );// 
+   branch(   if (m_vjtest == null) );// 
+      path( { );// 
+         set(   m_vjtest =new Thread(this); );// 
+         set( m_vjtest.start(); );// 
+   bend();// 
+end( } } );// 
+
+input( public void stop() );// 
+   set( { );// 
+   branch(   if (m_vjtest != null) );// 
+      path( { );// 
+         set(   m_vjtest.stop(); );// 
+         set( m_vjtest =null; );// 
+   bend();// 
+end( } } );// 
+
+input( public void run() );// 
+   set( { );// 
+   set(   m_nCurrImage =0; );// 
+   generic();// // If re-entering the page, then the images have already been loaded.
+   generic();// // m_fAllLoaded == TRUE.
+   generic();// //----------------------------------------------------------------------
+   branch( if (!m_fAllLoaded) );// 
+      path( { );// 
+         set(   repaint(); );// 
+         set( m_Graphics =getGraphics(); );// 
+         set( m_Images =new Image[NUM_IMAGES]; );// 
+         set( MediaTracker tracker =new MediaTracker(this); );// 
+         set( String strImage; );// 
+         generic();// // For each image in the animation, this method first constructs a
+         generic();// // string containing the path to the image file; then it begins
+         generic();// // loading the image into the m_Images array.  Note that the call to
+         generic();// // getImage will return before the image is completely loaded.
+         generic();// //------------------------------------------------------------------
+         loop( for (int i = 1; i <= NUM_IMAGES; i++) { );// 
+            set( strImage ="images/img00" + ((i < 10) ? "0" : "") + i + ".gif"; );// 
+            branch( if (m_fStandAlone) );// 
+               path();//
+                  set( m_Images[i-1] =Toolkit.getDefaultToolkit().getImage(strImage); );// 
+               path( else );// 
+                  set( m_Images[i-1] =getImage(getDocumentBase(), strImage); );// 
+            bend();// 
+            set( tracker.addImage(m_Images[i-1], 0); );// 
+         lend( } );// 
+         set();// 
+         branch( try { );// 
+            path();//
+               set( tracker.waitForAll(); );// 
+               set( m_fAllLoaded =!tracker.isErrorAny(); );// 
+               set( } );// 
+            path(   catch (InterruptedException e) { );// 
+         bend( } );// 
+         set();// 
+         branch( if (!m_fAllLoaded) );// 
+            path( { );// 
+               set(   stop(); );// 
+               set( m_Graphics.drawString("Error loading images!", 10, 40); );// 
+               end( return; );// 
+               set();// 
+         bend();// 
+         set( } m_nImgWidth =m_Images[0].getWidth(this); );// 
+         set( m_nImgHeight =m_Images[0].getHeight(this); );// 
+   bend();// 
+   set( }repaint(); );// 
+   loop( while (true) { );// 
+      branch( try { );// 
+         path();//
+            set( displayImage(m_Graphics); );// 
+            set( m_nCurrImage++; );// 
+            branch( if (m_nCurrImage == NUM_IMAGES) );// 
+               path();//
+                  set( m_nCurrImage =0; );// 
+            bend();// 
+            set( Thread.sleep(50); );// 
+            set( } );// 
+         path(   catch (InterruptedException e) { );// 
+            set( stop(); );// 
+      bend( } );// 
+   lend( } );// 
+end( } );// 
+
+input( public boolean mouseDown(Event evt, int x, int y) );// 
+   set( { );// 
+end(   return true; );// 
+end( } );// 
+
+input( public boolean mouseUp(Event evt, int x, int y) );// 
+   set( { );// 
+end(   return true; );// 
+end( } );// 
+
+input( public boolean mouseDrag(Event evt, int x, int y) );// 
+   set( { );// 
+end(   return true; );// 
+end( } );// 
+
+input( public boolean mouseMove(Event evt, int x, int y) );// 
+   set( { );// 
+end(   return true; );// 
+end( } );// 
+
+input( public boolean mouseEnter(Event evt, int x, int y) );// 
+   set( { );// 
+end(   return true; );// 
+end( } );// 
+
+input( public boolean mouseExit(Event evt, int x, int y) );// 
+   set( { );// 
+end(   return true; );// 
+end( } );// 
+end( } );// 
+end();//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 12632256 0 255 255 16776960 65280 16512
+;    vjtest.java   //   ...
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 859 159 493 466 58 75   307   4294966062    visualj.key  0

@@ -1,0 +1,318 @@
+;  IRL FlowCode Version: Version 10.0
+;  c1995-2015: Visual Flow Coder by 2LResearch
+;
+;  File Name : AMW_Splash.dart.vfc.bak
+;  File Date : 09:12:19 PM - 01:Nov:2023
+
+event(import 'package:flutter/material.dart';);// 
+event(import 'AMW_HomePage.dart';);//// FILE:AMW_HomePage.dart.vfc
+set();//   
+event(import '../AMW_CvPage.dart';);//
+event(import 'AMW_LoginPage.dart';);//    FILE:. \AMW_LoginPage.dart.vfc
+end();//
+
+input( class SplashPage extends StatefulWidget {);//
+branch();//
+path();//
+path();// > --------------------------input 0 
+set(const SplashPage({super.key, required this.title}););//
+set();//   
+set();//  // This widget is the home page of your application. It is stateful, meaning
+set();//  // that it has a State object (defined below) that contains fields that affect
+set();//  // how it looks.
+set();//  
+set();//  // This class is the configuration for the state. It holds the values (in this
+set();//  // case the title) provided by the parent (in this case the App widget) and
+set();//  // used by the build method of the State. Fields in a Widget subclass are
+set();//  // always marked "final".
+set();//  
+set(final String title;);//   
+set();//   
+set(@override);//   
+process(State<SplashPage> createState() => _SplashPageState(););//
+bend();//
+end(});//  
+set(final _formKey = GlobalKey<FormState>(););//   
+set(TextEditingController email = TextEditingController(););//   
+set(TextEditingController pwd = TextEditingController(););//   
+
+input( class _SplashPageState extends State<SplashPage> {);//
+branch();//
+path();//
+path();// > --------------------------input 0 
+set();//   
+set(@override);//   
+
+input( Widget build(BuildContext context) {);//
+branch(return Scaffold();//   
+path();//
+branch(appBar: AppBar();//    
+path();//
+set(      title: Text(widget.title),);//title: Text( 'hello ' ),
+path();//
+bend(),);//    
+path(body:);//
+branch(Column();//// //////
+path();//
+branch(children: [);//// //////
+path();//
+process();//_header2( name , description ) ,
+branch(Expanded();//        
+path();//
+process(child: BaseLayout(  ),);//
+set();//child: CardWidget(),
+path();//
+bend(),);//        
+set(          );//CardWidget(),
+path();//
+branch(ElevatedButton();//          
+path();//
+set(child: const Text( "Open Wallet" ),);//            
+path();//
+
+input( onPressed: () {);//////////////
+output(print( "**** ------------- OPEN WALLET -------------- **** " ) ;);////               //
+branch(if( checkLogin( email.text , pwd.text )  ));//
+path( {);//
+process(Navigator.push( context,MaterialPageRoute(  builder: (context) => HomePage(email: 'name', titleText: const Text( 'American Medical Wallet ...' ) ) ,  ) ););////         //
+path(}else{);//
+process(Navigator.push( context,MaterialPageRoute(  builder: (context) => LoginPage( title: const Text( 'Log in for American Medical Wallet' ) ) ,  ) ););////         //
+output(// home: const LoginPage(title: 'my American Medical Wallet'),);//FILE:.\AMW_LoginPage.dart.vfc
+bend( });//
+end(},);////            //
+bend(),);//          
+bend(],);//// //////
+bend(),);//// //////
+path();//
+set();//_splash( _formKey , emailController , passwordController ),
+bend(););//
+end(});//  
+bend();//
+end(});////   //
+
+input( bool checkLogin( String email, String pwd ) {);//
+output(print( "**** ------------- checkLogin() -------------- **** " ) ;);////               //
+branch(            );//if (_formKey.currentState!.validate()) {
+path();//
+branch(if ( email == " " && pwd == " " ) {);//       
+path();//
+end(return true;);//
+path( } else {);//////
+end(return false;);//
+bend(});////////       //////
+bend();////        //
+end(});//////
+
+input(class BaseLayout extends StatelessWidget{);//// //////
+generic(@override);// ////
+branch(Widget build(BuildContext context){);//// //////
+path();//
+branch(return Scaffold();//// //////
+path();//
+branch(body: Container();//// //////
+path();//
+branch(decoration: BoxDecoration();//// //////
+path();//
+branch(image: DecorationImage();//// //////
+path();//
+generic(image: AssetImage("assets/heart.png"),);// ////
+generic(fit: BoxFit.cover,);// ////
+bend(),);//// //////
+bend(),);//// //////
+event( );//child: null /* add child content here */,
+bend(),);//// //////
+path();//
+bend(););//// //////
+path();//
+bend(});//// //////
+end(});//// //////
+
+input(class _splash extends StatelessWidget {);//
+set();//final String email;
+set(      );//final title ;
+set(final _formKey ;);//      
+generic(final emailController; final passwordController;);// ////
+set( const _splash(   this._formKey, this.emailController , this.passwordController  ););//// _splash(   this._formKey, this.emailController , this.passwordController , this.title  );//
+event(@override);//
+event(Widget build(BuildContext  context) {);//
+set(return);//  
+branch(SingleChildScrollView();//    
+path(child: Form ();//
+set(key: _formKey,);//      
+branch(child: Padding();//     
+path();//
+set(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),);//       
+branch(child: Column();//      
+path();//
+set(crossAxisAlignment: CrossAxisAlignment.center,);//        
+branch(children: [);//       
+path();//
+set();//     
+branch( Card();//     
+path();//
+set(elevation: 1,);//        
+set(color: Color(0xf067f0a4),);//        
+branch(child: Column();//       
+path();//
+set(mainAxisSize: MainAxisSize.min,);//         
+branch(children: <Widget>[);//        
+path();//
+branch(const ListTile();//        
+path();//
+set(leading: Icon(Icons.lock_outlined   ),);//          
+set(title: Text('Login Page'),);//          
+set();//subtitle: Text( 'Pleease log in or create an account' ),
+set(subtitle: Text( 'Please enter your email and password to open the wallet.  If you forgot your log in info, or need an account, use the Create or Recover button.' ),);//             
+path();//
+bend(),);//        
+branch(Row();//        
+path();//
+set(mainAxisAlignment: MainAxisAlignment.end,);//          
+branch(children: <Widget>[);//         
+path();//
+set();//          
+set(const SizedBox(width: 8),);//          
+branch(TextButton();//         
+path();//
+set(child: const Text('Create or Recover Account'),);//           
+path();//
+event(onPressed: () {);// ////
+branch(Navigator.push(context,MaterialPageRoute();//        
+path(builder: (context) => CvPage( 'account', 'register or recover your account ...'  ) ,);////FILE:..\CvPage.dart.vfc -Goto 9
+bend(),););//        
+end(} ,);//
+bend(),);//         
+set(const SizedBox(width: 8),);//          
+path();//
+bend(],);//         
+path();//
+bend(),);//        
+path();//
+bend(],);//        
+path();//
+bend(),);//       
+path();//
+bend(),);//       
+set();//     
+set();//     
+branch(Padding();//        
+path(padding:);//         
+set(const EdgeInsets.symmetric(horizontal: 8, vertical: 16),);//            
+branch(child: TextFormField();//         
+path();//
+set(controller: emailController,);//           
+branch(decoration: const InputDecoration();//          
+path();//
+set(border: OutlineInputBorder(), labelText: "Email"),);//             
+
+input( validator: (value) {);//
+branch();//
+path();//
+path();// > --------------------------input 0 
+branch(if (value == null || value.isEmpty) {);//           
+path();//
+set(return 'Please enter your email';);//             
+bend(});////           //
+end(return null;);////            //
+bend(},);////           //
+path();//
+bend(),);//         
+path();//
+bend(),);//        
+branch(Padding();//        
+path(padding:);//         
+set(const EdgeInsets.symmetric(horizontal: 8, vertical: 16),);//            
+branch(child: TextFormField();//         
+path();//
+set(controller: passwordController,);//           
+set(obscureText: true,);//           
+branch(decoration: const InputDecoration();//          
+path();//
+set(border: OutlineInputBorder(), labelText: "Password"),);//             
+
+input( validator: (value) {);//
+branch();//
+path();//
+path();// > --------------------------input 0 
+branch(if (value == null || value.isEmpty) {);//           
+path();//
+set(return 'Please enter your password';);//             
+bend(});//
+set(return null;);//            
+bend(},);////           //
+path();//
+bend(),);//         
+path();//
+bend(),);//        
+branch(Padding();//        
+path(padding:);//         
+set(const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),);//            
+branch(child: Center();//         
+path();//
+branch(child: ElevatedButton();//          
+path();//
+set(child: const Text( "Open Wallet" ),);//            
+process( onPressed: () {);//////////
+branch();//
+path();// > --------------------------input 0 
+branch(if (_formKey.currentState!.validate()) {);//            
+path();//
+set();//              
+event(  // Navigate the user to the Home page);//
+set();//        
+branch(if ( emailController.text == " " && passwordController.text == " " ) {);//       
+path();//
+output(print( "**** -------------**** ------------------- **** " ) ;);////               //
+branch(Navigator.push();//        
+path();//
+set(context,);//         
+branch(MaterialPageRoute();//        
+path();//
+event();//// FILE:AMW_HomePage.dart.vfc -Goto 13
+branch(builder: (context) => HomePage();//         
+path();//
+set(email: emailController.text,);//          
+path();//
+output( titleText: const Text( 'American Medical Wallet ...' ),);//titleText: const Text( title ),
+bend(),);//        
+bend(),);//        
+path();//
+bend(););//        
+path( } else {);//////
+branch(ScaffoldMessenger.of(context).showSnackBar();//        
+path();//
+process(const SnackBar(content: Text('Invalid Credentials')),);////        //
+bend(););//        
+bend(});////////       //////
+set();//        
+path( } else {);//////
+branch();//
+path();// > --------------------------input 0 
+process(ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please fill input')),);//             
+bend(););//             
+bend(});//
+bend(},);////            //
+path();//
+bend(),);//          
+path();//
+bend(),);//         
+path();//
+bend(),);//        
+path();//
+bend(],);//       
+path();//
+bend(),);//      
+path();//
+bend(),);//     
+path();//
+bend(),);//    
+path();//
+bend(););//   
+bend();//
+end(});//  
+end(});//  
+set();//  
+end();//
+end();//
+
+

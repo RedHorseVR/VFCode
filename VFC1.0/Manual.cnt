@@ -1,0 +1,201 @@
+:Base Manual.hlp>Main
+1 Chapter 1 - Visual FlowCoder Introduction, Philosophy and Setup
+2 Introduction to Visual FlowCoder=IntroductiontoVisualFlowCoder@Manual.hlp>Main
+2 Visual FlowCoder's Philosophy=VisualFlowCoder.sPhilosophy@Manual.hlp>Main
+2 Installing Visual FlowCoder=InstallingVisualFlowCoder@Manual.hlp>Main
+2 Re-Setting or Changing Visual FlowCoder's User Registration Information=Re.SettingorChangingVisualFlowCoder.sUserRegistrationInformation@Manual.hlp>Main
+2 Entering Your User Information=EnteringYourUserInformation@Manual.hlp>Main
+2 Uninstalling Visual FlowCoder=UninstallingVisualFlowCoder@Manual.hlp>Main
+1 Chapter 2 - FlowCode Objects, Toolbars and Menus
+2 What is FlowCode?=WhatisFlowCode.@Manual.hlp>Main
+2 The FlowCode Object Statements
+3 The FlowCode Object Statements=TheFlowCodeObjectStatements@Manual.hlp>Main
+3 Types of Objects=TypesofObjects@Manual.hlp>Proc
+2 Editing FlowCode Object Statements
+3 Editing FlowCode Object Statements=EditingFlowCodeObjectStatements@Manual.hlp>Main
+3 Selecting and Inserting Statement Objects
+4 Selecting and Inserting Statement Objects=SelectingandInsertingStatementObjects@Manual.hlp>Proc
+4 Area Select=AreaSelect@Manual.hlp>Proc
+4 Area Select for Large Diagrams=AreaSelectforLargeDiagrams@Manual.hlp>Proc
+3 Object Modifications
+4 Object Modifications=ObjectModifications@Manual.hlp>Proc
+2 The Object Toolbar
+3 The Object Toolbar=TheObjectToolbar@Manual.hlp>Main
+2 The Standard Toolbar
+3 The Standard Toolbar=TheStandardToolbar@Manual.hlp>Main
+2 The Custom Toolbar
+3 The Custom Toolbar=TheCustomToolbar@Manual.hlp>Main
+2 The Export Toolbar
+3 The Export Toolbar=TheExportToolbar@Manual.hlp>Main
+2 The File Menu
+3 The File Menu=TheFileMenu@Manual.hlp>Main
+3 New=New@Manual.hlp>Proc
+3 Import & Export=Import.Export@Manual.hlp>Proc
+3 Save As=SaveAs@Manual.hlp>Proc
+3 Backup=Backup@Manual.hlp>Proc
+3 Print=Print@Manual.hlp>Proc
+2 The Edit Menu
+3 The Edit Menu=TheEditMenu@Manual.hlp>Main
+3 Insert FlowCode Object=InsertFlowCodeObject@Manual.hlp>Proc
+3 Change Object Type To:=ChangeObjectTypeTo.@Manual.hlp>Proc
+3 Copy
+4 Copy=Copy@Manual.hlp>Proc
+4 Normal=Normal@Manual.hlp>Proc
+4 Selection to Clipboard as Metafile=SelectiontoClipboardasMetafile@Manual.hlp>Proc
+4 Function to Clipboard as Metafile=FunctiontoClipboardasMetafile@Manual.hlp>Proc
+4 Export Selection to Clipboard=ExportSelectiontoClipboard@Manual.hlp>Proc
+4 Export All to Clipboard=ExportAlltoClipboard@Manual.hlp>Proc
+4 Export by Object Type to Clipboard=ExportbyObjectTypetoClipboard@Manual.hlp>Proc
+3 Paste
+4 Paste=Paste@Manual.hlp>Proc
+3 Line Number
+4 Line Number=LineNumber@Manual.hlp>Proc
+3 Set Bookmark
+4 Set Bookmark=SetBookmark@Manual.hlp>Proc
+3 Clear All Bookmarks
+4 Clear All Bookmarks=ClearAllBookmarks@Manual.hlp>Proc
+3 GoTo Diagram Top/Bottom
+4 GoTo Diagram Top/Bottom=GoToDiagramTop.Bottom@Manual.hlp>Proc
+3 Select
+4 Select=Select@Manual.hlp>Proc
+2 The View Menu
+3 The View Menu=TheViewMenu@Manual.hlp>Main
+3 Zoom=Zoom@Manual.hlp>Proc
+3 FlowCode Statement Viewer=FlowCodeStatementViewer@Manual.hlp>Proc
+3 Show Comments=ShowComments@Manual.hlp>Proc
+3 Show FlowCode Statement Names=ShowFlowCodeStatementNames@Manual.hlp>Proc
+3 Use Comments for Object Names=UseCommentsforObjectNames@Manual.hlp>Proc
+3 Center Current, or Top, Object=CenterCurrent.orTop.Object@Manual.hlp>Proc
+2 The Insert Menu
+3 The Insert Menu=TheInsertMenu@Manual.hlp>Main
+2 The Analysis Menu
+3 The Analysis Menu=TheAnalysisMenu@Manual.hlp>Main
+2 The Settings Menu
+3 The Settings Menu=TheSettingsMenu@Manual.hlp>Main
+3 VFC System Directories …=VFCSystemDirectories.@Manual.hlp>Proc
+3 Default Text Editor …=DefaultTextEditor.@Manual.hlp>Proc
+3 Appearance=Appearance@Manual.hlp>Proc
+2 The Tools Menu
+3 The Tools Menu=TheToolsMenu@Manual.hlp>Main
+2 The Help Menu
+3 The Help Menu=TheHelpMenu@Manual.hlp>Main
+2 The Language Help Menu
+3 The Language Help Menu=TheLanguageHelpMenu@Manual.hlp>Main
+2 The Context Sensitive Right Mouse Button Menu
+3 The Context Sensitive Right Mouse Button Menu=TheContextSensitiveRightMouseButtonMenu@Manual.hlp>Main
+1 Chapter 3 - Language and Tool Customization
+2 Customizing FlowCoder
+3 Customizing FlowCoder=CustomizingFlowCoder@Manual.hlp>Main
+3 Setting the Language KeyFile=SettingtheLanguageKeyFile@Manual.hlp>Proc
+2 Import and Export Settings
+3 Import and Export Settings=ImportandExportSettings@Manual.hlp>Main
+3 The Language and Import/Export Dialog
+4 The Language and Import/Export Dialog=TheLanguageandImport.ExportDialog@Manual.hlp>Proc
+4 Language Area=LanguageArea@Manual.hlp>Proc
+4 Import Settings=ImportSettings@Manual.hlp>Proc
+4 Export Settings=ExportSettings@Manual.hlp>Proc
+4 Advanced Export Settings=AdvancedExportSettings@Manual.hlp>Proc
+4 Comments=Comments@Manual.hlp>Proc
+2 Key Files
+3 Key Files=KeyFiles@Manual.hlp>Main
+3 Editing Keyfiles=EditingKeyfiles@Manual.hlp>Proc
+3 Programming Keyfiles=ProgrammingKeyfiles@Manual.hlp>Proc
+3 Summary of KeyFile Symbols=SummaryofKeyFileSymbols@Manual.hlp>Proc
+2 The VFC Console
+3 The VFC Console=TheVFCConsole@Manual.hlp>Main
+2 The VFC Pipe Tool Utility
+3 The VFC Pipe Tool Utility=TheVFCPipeToolUtility@Manual.hlp>Main
+2 VFC Utility Components
+3 VFC Utility Components=VFCUtilityComponents@Manual.hlp>Main
+1 Chapter 4 - Navigating FlowCode
+2 Moving About In Your Flowchart
+3 Moving About In Your Flowchart=MovingAboutInYourFlowchart@Manual.hlp>Main
+3 The Basics=TheBasics@Manual.hlp>Proc
+3 The Statement Viewer=TheStatementViewer@Manual.hlp>Proc
+3 The Path Viewer=ThePathViewer@Manual.hlp>Proc
+2 The VFC Browse Utility
+3 The VFC Browse Utility=TheVFCBrowseUtility@Manual.hlp>Main
+3 Invoking VFC Browse=InvokingVFCBrowse@Manual.hlp>Proc
+1 Chapter 5 - Importing Code
+2 Parsing
+3 Parsing=Parsing@Manual.hlp>Main
+3 Using the ParseManager Utility
+4 Using the ParseManager Utility=UsingtheParseManagerUtility@Manual.hlp>Proc
+4 Running a Parser from ParseManager=RunningaParserfromParseManager@Manual.hlp>Proc
+4 Drag-Drop Parsing=Drag.DropParsing@Manual.hlp>Proc
+3 Batch File Parsing
+4 Batch File Parsing=BatchFileParsing@Manual.hlp>Proc
+2 Import Paste
+3 Import Paste=ImportPaste@Manual.hlp>Main
+3 Developing An Import Paste Keyfile Filter=DevelopingAnImportPasteKeyfileFilter@Manual.hlp>Proc
+3 Testing the Import Paste KeyFile Filter=TestingtheImportPasteKeyFileFilter@Manual.hlp>Proc
+1 Chapter 6 - Exporting Code
+2 Going from FlowCode to Code
+3 Going from FlowCode to Code=GoingfromFlowCodetoCode@Manual.hlp>Main
+3 A Simple Export Tutorial in DOS=ASimpleExportTutorialinDOS@Manual.hlp>Proc
+2 Summary of Visual FlowCoder Export Macros
+3 Summary of Visual FlowCoder Export Macros=SummaryofVisualFlowCoderExportMacros@Manual.hlp>Main
+1 Chapter 7 - Printing
+2 The VFCprint Utility
+3 The VFCprint Utility=TheVFCprintUtility@Manual.hlp>Main
+3 Invoking The VFCprint Module=InvokingTheVFCprintModule@Manual.hlp>Proc
+3 Options for the Printed Page=OptionsforthePrintedPage@Manual.hlp>Proc
+3 Tips for Printing Large Files=TipsforPrintingLargeFiles@Manual.hlp>Proc
+1 Chapter 8 - Right Click File and Object Controls
+2 Right Click a FlowCode File=RightClickaFlowCodeFile@Manual.hlp>Main
+2 Right Click a FlowCode Object=RightClickaFlowCodeObject@Manual.hlp>Main
+1 Chapter 9 - The Visual FlowCoder Template Reuse System
+2 Introduction to FlowCode Templates
+3 Introduction to FlowCode Templates=IntroductiontoFlowCodeTemplates@Manual.hlp>Main
+3 Invoking the Template Engine=InvokingtheTemplateEngine@Manual.hlp>Proc
+3 Inserting a Template=InsertingaTemplate@Manual.hlp>Proc
+1 Chapter 10 - Using Visual FlowCoder with Visual Studio 6.0
+2 Visual FlowCoder's Visual C++ 6.0 Add-in
+3 Visual FlowCoder's Visual C++ 6.0 Add-in=VisualFlowCoder.sVisualC..6.0Add.in@Manual.hlp>Main
+3 Setting up the Visual C++ Add-in=SettinguptheVisualC..Add.in@Manual.hlp>Proc
+3 Using the Visual C++ 6.0 Add-in=UsingtheVisualC..6.0Add.in@Manual.hlp>Proc
+2 Visual FlowCoder's Visual Basic 6.0 Add-in
+3 Visual FlowCoder's Visual Basic 6.0 Add-in=VisualFlowCoder.sVisualBasic6.0Add.in@Manual.hlp>Main
+3 Setting up the Visual Basic Add-in=SettinguptheVisualBasicAdd.in@Manual.hlp>Proc
+3 Using the Visual Basic Add-in=UsingtheVisualBasicAdd.in@Manual.hlp>Proc
+3 Export Filename Conventions Used in the Visual Basic Add-in=ExportFilenameConventionsUsedintheVisualBasicAdd.in@Manual.hlp>Proc
+2 The Visual J++ 6.0 and Visual FoxPro 6.0 Add-ins
+3 The Visual J++ 6.0 and Visual FoxPro 6.0 Add-ins=TheVisualJ..6.0andVisualFoxPro6.0Add.ins@Manual.hlp>Main
+1 Chapter 11 - Nesting and Controlling FlowCoder
+2 Hyperlinking FlowCode Files for Nested Systems
+3 Hyperlinking FlowCode Files for Nested Systems=HyperlinkingFlowCodeFilesforNestedSystems@Manual.hlp>Main
+3 Creating Links=CreatingLinks@Manual.hlp>Proc
+3 Opening a Link=OpeningaLink@Manual.hlp>Proc
+2 Command Line Controls
+3 Command Line Controls=CommandLineControls@Manual.hlp>Main
+3 Animating and Tracking Profile Data=AnimatingandTrackingProfileData@Manual.hlp>Proc
+3 Summary of Command Line Controls=SummaryofCommandLineControls@Manual.hlp>Proc
+1 FlowLynx's End User License Agreement
+2 End User License Agreement (EULA)
+3 End User License Agreement (EULA)=EndUserLicenseAgreement.EULA.@Manual.hlp>Main
+3 A) LICENSE=A.LICENSE@Manual.hlp>Proc
+3 B) YOU MAY=B.YOUMAY@Manual.hlp>Proc
+3 C) YOU MAY NOT=C.YOUMAYNOT@Manual.hlp>Proc
+3 D) TERM=D.TERM@Manual.hlp>Proc
+3 E) WARRANTY=E.WARRANTY@Manual.hlp>Proc
+3 F) LIMITATION OF WARRANTIES AND LIABILITY=F.LIMITATIONOFWARRANTIESANDLIABILITY@Manual.hlp>Proc
+3 G) RESTRICTED RIGHTS=G.RESTRICTEDRIGHTS@Manual.hlp>Proc
+3 H) GENERAL=H.GENERAL@Manual.hlp>Proc
+1 Release 1.0 Notes
+2 NEW AND IMPROVED FEATURES  SINCE THE PRE-RELEASE=NEWANDIMPROVEDFEATURESSINCETHEPRE.RELEASE@Manual.hlp>Main
+2 TIPS AND KNOWN GLITCHES
+3 TIPS AND KNOWN GLITCHES=TIPSANDKNOWNGLITCHES@Manual.hlp>Main
+3 OPERATING SYSTEM AND EXTERNAL TOOLS=OPERATINGSYSTEMANDEXTERNALTOOLS@Manual.hlp>Proc
+3 REMOVING COMPILED HTML HELP FILES=REMOVINGCOMPILEDHTMLHELPFILES@Manual.hlp>Proc
+3 TOOLS AND LINKS TO TOOLS=TOOLSANDLINKSTOTOOLS@Manual.hlp>Proc
+3 THE WIN95/98 BUILT-IN CONSOLE TOOL=THEWIN95.98BUILT.INCONSOLETOOL@Manual.hlp>Proc
+3 HELP FILES=HELPFILES@Manual.hlp>Proc
+3 VISUAL STUDIO ADD-INS=VISUALSTUDIOADD.INS@Manual.hlp>Proc
+3 THE VFC GUI=THEVFCGUI@Manual.hlp>Proc
+3 IMPORT PASTE GLITCHES=IMPORTPASTEGLITCHES@Manual.hlp>Proc
+3 THE TEMPLATE ENGINE=THETEMPLATEENGINE@Manual.hlp>Proc
+3 MISCELLANEOUS=MISCELLANEOUS@Manual.hlp>Proc
+3 PRINTING=PRINTING@Manual.hlp>Proc
+3 SIMULATION MODE=SIMULATIONMODE@Manual.hlp>Proc
+1 Glossary of Terms
+2 Glossary of Terms=GlossaryOfTerms.D2H@Manual.hlp>Main

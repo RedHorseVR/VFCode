@@ -1,0 +1,326 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : calc.ins
+;  File Date : 10:50:17 PM - 10:Aug:1997
+
+
+input( <!--  calc.htm  -->  );//  FILE:calc.htm 
+end();//
+generic( <!-- calc.htm --> );// 
+generic( <!-- calc.htm --> );// 
+generic( <!-- calc.htm --> );// 
+generic( <HTML> );// 
+
+input( <HEAD> );// 
+   generic( <TITLE>VBScript Sample: Calculator</TITLE> );// 
+   generic( </HEAD> );// 
+   generic( <BODY BGCOLOR=FFFFFF LINK=#0033CC TOPMARGIN=15 LEFTMARGIN=20> );// 
+   set( <P> );// 
+   generic( <FONT SIZE=3> <!-- global default --> );// 
+   end( <SCRIPT LANGUAGE="VBScript"> );// 
+   generic( <!-- );// 
+   generic( ' Module-level variables );// 
+   event( Sub Procedure1() );// 
+   generic( mSGbOX "Test Procedure" );//
+   end( end sub );// 
+   generic( Dim Accum ' Previous number (operand) awaiting operation );// 
+   generic( Dim FlagNewNum ' Flag to indicate a new number (operand) is being entered );// 
+   loop( Dim PendingOp ' Pending operation waiting for completion of second operand );// 
+      event( Sub NumPressed(Byval Num) );// 
+      branch( If FlagNewNum Then );// 
+         path();///auto path//
+            generic( ' /auto path//' );// 
+            generic( Document.Keypad.Readout.Value = Num );// 
+            generic( FlagNewNum = False );// 
+         path( Else );// 
+            branch( If Document.Keypad.Readout.Value = "0" Then );// 
+               path();///auto path//
+                  generic( ' /auto path//' );// 
+                  generic( Document.Keypad.Readout.Value = CStr(Num) );// 
+               path( Else );// 
+                  generic( Document.Keypad.ReadOut.Value= Document.Keypad.ReadOut.Value & CStr(Num) );// 
+            bend( End If );// 
+            set();// 
+      bend( End If );// 
+      end( End Sub );// 
+      event( Sub Decimal_onClick() );// 
+      generic( Dim curReadout );// 
+      generic( curReadOut = Document.Keypad.ReadOut.Value );// 
+      branch( If FlagNewNum Then );// 
+         path();///auto path//
+            generic( ' /auto path//' );// 
+            generic( curReadOut = "0." );//
+            generic( FlagNewNum = False );// 
+         path( Else );// 
+            branch( If InStr(curReadOut, ".") = 0 Then );// 
+               path();///auto path//
+                  generic( ' /auto path//' );// 
+                  generic( curReadOut = curReadOut & "." );//
+            bend( End If );// 
+            set();// 
+      bend( End If );// 
+      generic( Document.Keypad.ReadOut.Value = curReadOut );// 
+      end( End Sub );// 
+      event( Sub Plus_onClick() );// 
+      generic( Operation "+" );//
+      end( End Sub );// 
+      event( Sub Minus_onClick() );// 
+      generic( Operation "-" );//
+      end( End Sub );// 
+      event( Sub Multiply_onClick() );// 
+      generic( Operation "*" );//
+      end( End Sub );// 
+      event( Sub Divide_OnClick() );// 
+      generic( Operation "/" );//
+      end( End Sub );// 
+      event( Sub Operation(Byval Op) );// 
+      generic( Dim Readout );// 
+      generic( ReadOut = Document.Keypad.ReadOut.Value );// 
+      branch( If FlagNewNum and PendingOp <> "=" Then );// 
+         path();///auto path//
+            generic( ' /auto path//' );// 
+            loop( ' User is hitting op keys repeatedly, so don't do anything );// 
+            path( Else );// 
+               generic( FlagNewNum = True );// 
+               branch( Select Case PendingOp );// 
+                  path( Case "+" );//
+                     generic( Accum = CDbl(Accum) + CDbl(ReadOut) );// 
+                  path( Case "-" );//
+                     generic( Accum = CDbl(Accum) - CDbl(ReadOut) );// 
+                  path( Case "/" );//
+                     generic( Accum = CDbl(Accum) / CDbl(ReadOut) );// 
+                  path( Case "*" );//
+                     generic( Accum = CDbl(Accum) * CDbl(ReadOut) );// 
+                  path( Case Else );// 
+                     generic( Accum = ReadOut );// 
+               bend( End Select );// 
+               set();// 
+               generic( Document.Keypad.ReadOut.Value = Accum );// 
+               generic( PendingOp = Op );// 
+         bend( End If );// 
+end( End Sub );// 
+event( Sub ClearEntry_onClick() );// 
+generic( ' Remove current number and reset state );// 
+generic( Document.Keypad.ReadOut.Value = "0" );//
+generic( FlagNewNum = True );// 
+end( End Sub );// 
+event( Sub Clear_onClick() );// 
+generic( mSGbOX "Test Procedure" );//
+generic( ' Clear accumulator and pending operation, and clear display );// 
+generic( Accum = 0 );// 
+generic( PendingOp = "" );//
+generic( ClearEntry_onClick );// 
+end( End Sub );// 
+event( Sub Neg_onClick() );// 
+generic( Document.Keypad.ReadOut.Value = CDbl(Document.Keypad.ReadOut.Value) * -1 );// 
+end( End Sub );// 
+event( Sub Percent_onClick() );// 
+generic( Document.Keypad.ReadOut.Value=(CDbl(Document.Keypad.ReadOut.Value)/100)*Accum );// 
+end( End Sub );// 
+event( Sub Equals_OnClick() );// 
+generic( Operation "=" );//
+end( End Sub );// 
+generic( --> );// 
+end( </SCRIPT> );// 
+end( </FONT>VB Script Calculator );// 
+
+input( <FORM ACTION="" NAME="Keypad"> );// 
+
+input( <TABLE CELLSPACING="0"> );// 
+   branch( <TR> );// 
+      path( <TD> );// 
+         generic( <P ALIGN=Center> );// 
+      
+input( <TABLE BORDER="7" CELLSPACING="1" CELLPADDING="0"> );// 
+         generic( <CAPTION ALIGN=top> );// 
+         generic( </CAPTION> );// 
+         branch( <TR> );// 
+            path( <TD COLSPAN=3 ALIGN=MIDDLE> );// 
+            
+input( <INPUT TYPE=text VALUE="0" SIZE=38 NAME="ReadOut"> );// 
+end( </TD> );// 
+set();// 
+path( <TD> );// 
+end( </TD> );// 
+set();// 
+path( <TD> );// 
+
+input( <INPUT LANGUAGE="VBScript" TYPE=submit VALUE=" C " ONCLICK="call Clear_onClick()"> );// 
+   end( </TD> );// 
+   set();// 
+path( <TD> );// 
+   end( </TD> );// 
+   set();// 
+bend( </TR> );// 
+set();// 
+branch( <TR> );// 
+path( <TD> );// 
+   generic( <P ALIGN=Center> );// 
+
+input( <INPUT LANGUAGE="VBScript" TYPE=submit VALUE="7" ONCLICK="NumPressed(7)"> );// 
+end( </TD> );// 
+set();// 
+path( <TD> );// 
+generic( <P ALIGN=Center> );// 
+
+input( <INPUT LANGUAGE="VBScript" TYPE=submit VALUE="8" ONCLICK="NumPressed(8)"> );// 
+end( </TD> );// 
+set();// 
+path( <TD> );// 
+generic( <P ALIGN=Center> );// 
+
+input( <INPUT LANGUAGE="VBScript" TYPE=submit VALUE="9" ONCLICK="NumPressed(9)"> );// 
+end( </TD> );// 
+set();// 
+path( <TD> );// 
+end( </TD> );// 
+set();// 
+path( <TD> );// 
+
+input( <INPUT LANGUAGE="VBScript" TYPE=submit VALUE="+/-" ONCLICK="call Neg_onClick()"> );// 
+   end( </TD> );// 
+   set();// 
+path( <TD> );// 
+   end( </TD> );// 
+   set();// 
+bend( </TR> );// 
+set();// 
+branch( <TR> );// 
+path( <TD> );// 
+   generic( <P ALIGN=Center> );// 
+
+input( <INPUT LANGUAGE="VBScript" TYPE=submit VALUE="4" ONCLICK="NumPressed(4)"> );// 
+end( </TD> );// 
+set();// 
+path( <TD> );// 
+generic( <P ALIGN=Center> );// 
+
+input( <INPUT LANGUAGE="VBScript" TYPE=submit VALUE="5" ONCLICK="NumPressed(5)"> );// 
+end( </TD> );// 
+set();// 
+path( <TD> );// 
+generic( <P ALIGN=Center> );// 
+
+input( <INPUT LANGUAGE="VBScript" TYPE=submit VALUE="6" ONCLICK="NumPressed(6)"> );// 
+end( </TD> );// 
+set();// 
+path( <TD> );// 
+end( </TD> );// 
+set();// 
+path( <TD ALIGN=MIDDLE> );// 
+
+input( <INPUT LANGUAGE="VBScript" TYPE=submit VALUE=" + " ONCLICK="call Plus_onClick()"> );// 
+   end( </TD> );// 
+   set();// 
+path( <TD> );// 
+   end( </TD> );// 
+   set();// 
+bend( </TR> );// 
+set();// 
+branch( <TR> );// 
+path( <TD> );// 
+   generic( <P ALIGN=Center> );// 
+
+input( <INPUT LANGUAGE="VBScript" TYPE=submit VALUE="1" ONCLICK="NumPressed(1)"> );// 
+end( </TD> );// 
+set();// 
+path( <TD> );// 
+generic( <P ALIGN=Center> );// 
+
+input( <INPUT LANGUAGE="VBScript" TYPE=submit VALUE="2" ONCLICK="NumPressed(2)"> );// 
+end( </TD> );// 
+set();// 
+path( <TD> );// 
+generic( <P ALIGN=Center> );// 
+
+input( <INPUT LANGUAGE="VBScript" TYPE=submit VALUE="3" ONCLICK="NumPressed(3)"> );// 
+end( </TD> );// 
+set();// 
+path( <TD> );// 
+end( </TD> );// 
+set();// 
+path( <TD> );// 
+
+input( <INPUT LANGUAGE="VBScript" TYPE=submit VALUE=" * " ONCLICK="call Multiply_onClick()"> );// 
+   end( </TD> );// 
+   set();// 
+path( <TD> );// 
+   end( </TD> );// 
+   set();// 
+bend( </TR> );// 
+set();// 
+branch( <TR> );// 
+path( <TD> );// 
+   generic( <P ALIGN=Center> );// 
+
+input( <INPUT LANGUAGE="VBScript" TYPE=submit VALUE="0" ONCLICK="NumPressed(0)"> );// 
+end( </TD> );// 
+set();// 
+path( <TD> );// 
+generic( <P ALIGN=Center> );// 
+
+input( <INPUT LANGUAGE="VBScript" TYPE=submit VALUE="." ONCLICK="call Decimal_onClick()"> );// 
+end( </TD> );// 
+set();// 
+path( <TD> );// 
+generic( <P ALIGN=Center> );// 
+
+input( <INPUT LANGUAGE="VBScript" TYPE=submit VALUE="=" ONCLICK="call Equals_OnClick()"> );// 
+end( </TD> );// 
+set();// 
+path( <TD> );// 
+end( </TD> );// 
+set();// 
+path( <TD ALIGN=MIDDLE> );// 
+
+input( <INPUT LANGUAGE="VBScript" TYPE=submit VALUE=" / " ONCLICK="call Divide_OnClick()"> );// 
+   end( </TD> );// 
+   set();// 
+path( <TD> );// 
+   end( </TD> );// 
+   set();// 
+bend( </TR> );// 
+set();// 
+generic( </TABLE> );// 
+end( </TD> );// 
+set();// 
+bend( </TR> );// 
+generic( </TABLE> );// 
+generic( </FORM> );// 
+set( <P> );// 
+generic( </BODY> );// 
+generic( </HTML> );// 
+generic( <!- ---------------------------------------------------------------------------------------------- );// 
+generic( <!- Exported By Insecta Version 2.0 - October 1996 Beta 3 );// 
+generic( <!- Insecta File: calc.ins );// 
+generic( <!- Export File: calc.htm );// 
+generic( <!- Export Date: 11:12:28 PM - 10:May:1997 );// 
+generic( > );// 
+generic( <!-- ---------------------------------------------------------------------------------------------- );// 
+generic( <!-- Exported By Insecta Version 2.0 - October 1996 Beta 3 );// 
+generic( <!-- Insecta File: calc.ins );// 
+generic( <!-- Export File: calc.htm );// 
+generic( <!-- Export Date: 11:16:01 PM - 10:May:1997> );// 
+generic( <!-- ---------------------------------------------------------------------------------------------- );// 
+generic( <!-- Exported By Insecta Version 2.0 - October 1996 Beta 3 );// 
+generic( <!-- Insecta File: calc.ins );// 
+generic( <!-- Export File: calc.htm );// 
+generic( <!-- Export Date: 11:22:10 PM - 10:May:1997 );// 
+generic( > );// 
+generic( <!-- ---------------------------------------------------------------------------------------------- );// 
+generic( <!-- Exported By Insecta Version 2.0 - October 1996 Beta 3 );// 
+generic( <!-- Insecta File: calc.ins );// 
+generic( <!-- Export File: calc.htm );// 
+generic( <!-- Export Date: 11:32:23 PM - 10:May:1997 );// 
+end( > );// 
+end();//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 0 13158600 0 0 13158600 65280 65535 0 0 0 16777215 0 8421440
+;    calc.htm   <!--   
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 382 236 496 252 100 98   244   4294964619    vbscript.key  0

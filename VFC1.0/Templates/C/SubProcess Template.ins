@@ -1,0 +1,34 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : SubProcess Template.ins
+;  File Date : 08:40:28 AM - 28:Jan:1999
+
+
+input(//BEGIN_INSECTA_TEMPLATE);//NOTE:  ALL MAP_VARIABLES MUST START WITH A '$'
+event(//MAP_VARIABLE $procname=SubProcessENTER: Enter the SubProcess name (Do not use spaces or punctuation.));//
+set(//SET_INSECTA_FILENAME    $procname.ins);//
+set(//SET_EXPORT_FILENAME    $procname.c);//
+set(//SET_LANGUAGE_KEY    c.key);//
+end(//END_INSECTA_TEMPLATE );//
+
+input(/* ---  headers --- */);//FILE:write.exe c_parse.h
+generic(#include <stdio.h>);//
+generic(#include <stdlib.h>);//
+end(/*  end headers */);//
+
+input(/* --- globals & externals --- */);//
+end(/* end globals & externals */);//
+
+input($procname( int argc, char *argv[] )  {);//
+process(printf("\tInside $procname\n"););//
+end(});//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    //   //   //
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 463 83 603 586 2 80   299   62    template.key  0

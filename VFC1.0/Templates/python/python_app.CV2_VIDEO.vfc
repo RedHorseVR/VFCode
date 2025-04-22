@@ -1,0 +1,55 @@
+;  IRL FlowCode Version: Version 10.0
+;  c1995-2015: Visual Flow Coder by 2LResearch
+;
+;  File Name : python_app.CV2_VIDEO.vfc
+;  File Date : 11:17:26 AM - 27:Sep:2023
+
+
+input(//BEGIN_INSECTA_TEMPLATE);//NOTE:  ALL MAP_VARIABLES MUST START WITH A '$'
+event(//MAP_VARIABLE $appname=python_app   ENTER: Enter the application's name (Do not use spaces, extension or punctuation.));//
+event(//MAP_VARIABLE $keyfile =python.key);//
+event();////MAP_VARIABLE $model = myNet  ENTER:  name of functional network model.
+set(//SET_INSECTA_FILENAME    $appname.py.vfc);//
+set(//SET_EXPORT_FILENAME    $appname.py);//
+set(//SET_LANGUAGE_KEY    python.key);//
+end(//END_INSECTA_TEMPLATE );//
+end();//
+
+input(def showVideo( video ) :);//a number like 0 is the webcam 
+generic( );//dim = ( 1280 , 720 )
+generic(capture = cv2.VideoCapture( video ));// capture = cv2.VideoCapture( "data/fire.mp4" )
+loop(while( capture.isOpened() ):);//while( True ):
+generic(ret, frame = capture.read());// ////
+branch(if ret == False    :);//
+path();//
+output(print( '---------------------> VIDEO FAILED "));//
+end(break );//
+bend( );//
+generic(frame = cv2.resize( frame , dim, interpolation = cv2.INTER_AREA));// 
+generic();//grayFrame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) 
+generic();//cv2.imshow('video gray', grayFrame)
+output(cv2.imshow( 'video:' + str( video ), frame));//////
+event(if key = cv2.waitKey(1) : break);//
+lend();//
+event(capture.release());//// //////
+end();//
+event(import cv2);//
+set();//  Generate dummy data 
+branch(if __name__ == '__main__':);//
+path();//
+output(print( '---------- RUNNING  $appname -----------' ));//
+set(camID = 0);//
+process(showVideo( camID ));//
+output(print( '----------DONE----------'));//
+path(else: );//
+output(print( '---------- IMPORTING FROM $appname -----------' ));//
+bend( );//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    python_app.py   #   .
+; INSECTA
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 130 130 1108 1046 32 100   618   4294966612    python.key  0

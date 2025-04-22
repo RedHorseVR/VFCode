@@ -1,0 +1,17 @@
+LIBRARY  MyDLL.dll
+   CODE      PRELOAD MOVEABLE DISCARDABLE
+   DATA      PRELOAD SINGLE
+
+EXPORTS
+   Function @2
+   GetFileName @3
+   Find_Dlg @4
+
+
+; ----------------------------------------------------------------------------------------------.
+
+;  Exported By Insecta Version 2.0 - October 1996 Beta 3.
+;  Insecta File: MyDLLdef.ins.
+;  Export  File: MyDLL.def.
+;  Export  Date: 10:22:28 PM - 05:Jun:1997.
+

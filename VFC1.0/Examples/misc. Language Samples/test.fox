@@ -1,0 +1,45 @@
+PROCEDURE Prt_MCk
+	PARAMETER pr_out
+	IF EMPTY(pr_out)
+		
+			pr_out = 'PREVIEW'
+	ENDIF
+	IF NOT FILE(gcdbfpath+'mer_cks.dbf')
+		
+			WAIT WINDOW 'Need to create merchant check record set'
+			RETURN
+	ENDIF
+	IF USED('mer_cks')
+		
+			SELECT mer_cks
+		ELSE
+			SELECT 0
+			USE gcDbfPath + 'mer_cks'
+	ENDIF
+	GO TOP
+	SET ESCAPE OFF
+	SCAN
+		WAIT WINDOW 'Position next check in printer'+CHR(13)+;
+		'or press <ESC> to exit ..'
+		SET ESCAPE OFF
+		IF LASTKEY() = 27
+			
+				EXIT
+		ENDIF
+		* LABEL FORM mer_cks next 1 &pr_out
+		report form mer_cks next 1 &pr_out
+	ENDSCAN
+	SET ESCAPE ON
+	IF USED('wc_case')
+		
+			SELECT wc_case
+	ENDIF
+RETURN
+
+&& ----------------------------------------------------------------------------------------------.
+
+&&  Exported By Insecta Version 2.0 - August 1996 Beta 3.
+&&  Insecta File: foxpro.ins.
+&&  Export  File: test.fox.
+&&  Export  Date: 03:45:37 PM - 30:Sep:2002.
+

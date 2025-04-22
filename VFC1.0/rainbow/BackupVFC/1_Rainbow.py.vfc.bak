@@ -1,0 +1,34 @@
+;  IRL FlowCode Version: Version 10.0
+;  c1995-2015: Visual Flow Coder by 2LResearch
+;
+;  File Name : Rainbow.py.vfc.bak
+;  File Date : 09:28:24 PM - 08:Sep:2024
+
+event( from ws2812 import WS2812 );// 
+event( import utime );// 
+event( import machine );// 
+set( power = machine.Pin(11, machine.Pin.OUT) );// 
+process( power.value(1) );// 
+set( BLACK = (0, 0, 0) );// 
+set( RED = (255, 0, 0) );// 
+set( YELLOW = (255, 150, 0) );// 
+set( GREEN = (0, 255, 0) );// 
+set( CYAN = (0, 255, 255) );// 
+set( BLUE = (0, 0, 255) );// 
+set( PURPLE = (180, 0, 255) );// 
+set( WHITE = (255, 255, 255) );// 
+set( COLORS = (BLACK, RED, YELLOW, GREEN, CYAN, BLUE, PURPLE, WHITE) );// 
+set();//
+set( led = WS2812(12, 1) );// inline WS2812(pin_num,led_count)
+set();//
+set();//
+loop( while True: );// 
+output( print('Beautiful color') );// 
+loop( for color in COLORS: );// 
+process( led.pixels_fill(color) );// 
+process( led.pixels_show() );// 
+process( utime.sleep(0.2) );// 
+lend(  );//
+lend(  );//
+
+

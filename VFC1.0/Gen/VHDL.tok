@@ -1,0 +1,289 @@
+[VARIABLES]
+
+VARIABLE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[INPUT]
+^ *PROCESS
+^ *PROCEDURE
+^ *LIBRARY
+^ *PORT
+^ *ARCHITECTURE
+^ *FUNCTION
+
+
+
+
+
+
+
+[EVENT]
+^ *WAIT
+ENTITY
+^ *READ *(
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[PROCESS]
+^ *SELECT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[SET]
+^ *SET
+:=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[OUTPUT]
+^ *OUTPUT
+^ *USE
+^ *BEGIN
+^ *SEVERITY
+^ *REPORT
+
+
+
+
+
+
+
+
+
+
+
+
+[LOOP]
+^ *SCAN
+^ *WHILE *.*LOOP
+^ *FOR *.*LOOP
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[LEND]
+^ *END *LOOP *;
+END *LOOP;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[BRANCH]
+^ *IF
+.*CASE
+.+ *WHEN
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[PATH]
+^ *ELSE
+^ELSIF
+^ *WHEN
+.+ *ELSE *
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[BEND]
+^ *END *PROCESS<CLOSER>
+^ *END
+: *$<CLOSER>
+
+
+
+
+
+
+
+
+
+
+[END]
+^ *END *PROCESS<CLOSER>
+^ *BREAK
+EXIT *;
+EXIT +WHEN *
+^ *END *.* *;<CLOSER>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[TOOLS]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[HELP]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[NO_CASE_SENSITIVE]
+[MATCH_ORDER]
+[COMMENTS]
+--
+.
+[] Begin Misc KeyFile Comments
+<SKIP>
+ *#* +
+
+<TRIM>
+ +#*
+
+
+<TEXT_QUALIFIER>
+'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[] End Misc KeyFile Comments
+[DEFAULT_EXTENSION]
+.prg

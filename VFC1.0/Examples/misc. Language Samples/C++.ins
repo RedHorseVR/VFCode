@@ -1,0 +1,115 @@
+;  Insecta Robotica Language Version 2.0 - February 1996 Beta 
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : C++.ins
+;  File Date : 02:24:17 PM - 20:Mar:2002
+
+
+input(/*  PROJECT OBJECT  */);//class for saving colors FILE:write.exe D:\US&R\DEVELOP\INSECTA\insecta2\project.h
+	set(#include <stdio.h>);//
+	set(#include <string.h>);//
+	set(#include <stdlib.h>);//
+	set(#include "project.h");//
+	set(#include "Environ.h");//
+	set(#include "Winproc.h");//
+	set(#include "funcnames.h");//
+	set(extern char  ExportFileName[257];);//
+end();//
+
+input(ProjectClass::ProjectClass( char *filename ) {);//
+	set( Env  = new class Environment(););//
+	set(strncpy(ExportName,"*.txt",254););//
+	set(CommentsKey[0]='/';);//
+	set(CommentsKey[1]='/';);//
+	set(CommentsKey[2]=NULL;);//
+end(});//
+
+input(ProjectClass::~ProjectClass() {);//
+	set(delete Env;);//
+end(});//
+
+input(void ProjectClass::SetExport(char * name) {);//
+	set(strncpy(ExportName,name,254););//
+end(});//
+
+input(void ProjectClass::LoadProject( char * filename )  {);//
+	set(FILE *file = fopen(filename,"r"););//
+	set(char tmp[257];);//
+	set(int status=NULL, idx=0;);//
+	branch(if(!file)  );//
+		path(return;);//
+	bend();//
+	loop(while( status != EOF )  {  );//  
+		generic(status=fgetc(file););//
+		set(tmp[idx++]=(char)status;);//
+		set(tmp[idx]=NULL;);//
+		set(idx%=256;);//
+		branch(if(strstr(tmp,SESSION_INFO_KEY)));//
+			path({);//
+				loop(while(status!=';' && status!=EOF));//
+				lend(status=fgetc(file););//
+				end(break;);//
+		bend(});//
+	lend(});//
+	branch(if(status==EOF));//
+		path(return;);//
+	bend();//
+	set();//if(status==';')  status=fgetc(file););//
+	generic(fscanf(file, "%u",&TRACE_PEN_COLOR); );//
+	generic(fscanf(file, "%u",&TRACE_BRUSH_COLOR); );//
+	generic(fscanf(file, "%u",&UNDEF_PEN_COLOR); );//
+	generic(fscanf(file, "%u",&BREAK_PEN_COLOR); );//
+	generic(fscanf(file, "%u",&BREAK_BRUSH_COLOR); );//
+	generic(fscanf(file, "%u",&CURRENT_BRUSH_COLOR); );//
+	generic(fscanf(file, "%u",&COMMENTS_COLOR); );//
+	generic(fscanf(file, "%u",&CURRENT_TEXT_COLOR); );//
+	generic(fscanf(file, "%u",&ERROR_PEN_COLOR); );//
+	generic(fscanf(file, "%u",&INTERP_PEN_COLOR); );//
+	generic(fscanf(file, "%u",&TEXT_COLOR); );//
+	generic(fscanf(file, "%u",&PEN_COLOR); );//
+	generic(fscanf(file, "%u",&BACKGROUND_COLOR););//
+	set(/* if(Env)  Env->Load(file); */);//
+	generic(fscanf(file, "%s ",ExportName););//
+	set(if(ExportName[0]==';') ExportName[0]=' ';);//
+	set(if(ExportName[1]==';') ExportName[1]=' ';);//
+	set(if(ExportName[2]==';') ExportName[2]=' ';);//
+	generic(fscanf(file, "%*c %s ",CommentsKey););//
+	process(fclose(file););//
+	process(WinprocObject.ChangeColors(););//
+	set(strncpy(ExportFileName,ExportName,254););//
+	set(strncpy(FuncNames.CommentsKey,CommentsKey,4););//
+end(});//
+
+input(void ProjectClass::SaveProject(char * filename )  {);//
+	set(FILE *file = fopen(filename,"a"););//
+	branch(if(!file)  );//
+		path(return;);//
+	bend();//
+	process(fprintf(file,"\n;*******%s*******\n",SESSION_INFO_KEY););//
+	generic(fprintf(file, ";  %u   ",TRACE_PEN_COLOR); );//
+	generic(fprintf(file, "   %u   ",TRACE_BRUSH_COLOR); );//
+	generic(fprintf(file, "   %u   ",UNDEF_PEN_COLOR); );//
+	generic(fprintf(file, "   %u   ",BREAK_PEN_COLOR); );//
+	generic(fprintf(file, "   %u   ",BREAK_BRUSH_COLOR); );//
+	generic(fprintf(file, "   %u   ",CURRENT_BRUSH_COLOR); );//
+	generic(fprintf(file, "   %u   ",COMMENTS_COLOR); );//
+	generic(fprintf(file, "   %u   ",CURRENT_TEXT_COLOR); );//
+	generic(fprintf(file, "   %u   ",ERROR_PEN_COLOR); );//
+	generic(fprintf(file, "   %u   ",ERROR_PEN_COLOR); );//
+	generic(fprintf(file, "   %u   ",TEXT_COLOR); );//
+	generic(fprintf(file, "   %u   ",PEN_COLOR); );//
+	generic(fprintf(file, "   %u   ",BACKGROUND_COLOR););//
+	generic(fprintf(file, "\n;%s ",ExportName););//
+	generic(fprintf(file, "\n;%s\n ",CommentsKey););//
+	process(/* if(Env)  Env->Save(file);  */);//
+	process(fclose(file););//
+end(});//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 0 13158600 0 0 13158600 6579300 0 16777215 0 0 0 0 16777215
+;    ;   project.cpp   p
+; p
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 840 155 378 697 0 100   183   4294966423    insecta.key 

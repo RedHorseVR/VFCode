@@ -1,0 +1,214 @@
+<!--  calc.htm  -->
+<!-- calc.htm -->
+<!-- calc.htm -->
+<!-- calc.htm -->
+<!-- ---------------------------------------------------------------------------------------------- 
+<!-- Exported By Insecta Version 2.0 - October 1996 Beta 3 
+<!-- Insecta File: calc.ins 
+<!-- Export File: calc.htm 
+<!-- Export Date: 11:16:01 PM - 10:May:1997> 
+<!-- ---------------------------------------------------------------------------------------------- 
+<!-- Exported By Insecta Version 2.0 - October 1996 Beta 3 
+<!-- Insecta File: calc.ins 
+<!-- Export File: calc.htm 
+<!-- Export Date: 11:22:10 PM - 10:May:1997 
+> 
+<!-- ---------------------------------------------------------------------------------------------- 
+<!-- Exported By Insecta Version 2.0 - October 1996 Beta 3 
+<!-- Insecta File: calc.ins 
+<!-- Export File: calc.htm 
+<!-- Export Date: 11:32:23 PM - 10:May:1997 
+> 
+
+
+<!-- ----------------------------------------------------------------------------------------------
+
+<!--  Exported By Insecta Version 2.0 - October 1996 Beta 3
+<!--  Insecta File: calc.ins
+<!--  Export  File: calc.htm
+<!--  Export  Date: 03:02:56 PM - 23:May:1997
+
+-->
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPad 2.0">
+<title>VBScript Sample: Calculator</title>
+</head>
+
+<body bgcolor="#FFFFFF" link="#0033CC" topmargin="15"
+leftmargin="20">
+
+<p><font size="3"><!-- global default --> <script language="VBScript"> 
+   <!-- 
+   ' Module-level variables 
+   Sub Procedure1() 
+   mSGbOX "Test Procedure" 
+   end sub 
+   Dim Accum ' Previous number (operand) awaiting operation 
+   Dim FlagNewNum ' Flag to indicate a new number (operand) is being entered 
+   Dim PendingOp ' Pending operation waiting for completion of second operand 
+      Sub NumPressed(Byval Num) 
+      If FlagNewNum Then 
+      
+         ' /auto path//' 
+         Document.Keypad.Readout.Value = Num 
+         FlagNewNum = False 
+      Else 
+         If Document.Keypad.Readout.Value = "0" Then 
+         
+            ' /auto path//' 
+            Document.Keypad.Readout.Value = CStr(Num) 
+         Else 
+            Document.Keypad.ReadOut.Value= Document.Keypad.ReadOut.Value & CStr(Num) 
+         End If 
+         
+      End If 
+      End Sub 
+      Sub Decimal_onClick() 
+      Dim curReadout 
+      curReadOut = Document.Keypad.ReadOut.Value 
+      If FlagNewNum Then 
+      
+         ' /auto path//' 
+         curReadOut = "0." 
+         FlagNewNum = False 
+      Else 
+         If InStr(curReadOut, ".") = 0 Then 
+         
+            ' /auto path//' 
+            curReadOut = curReadOut & "." 
+         End If 
+         
+      End If 
+      Document.Keypad.ReadOut.Value = curReadOut 
+      End Sub 
+      Sub Plus_onClick() 
+      Operation "+" 
+      End Sub 
+      Sub Minus_onClick() 
+      Operation "-" 
+      End Sub 
+      Sub Multiply_onClick() 
+      Operation "*" 
+      End Sub 
+      Sub Divide_OnClick() 
+      Operation "/" 
+      End Sub 
+      Sub Operation(Byval Op) 
+      Dim Readout 
+      ReadOut = Document.Keypad.ReadOut.Value 
+      If FlagNewNum and PendingOp <> "=" Then 
+      
+         ' /auto path//' 
+         ' User is hitting op keys repeatedly, so don't do anything 
+         Else 
+            FlagNewNum = True 
+            Select Case PendingOp 
+            Case "+" 
+               Accum = CDbl(Accum) + CDbl(ReadOut) 
+            Case "-" 
+               Accum = CDbl(Accum) - CDbl(ReadOut) 
+            Case "/" 
+               Accum = CDbl(Accum) / CDbl(ReadOut) 
+            Case "*" 
+               Accum = CDbl(Accum) * CDbl(ReadOut) 
+            Case Else 
+               Accum = ReadOut 
+            End Select 
+            
+            Document.Keypad.ReadOut.Value = Accum 
+            PendingOp = Op 
+         End If 
+End Sub 
+Sub ClearEntry_onClick() 
+' Remove current number and reset state 
+Document.Keypad.ReadOut.Value = "0" 
+FlagNewNum = True 
+End Sub 
+Sub Clear_onClick() 
+mSGbOX "Test Procedure" 
+' Clear accumulator and pending operation, and clear display 
+Accum = 0 
+PendingOp = "" 
+ClearEntry_onClick 
+End Sub 
+Sub Neg_onClick() 
+Document.Keypad.ReadOut.Value = CDbl(Document.Keypad.ReadOut.Value) * -1 
+End Sub 
+Sub Percent_onClick() 
+Document.Keypad.ReadOut.Value=(CDbl(Document.Keypad.ReadOut.Value)/100)*Accum 
+End Sub 
+Sub Equals_OnClick() 
+Operation "=" 
+End Sub 
+--> 
+</script> </font>VB
+Script Calculator </p>
+
+<form name="Keypad">
+    <table border="0" cellspacing="0">
+        <tr>
+            <td><table border="14" cellpadding="0"
+            cellspacing="0" width="50%">
+                <tr>
+                    <td align="middle" colspan="3"><input
+                    type="text" size="6" name="ReadOut" value="0"><p><input
+                    type="button" value="7" language="VBScript"
+                    onclick="NumPressed(7)"><input type="button"
+                    value="8" language="VBScript"
+                    onclick="NumPressed(8)"><font size="4"><input
+                    type="button" value="9" language="VBScript"
+                    onclick="NumPressed(9)"></font></p>
+                    <p><input type="button" value="4"
+                    language="VBScript" onclick="NumPressed(4)"><input
+                    type="submit" value="5" language="VBScript"
+                    onclick="NumPressed(5)"><input type="button"
+                    value="6" language="VBScript"
+                    onclick="NumPressed(6)"></p>
+                    <p><input type="button" value="1"
+                    language="VBScript" onclick="NumPressed(1)"><input
+                    type="button" value="2" language="VBScript"
+                    onclick="NumPressed(2)"><input type="button"
+                    value="3" language="VBScript"
+                    onclick="NumPressed(3)"></p>
+                    <p><input type="button" value="0"
+                    language="VBScript" onclick="NumPressed(0)"><input
+                    type="button" value=" ." language="VBScript"
+                    onclick="call Decimal_onClick()"><input
+                    type="button" value="=" language="VBScript"
+                    onclick="call Equals_OnClick()"></p>
+                    </td>
+                    <td>&nbsp;</td>
+                    <td><p align="left"><input type="button"
+                    value=" C  " language="VBScript"
+                    onclick="call Clear_onClick()"></p>
+                    <p align="left"><input type="button"
+                    value="+/- " language="VBScript"
+                    onclick="call Neg_onClick()"></p>
+                    <p align="left"><input type="button"
+                    value=" +  " language="VBScript"
+                    onclick="call Plus_onClick()"></p>
+                    <p align="left"><input type="button"
+                    value=" *   " language="VBScript"
+                    onclick="call Multiply_onClick()"></p>
+                    <p align="left"><input type="button"
+                    value="  /   " language="VBScript"
+                    onclick="call Divide_OnClick()"></p>
+                    </td>
+                    <td>&nbsp; </td>
+                </tr>
+                <tr>
+                    <td align="center">&nbsp;</td>
+                    <td align="center">&nbsp;</td>
+                </tr>
+            </table>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

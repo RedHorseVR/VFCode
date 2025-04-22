@@ -1,0 +1,41 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : vjtestFrame.ins
+;  File Date : 02:23:39 PM - 09:Aug:1997
+
+
+input( /**  C:\WINDOWS\Profiles\luis\Desktop\vjtest\vjtestFrame.java  **/);//  FILE:C:\WINDOWS\Profiles\luis\Desktop\vjtest\vjtestFrame.java 
+end();//
+set( import java.awt.*; );// 
+event( class vjtestFrame extends Frame { );// 
+
+input( public vjtestFrame(String str) );// 
+   set( { );// 
+   set(   super (str); );// 
+end( } );// 
+
+input( public boolean handleEvent(Event evt) );// 
+   set( { );// 
+   branch(   switch (evt.id) { );// 
+      path( case Event.WINDOW_DESTROY: );// 
+         set( dispose(); );// 
+         set( System.exit(0); );// 
+         end( return true; );// 
+         set();// 
+      path( default: );// 
+         end( return super.handleEvent(evt); );// 
+         set();// 
+   bend( } );// 
+end( } );// 
+end( } );// 
+end();//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 12632256 0 255 255 16776960 65280 16512
+;    vjtestFrame.java   //   ...
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 646 149 588 872 1 95   306   70    visualj.key  0

@@ -1,0 +1,34 @@
+:Base ParseManager.hlp>Main
+1 Chapter 1  Introduction, Features and Upgrade Information
+2 Introduction=Introduction@ParseManager.hlp>Main
+2 New Features And Release Notes=NewFeaturesAndReleaseNotes@ParseManager.hlp>Main
+2 Technical Support=TechnicalSupport@ParseManager.hlp>Main
+2 Upgrading ParseManager
+3 Upgrading ParseManager=UpgradingParseManager@ParseManager.hlp>Main
+3 System Requirements=SystemRequirements@ParseManager.hlp>Main
+2 Upgrading Language Parsers
+3 Upgrading Language Parsers=UpgradingLanguageParsers@ParseManager.hlp>Main
+3 Manually Installing a Language Parser=ManuallyInstallingaLanguageParser@ParseManager.hlp>Main
+1 Chapter 2  Getting Started
+2 The Basics
+3 The Basics=TheBasics@ParseManager.hlp>Main
+3 Invoking ParseManager=InvokingParseManager@ParseManager.hlp>Main
+3 The ParseManager Window=TheParseManagerWindow@ParseManager.hlp>Main
+3 The System Menu=TheSystemMenu@ParseManager.hlp>Main
+3 The Controls=TheControls@ParseManager.hlp>Main
+3 Specifying a Language for a File Name=SpecifyingaLanguageforaFileName@ParseManager.hlp>Main
+3 Drag-Drop Parsing=Drag.DropParsing@ParseManager.hlp>Main
+1 Chapter 3  Using ParseManager
+2 Parsing=Parsing@ParseManager.hlp>Main
+2 The Parser KeyFiles=TheParserKeyFiles@ParseManager.hlp>Main
+2 Parser Exceptions
+3 Parser Exceptions=ParserExceptions@ParseManager.hlp>Main
+3 Resolving Exceptions=ResolvingExceptions@ParseManager.hlp>Main
+3 Reporting Unresolvable Exceptions to FlowLynx=ReportingUnresolvableExceptionstoFlowLynx@ParseManager.hlp>Main
+2 Automatic Parsing
+3 Automatic Parsing=AutomaticParsing@ParseManager.hlp>Main
+3 Setting Up Auto Parse=SettingUpAutoParse@ParseManager.hlp>Main
+3 Language Association=LanguageAssociation@ParseManager.hlp>Main
+3 A Word of Caution about Exceptions=AWordofCautionaboutExceptions@ParseManager.hlp>Main
+1 Glossary of Terms
+2 Glossary of Terms=GlossaryOfTerms.D2H@ParseManager.hlp>Main

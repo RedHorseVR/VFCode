@@ -1,0 +1,67 @@
+# Accolade project file saved 05-12-1997 01:42:33
+$VERSION "1.14c (Demo)"
+$OPTION "CompileOrder=1"
+$OPTION "CompileOutOfDate=1"
+$OPTION "CompileListing=0"
+$OPTION "CompileVHDL93=0"
+$OPTION "LinkUpdateObject=1"
+$OPTION "LinkOutOfDate=1"
+$OPTION "LinkEntity="
+$OPTION "LinkArchitecture="
+$OPTION "LinkSourceLevel=0"
+$OPTION "RunUpdateExec=1"
+$OPTION "RunToTime=1000"
+$OPTION "RunUnit=ns"
+$OPTION "RunStepTime=100"
+$OPTION "RunVectorFormat=hexadecimal"
+$OPTION "RunSignals=A,b,EQ"
+$OPTION "SynthOrder=1"
+$OPTION "SynthAnalyze=0"
+$OPTION "SynthVerbose=0"
+$OPTION "SynthNumeric=0"
+$OPTION "SynthModule=1"
+$OPTION "SynthClockEnable=1"
+$OPTION "SynthTopLevel=0"
+$OPTION "SynthImproveX=1"
+$OPTION "SynthPreset=1"
+$OPTION "SynthEntity="
+$OPTION "SynthArchitecture="
+$OPTION "SynthFamily="
+$OPTION "SynthLevel=5"
+$OPTION "SynthGoal="
+$OPTION "SynthBUFG="
+$OPTION "SynthDeviceName="
+$OPTION "SynthLibraryMapping="
+$OPTION "SnapCursor= 1"
+$OPTION "SimDebugger= 0"
+$OPTION "LibraryPath=C:\\Acc-eda\\lib"
+$FILES
+($MODULE COMPARE.VHD WORK ""
+ ($ENTITY COMPARE COMPARE.VHD WORK  32
+  USE IEEE
+  ($ARCHITECTURE EQUALITY COMPARE.VHD WORK  40
+   USE IEEE
+   $ARCHITECTURE LESS_THAN COMPARE.VHD WORK  47
+   USE IEEE
+   $ARCHITECTURE GREATER_THAN COMPARE.VHD WORK  54
+   USE IEEE
+  )
+ )
+ $MODULE TESTCOMP.VHD WORK ""
+ ($ENTITY TESTCOMP TESTCOMP.VHD WORK  12
+  USE COMPARE IEEE
+  ($ARCHITECTURE STIMULUS TESTCOMP.VHD WORK  14
+   USE COMPARE IEEE
+   ($COMPONENT COMP3 TESTCOMP.VHD  27
+    ($ENTITY COMPARE COMPARE.VHD WORK  32
+    )
+    $COMPONENT COMP2 TESTCOMP.VHD  26
+    ($ENTITY COMPARE COMPARE.VHD WORK  32
+    )
+    $COMPONENT COMP1 TESTCOMP.VHD  25
+    ($ENTITY COMPARE COMPARE.VHD WORK  32
+    )
+   )
+  )
+ )
+)

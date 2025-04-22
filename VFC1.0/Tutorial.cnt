@@ -1,0 +1,44 @@
+:Base Tutorial.hlp>Main
+1 Introduction
+2 Lesson Information=LessonInformation@Tutorial.hlp>Main
+2 Before You Begin
+3 Before You Begin=BeforeYouBegin@Tutorial.hlp>Main
+3 VFC System Prerequisites=VFCSystemPrerequisites@Tutorial.hlp>Main
+1 Tutorial 0 - The Basics
+2 Accomplishing Elementary Tasks in VFC
+3 Accomplishing Elementary Tasks in VFC=AccomplishingElementaryTasksinVFC@Tutorial.hlp>Main
+3 Create a Workspace Directory.=CreateaWorkspaceDirectory.@Tutorial.hlp>Main
+3 Start a New FlowCoder File Session.=StartaNewFlowCoderFileSession.@Tutorial.hlp>Main
+3 Open your Working Folder=OpenyourWorkingFolder@Tutorial.hlp>Main
+3 Inserting a FlowCode Template=InsertingaFlowCodeTemplate@Tutorial.hlp>Main
+1 Tutorial 1 - Building and Modifying FlowCode in 'C'
+2 "Hello World" Reusing Single Lines of Code
+3 "Hello World" Reusing Single Lines of Code=.HelloWorld.ReusingSingleLinesofCode@Tutorial.hlp>Main
+3 Part 1 - Build the Program
+4 Part 1 - Build the Program=Part1.BuildtheProgram1@Tutorial.hlp>Main
+4 GET STARTED:=GETSTARTED.1@Tutorial.hlp>Proc
+4 SELECT THE LANGUAGE:=SELECTTHELANGUAGE.1@Tutorial.hlp>Proc
+4 CONSTRUCT THE PROGRAM:=CONSTRUCTTHEPROGRAM.@Tutorial.hlp>Proc
+3 Part 2 - Compile, Link and Run the Program
+4 Part 2 - Compile, Link and Run the Program=Part2.Compile.LinkandRuntheProgram@Tutorial.hlp>Main
+3 Part 3 - Modify the Program
+4 Part 3 - Modify the Program=Part3.ModifytheProgram@Tutorial.hlp>Main
+1 Tutorial 2 - Building FlowCode in PERL
+2 "Hello World" in PERL
+3 "Hello World" in PERL=.HelloWorld.inPERL@Tutorial.hlp>Main
+3 Part 1 - Build the Program
+4 Part 1 - Build the Program=Part1.BuildtheProgram2@Tutorial.hlp>Main
+4 GET STARTED:=GETSTARTED.2@Tutorial.hlp>Proc
+4 SELECT THE LANGUAGE:=SELECTTHELANGUAGE.2@Tutorial.hlp>Proc
+4 BUILD THE PROGRAM=BUILDTHEPROGRAM@Tutorial.hlp>Proc
+3 Part 2 - Run the Program
+4 Part 2 - Run the Program=Part2.RuntheProgram@Tutorial.hlp>Main
+1 Tutorial 3 - Reusing FlowCode in 'C' with Templates
+2 Using FlowCode Templates=UsingFlowCodeTemplates@Tutorial.hlp>Main
+1 Tutorial 4 - Using Structured Templates in 'Java'
+2 Templates Based on a Code Framework
+3 Templates Based on a Code Framework=TemplatesBasedonaCodeFramework@Tutorial.hlp>Main
+3 Part 1:  'Stamp Out' a Java Applet=Part1..StampOut.aJavaApplet@Tutorial.hlp>Main
+3 Part 2:  Add a Dragable Cross Hair=Part2.AddaDragableCrossHair@Tutorial.hlp>Main
+1 Glossary of Terms
+2 Glossary of Terms=GlossaryOfTerms.D2H@Tutorial.hlp>Main

@@ -1,0 +1,35 @@
+;  Insecta Robotica Language Version 2.0 - April 1996 Beta 
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : calc.ins
+;  File Date : 03:57:43 PM - 23:Apr:2002
+
+event();//--------------------------------------------------------------- 
+set();//  VB Event when CE button is pressed 
+set();//--------------------------------------------------------------- 
+
+input(Sub InsectaCancelEntry_Click (TheForm As Form, LastInput, DecimalFlag) );// 
+	generic(TheForm.Readout = "INSECTA");//
+	generic(DecimalFlag = False );// 
+	generic(LastInput = "CE");//
+end(End Sub );//
+set();//--------------------------------------------------------------- 
+set();//Custom Event when Custom  button is pressed 
+set();//--------------------------------------------------------------- 
+event(Sub InsectaCustom_Click (TheForm As Form, LastInput, DecimalFlag) );// 
+generic(TheForm.Visible = TRUE );// 
+end(End Sub );//
+
+input(Sub Main () );//      
+	generic(Load Calculator );//      
+	generic(Calculator.Show );//      
+end(End Sub );//end    Sub Main   
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 0 13158600 0 0 13158600 65535 0 4210816 0 0 8388863 0 12632256
+;    Calc.bas   '   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 124 14 520 688 5 90   260   60    No Filter  0

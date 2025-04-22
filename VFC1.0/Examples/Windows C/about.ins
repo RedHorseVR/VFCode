@@ -1,0 +1,52 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : about.ins
+;  File Date : 11:28:02 PM - 10:Aug:1997
+
+
+input(/* includes */);//FILE:resource.h
+   generic(#include <windows.h>);//  
+   generic(#include "resource.h");//FILE:  "resource.h"
+end(/*------------*/);// 
+
+input(/* About Modal Dialog  */);//
+   set(/* );//
+   set(DialogBox( NULL, "About" , hWnd , (DLGPROC) About_DlgProc ););//use this call to start the dialog
+   set(LRESULT CALLBACK About_DlgProc(HWND hDlg,UINT uMessage,WPARAM wParam,LPARAM lParam););//place this in the prototype section
+   set(*/ );//
+
+input(        LRESULT CALLBACK About_DlgProc(HWND hDlg,UINT uMessage,WPARAM wParam,LPARAM lParam){);//  
+   branch(switch (uMessage){);//  
+      path(case WM_INITDIALOG:);//
+         set({ );//
+         end(return TRUE;);//
+         set(});//
+      path(case WM_COMMAND:);//  
+         branch(switch(wParam ){);//
+            path(case IDCANCEL:);//  
+               set({ );//
+               generic(EndDialog( hDlg , FALSE ););//  
+               end(break; );//
+               set(});//
+            path(case IDOK:);//  
+               set({ );//
+               generic(EndDialog( hDlg , TRUE ););//  
+               end(return TRUE;);//  
+               set(});//
+            path(default:);//
+               end(break; );//
+               set();//
+         bend(} );//  
+   bend(} );//  
+end(return FALSE;);//  
+end(} );//  
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    About.cpp   //   ;
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 125 145 710 528 1 80   351   60    cppwin.key  0

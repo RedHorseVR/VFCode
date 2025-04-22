@@ -1,0 +1,125 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : setup.ins
+;  File Date : 02:18:15 PM - 06:Dec:2000
+
+generic(    );//# ----------------------------------------------------------------------
+generic(    );//#
+generic(    );//# setup file for the search.cgi script
+generic(    );//#
+generic(    );//# CGI Magic April 11th 1997
+generic(    );//#
+generic(    );//# V1.01
+generic(    );//#
+generic(    );//# http://www.spells.com/cgi/
+generic(    );//#
+generic(    );//# ----------------------------------------------------------------------
+generic(    );//# --- $root_web_path is the server path to the beginning of the directory
+generic(    );//# --- tree that you want to search. Your searches all start in this
+generic(    );//# --- directory - note that you can use the "hidden_files" hidden input
+generic(    );//# --- on the html search form to hide any directory or file from the search
+generic(    );//# --- engine's view, as well as $banned_files below for files that must
+generic(    );//# --- never be seen.
+set(  $root_web_path = "/home/sites/www.flowlynx.com/web";);//  $root_web_path = "/home/sites/www.flowlynx.com/web/vbtest";
+set(  $root_web_path = ".";);//  $root_web_path = "w:/wwwroot/flowlynxinc";
+set(  $html_url = "search.htm";);//  $html_url = "Default.htm";
+generic(    );//# --- $server_url is the actual url for this site, and will be prepended
+generic(    );//# --- to hits to create a hypertext reference.
+set(  $server_url = "http://206.166.222.162";);//  $server_url = "http://scooby/PerlSearch2";
+generic(    );//# --- $search_script exists to allow you to change the name reference
+generic(    );//# --- of the search script, so that, for instance, the script could be
+generic(    );//# --- encapsulated in a .bat file.
+set(  $search_script = "search.pl";);//  $search_script = "search.cgi";  
+generic(    );//# --- $banned_files is a list of any files/directories that must
+generic(    );//# --- NEVER be accessible, whatever the settings in the html input file.
+generic(    );//# --- This prevents someone from making a mirror version of the html
+generic(    );//# --- input form and submitting it with a blank unwanted_files list,
+generic(    );//# --- in order to view all the files on the site.
+set(  $banned_files = "";);//  $banned_files = "search/|cgi/|/private(.*)html";  
+generic(    );//# --- following are subroutines that can be tailored to fit your site
+generic(    );//# ----------------------------------------------------------------------
+generic(    );//# --- print out the html header ----------------------------------------
+end(  );// AUTO 
+
+input(  sub PrintHeaderHTML  );//
+set(  {  );//
+set(  local($user) = @_;  );//
+end(  print <<__HEADERHTML__;);//
+event(  <html><head><title>$search_results_title</title></head>  );//
+generic(  <body>  );//
+generic(  <h2><center>$user Search Engine Output</center></h2>  );//
+generic(  <center>  );//
+generic(  <hr><p>  );//
+generic(  </center>  );//
+generic(  <center><h3>Your keyword(s) <font color=#ff0000><i>$keywords</i></font>);//#ff0000><i>$keywords</i></font>
+generic(  appear on these pages:</h3></center><ul>  );//
+generic(  __HEADERHTML__);//
+end(  }  );//
+generic(    );//# --- print out the html body -----------------------------------------
+generic(    );//# --- note that if you don't want the display to show the path and ----
+generic(    );//# --- filename of the found files, you can delete (/$filename) --------
+end(  );// AUTO 
+
+input(  sub PrintBodyHTML  );//
+set(  {  );//
+set(  local($filename, $title) = @_;  );//
+end(  print <<__bodyHTML__;);//
+event(  <li>  );//
+generic(  <b>  );//
+generic(  <a href="$filename">);//  <a href="$server_url/$filename">  
+generic(  $title</a>  );//
+generic(  </b>  );//
+generic(  ($filename)<br>);//
+event(  __bodyHTML__);//
+end(  }  );//
+generic(    );//# --- print out the html footer ----------------------------------------
+end(  );// AUTO 
+
+input(  sub PrintFooterHTML  );//
+set(  {  );//
+set(  local($number_of_hits) = @_;  );//
+end(  print <<__FOOTERHTML__  ;);//
+event(  <br><center><b><font size=2>Your search on <i>'$keywords'</i> found <font color=  #ff0000>);// 
+generic(  $number_of_hits </font>page(s) containing the selected keyword(s)</b>  );//
+generic(  </font><br><font size=2><i><b>Refine your  );//
+generic(  keyword search by pressing 'Ctrl+F'  );//
+generic(  to locate your keyword when viewing pages.</b>  );//
+generic(  </i></font><br>  );//
+generic(  <a href=$html_url><b>START A NEW SEARCH</b></a>  );//
+generic(  <p>  );//
+generic(  <hr>  );//
+generic(  </center> </body> </html>  );//
+event(  __FOOTERHTML__);//
+end(  }  );//
+generic(    );//# --- no hits found message ----------------------------------------
+end(  );// AUTO 
+
+input(  sub PrintNoHitsBodyHTML  );//
+set(  {  );//
+end(  print <<__NOHITS__;);//
+generic(  <p>  );//
+generic(  <center>  );//
+generic(  <h2>No pages were found containing your keyword(s).</h2>  );//
+generic(  </center>  );//
+generic(  <p>  );//
+event(  __NOHITS__);//
+end(  }   );//# End of PrintNoHitsBodyHTML
+generic(    );//# --- no keyword input message -------------------------------------
+end(  );// AUTO 
+
+input(  sub PrintNoKeywordMessage  {);//
+set(local ($user) = @_ ;);//
+generic(print  ("<h2><center>$user Search Engine Error</center></h2>"););//
+generic(  print ("<b>You MUST enter one or more keywords to use this search engine. </b> "););//
+generic(print ("  <a href=$html_url>Return to the search input form. </a>"););//
+end(  }  );//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 16777215 16777215 255 4278255615 16711680 16711680 12632256 16777215 255 255 16777215 4259584 10485760
+;    setup.pl   #   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 32 672 606 273 20 104   255   4294966818    perl.key  0

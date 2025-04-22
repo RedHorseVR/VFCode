@@ -1,0 +1,34 @@
+;  Insecta Robotica Language Version 2.0 - October 1996 Beta 3
+;  c1995-1996: Insecta Robotica Language is a tradename of US&R
+;
+;  File Name : Draw image.ins
+;  File Date : 03:31:52 PM - 31:Oct:1996
+
+
+input(//BEGIN_INSECTA_TEMPLATE );//
+	event(//MAP_VARIABLE $picname= logo.gif ENTER: Image file);//
+end(//END_INSECTA_TEMPLATE );// 
+
+input(/** recipe log **/);//<--- part of framework
+	process(/** <TIME_STAMP>  inserted an image $picname using segment: 'Draw image.sg'  **/);//
+end(//AFFIRM_END);//
+
+input(/** class data **/);//<--- used in framework
+	set( Image im;//AFFIRM_SET);//  
+	set(int ImageXPos = 10;//AFFIRM_SET);//  
+	set(  int ImageYPos = 10;//AFFIRM_SET);//
+
+input( public void init(){);//  
+	generic(im = getImage(getCodeBase(),"$picname"););//  
+
+input( public void paint(Graphics g){);//  
+	generic(g.drawImage(im, ImageXPos, ImageYPos+50, this ););//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    //   //   //
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 123 212 515 593 2 100   294   63    template.key  0

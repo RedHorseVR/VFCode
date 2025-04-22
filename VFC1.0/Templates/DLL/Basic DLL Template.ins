@@ -1,0 +1,57 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : Basic DLL Template.ins
+;  File Date : 05:45:47 AM - 20:Jan:1999
+
+
+input(//BEGIN_INSECTA_TEMPLATE  );//
+event(//MAP_VARIABLE $name=MyDLLENTER: Enter the new DLL's name);//
+event(//MAP_VARIABLE $func_name=FunctionENTER: Enter first export name);//
+event(//MAP_VARIABLE $key=dll_vc4.keyENTER: Verify the keyfile.  Use dll_vc4.key for MSVC++ 4.x  OR dll_vc6.key for Visual Studio 6.0);//
+set(//SET_LANGUAGE_KEY    $key);//
+set(//SET_INSECTA_FILENAME $name.ins );//
+set(//SET_EXPORT_FILENAME  $name.c);//
+end( //END_INSECTA_TEMPLATE );// 
+
+input(/* includes */);//FILE:$name_h.ins
+generic(#include <windows.h>);//  
+set();// #include "$name_h.h"
+
+input(/* defines */);//
+
+input(/* globals */);//
+set(HWND OwnerWindow = NULL;);//
+set(HINSTANCE hInst=NULL;);//
+
+input(/* prototypes */);//
+set(void Function(););//
+set(BOOL WINAPI DllMain (HINSTANCE hDLL, DWORD dwReason, LPVOID lpReserved) ;  );//
+end();//
+
+input(void $func_name() {);//  
+process(MessageBox( OwnerWindow, "DLL Function 1 test", " Generic DLL", MB_OK););//
+end(});//  
+
+input(BOOL WINAPI DLLMain (HINSTANCE hDLL, DWORD dwReason, LPVOID lpReserved){);//  
+set(hInst = hDLL;);//
+branch( if( dwReason == DLL_PROCESS_ATTACH ));//
+path({);//
+process();//MessageBox( OwnerWindow, "DLL $name attached", " Generic DLL", MB_OK);
+path(}else{);//
+bend(});//
+branch( if( dwReason == DLL_PROCESS_DETACH ));//
+path({);//
+process();//MessageBox( OwnerWindow, "DLL $name detached", " Generic DLL", MB_OK);
+path(}else{);//
+bend(});//
+end(return TRUE;});//  
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    ;   //   //
+; INSECTA
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 386 27 647 775 5 100   329   92    template.key  0

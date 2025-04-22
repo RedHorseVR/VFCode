@@ -1,0 +1,19 @@
+;  IRL FlowCode Version: Version 8.0 - mAY 2009
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : \bak_Link.ins
+;  File Date : 03:53:22 PM - 19:Oct:2009
+
+
+input(REM NORMAL BATCH FILE);//
+process(SET LIB="C:\Program Files\Microsoft Visual Studio\VC98\LIB);//
+process(PATH="C:\Program Files\Microsoft Visual Studio\VC98\Bin\");//
+process(ECHO .___COPYING %1.obj____________________________________________);//
+process();//DEL %1.obj
+generic(link.exe  /out:%1.exe  OBJ\*.obj    OBJ\*.res  kernel32.lib comctl32.lib user32.lib gdi32.lib winspool.lib advapi32.lib shell32.lib comdlg32.lib);//
+process(ECHO ._______________________________________________);//
+process(ECHO LINK FINISHED);//
+end(PAUSE );//
+end(EXIT );// 
+
+

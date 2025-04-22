@@ -1,0 +1,32 @@
+;  IRL FlowCode Version: Beta Version 3.6 - October 1997
+;  c1995-1998: Visual FlowCoder and FlowCode is a tradename of FlowLynx / Ublige 
+;
+;  File Name : link.ins
+;  File Date : 11:28:56 PM - 19:Jan:1999
+
+
+input(REM NORMAL BATCH FILE);//
+process();//SET  INCLUDE = c:\MSDEV\INCLUDE
+process(MKDIR obj);//SET LIB = c:\MSDEV\LIB
+process(ECHO OFF );//
+process(ECHO .___COPYING %1.obj____________________________________________);//
+process(COPY %1.obj   obj\%1.obj);//
+process(DEL %1.obj);//
+process(ECHO .___COPYING %1.res____________________________________________);//
+process(COPY %1.res   obj\%1.res);//
+process(DEL %1.res);//
+process(ECHO .______________________LINKING_________________________);//
+generic(c:\msdev\bin\link /out:%1.exe *.obj  obj\*.obj  *.res /LibPath:c:\msdev\lib\  kernel32.lib comctl32.lib user32.lib gdi32.lib winspool.lib advapi32.lib shell32.lib comdlg32.lib);//c:\msdev\bin\link /out:%1.exe insecta2\*.obj  obj
+process(ECHO OFF );//
+process(ECHO ._______________________________________________);//
+process(ECHO LINK FINISHED);//
+end(EXIT );// 
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 255 10198015 0 255 255 65535 65280 0
+;    link.BAT   REM   
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 144 272 634 494 4 100   335   61    dos.key  0
