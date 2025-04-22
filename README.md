@@ -9,6 +9,8 @@ VFC (Visual FlowChart) is a powerful tool that enables developers to view and ed
 - Written in C/C++ using the Windows API
 - Currently maintained as a Visual Studio project
 - Looking for contributors to help with maintenance and version 2.0 development
+- A Windows Binary Version (VFC1.0 Folder - A *messy* copy of my working tool) is avaialble under the current license
+- Visual Studio project source to follow
 
 ## 🔍 Key Features
 - Transform any text-based code into interactive flowgraphs
@@ -52,6 +54,7 @@ There are several ways to contribute to the VFC project:
 - Architecture documentation
 - Sample flowgraphs
 - Development setup instructions
+- *VERY* Early version of the documentation is at: http://redhorsevr.com/VFCmanual1.0/
 
 ## 📷 Examples and Screenshots
 *Coming soon* - Visual examples of VFC in action
