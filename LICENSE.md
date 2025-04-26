@@ -24,5 +24,11 @@ This software is dual-licensed by the author, Luis R. Lopez.
    - Organizations actively engaged with the author (via employment, consulting, etc.) may use the tools beyond these limits at the author's discretion for the duration of the engagement
    - Any substantial commercial use of VFCode exceeding these thresholds requires a negotiated license
 
+3. AI TRAINING RESTRICTION: 
+
+This software and its source code ("the Software") may not be used, in whole or in part, to train, fine-tune, develop, or improve any artificial intelligence model, large language model (LLM), machine learning system, or similar technology ("AI Systems") without explicit written permission from the copyright holder. 
+Any entity wishing to use the Software for AI training purposes must negotiate a separate license agreement with the copyright holder. This restriction applies regardless of whether the AI System is for commercial, non-commercial, research, or any other purpose.
+This restriction survives any termination or expiration of this license and applies to all derivative works of the Software.
+
 Full GPL v3 license:  
 https://www.gnu.org/licenses/gpl-3.0.en.html
