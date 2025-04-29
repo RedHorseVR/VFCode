@@ -11,7 +11,7 @@ Thank you for your interest in contributing to the Visual FlowChart (VFC) tool! 
 
 ## Getting Started
 
-1. **Request access**: Email luis.r.lopez@outlook.com to request access to the current tool
+1. **Request access**: Email luis.r.lopez@outlook.com to request access to the current tool SOURCE REPO
 2. **Familiarize yourself**: Review the documentation and examples
 3. **Join discussions**: Participate in GitHub Discussions to share ideas
 4. **Pick an issue**: Find an open issue to work on or suggest a new one
