@@ -8,14 +8,34 @@
 
 git clone https://github.com/RedHorseVR/VFCode.git
 
-# Navigate to the project directory
-cd VFCode
+# Place the VFC1.0 Folder at a location with install permission 
+   E.g. <YOUR INSTALL FOLDER> = C:/Users/Default/VFC1.0
 
-# set a path to <install_dir>/VFC2000.exe
+# Navigate to the project directory
+   cd  <YOUR INSTALL FOLDER>
+
+# set a path to <YOUR INSTALL FOLDER> using Windows 
+   Open System Properties:  
+         Right-click on the "This PC" or "My Computer" icon on your desktop or in File Explorer.         
+         Select Properties from the context menu.        
+         Click on Advanced system settings.
+   Access Environment Variables:
+         In the System Properties window, click the Environment Variables button near the bottom.
+   Edit the PATH Variable:        
+         Under the "System variables" section, find the Path variable (scroll down if necessary).
+         Select it and click Edit.
+         Add a new path by clicking New and typing the folder path as
+            <YOUR INSTALL FOLDER>
+         Confirm Your Changes.
+   Test Your Changes:    
+      Open Command Prompt (Press Windows + R, type cmd, and hit Enter).
+      Type echo %Path% to see if your changes are reflected.
 
 # first time run:
-1) run VFC from a command line locally from its install directory:
-> <YOUR INSTALL FOLDER>\VFC2000.exe
+1) Make sure you are in <YOUR INSTALL FOLDER> 
+2) run VFC from a command line locally from its install directory:
+   > CD <YOUR INSTALL FOLDER>
+   > VFC2000.exe
 
 # from VFC window menu:
 1) select Settings - VFC System Directories ...
