@@ -4,7 +4,7 @@
 ### Installation of binary VFC1.0 for Windows:
 
 ```
-# Clone the repository - Recommend using the Working Branch
+# Clone the repository 
 
 git clone https://github.com/RedHorseVR/VFCode.git
 
