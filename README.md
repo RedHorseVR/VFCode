@@ -5,7 +5,7 @@
 VFC (Visual FlowChart) is a powerful tool that enables developers to view and edit any text-based programming language through intuitive flowgraphs. Instead of scrolling through thousands of lines of code, VFC transforms your code into visual flowcharts that can be edited, traversed, and managed visually - then exports back to standard code for compilation.
 
 ## 🚀 Current Status
-- The original VFC tool (~100K LOC) exists in a private repository
+- The original VFC tool (~100K LOC) exists in a private repository you can get access to by asking
 - Written in C/C++ using the Windows API
 - Currently maintained as a Visual Studio project
 - Looking for contributors to help with maintenance and version 2.0 development
