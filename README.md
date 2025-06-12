@@ -30,6 +30,9 @@ Recent GitHub contribution data from early 2025 shows exceptional productivity l
 These productivity gains appear to far exceed what's possible with standard LLM coding tools alone.
 
 ## 👨‍💻 Getting Involved
+
+CONNECT WITH ME AND ASK FOR FULL SOURCE ACCESS
+
 There are several ways to contribute to the VFC project:
 
 1. **Immediate Needs** - Help with:
