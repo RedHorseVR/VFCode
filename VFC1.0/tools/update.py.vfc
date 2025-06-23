@@ -1,0 +1,170 @@
+;  IRL FlowCode Version: Version 10.0
+;  c1995-2015: Visual Flow Coder by 2LResearch
+;
+;  File Name : update.py.vfc
+;  File Date : 07:15:48 PM - 13:Jun:2025
+
+event(import os);// 
+event(import sys);// 
+event(import re);//
+end();//
+event(import difflib);// ////
+event(from pathlib import Path);// ////
+end();//
+set(DEBUG = True;);//DEBUG = False;
+end();//
+
+input(def replace_rightmost(s, old, new):);// ////
+end(return new.join(s.rsplit(old, 1)));// ////
+
+input(def get_second_extension(filename):);// ////
+generic(suffixes = Path(filename).suffixes);// ////
+end(return suffixes[-2] if len(suffixes) >= 2 else "");// // Returns None if missing//
+
+input(def compare_strings(str1, str2):);// ////
+generic(diff = difflib.ndiff(str1, str2));// ////
+generic(print("\n".join(diff)));// ////
+end();//// // Example usage ////
+
+input(def scan_file(filename):);// beginfunc
+set(global  INLINE_COMMENT);//
+generic(INLINE_COMMENT = '#');// ////
+set(VFC_DELIM = r'\);'+'//');//
+set(VFC_FILE  = False;);//
+set(RAWCODE = [] ;);//
+branch(if not os.path.exists(filename):);// beginif
+path();//
+output(print(f"Error: File '{filename}' not found."));//// //
+end(return "");// 
+path(else:);//
+branch(if   os.path.splitext( filename )[1].lower() == '.vfc'.lower()  :);//
+path( );//
+set(VFC_FILE  =True ;);//
+generic(EXTEN = get_second_extension(filename));// 
+path(else: );//
+set(EXTEN = os.path.splitext( filename )[1].lower());//
+bend( );//
+output(print( EXTEN ));//<------ FIGURE OUT THE LANGUAGE 
+branch(if  EXTEN.startswith( '.c' ) or  EXTEN.startswith( '.h' ) or  EXTEN.startswith( '.j' ) :);//
+path( );//
+generic(INLINE_COMMENT = '//');// ////
+path(elif EXTEN.startswith( '.py' )  :);//
+generic(INLINE_COMMENT = '#');// ////
+path(elif EXTEN.startswith( '.m' )  :);//
+generic(INLINE_COMMENT = '%');// ////
+bend( );//
+bend();// endif
+branch(try:);// begintry
+path();//
+branch(with open(filename, 'r') as file:);// beginwith
+path();//
+output(if DEBUG : print ( '------------------------------------------------'));//
+output(if DEBUG : print ( filename ));//
+output(if DEBUG : print ( '------------------------------------------------'));//
+set(RAWCODE = [] ;);//
+set(counter = 0 );//
+loop(for line in file:);// beginfor
+set(line = line.strip());//
+generic(line  = line.replace("\t", " "));// 
+generic(line  = line.replace("\n", ""));// 
+generic(line = re.sub( r" +", " ", line ));// 
+generic(line = re.sub( r" +[\{]", "{", line ));// 
+generic(line = re.sub( r" +[\(]", "(", line ));// 
+branch(if   VFC_FILE  :);//
+path();//
+set(LINE = line);//
+generic(LINE  = re.sub(fr'^\w+\(', '', LINE ));// line = re.sub(fr'^\w+\(|\s*{VFC_DELIM}', '', line )
+generic(LINE = re.sub( VFC_DELIM ,  INLINE_COMMENT , LINE ));// 
+generic(LINE= replace_rightmost( LINE , INLINE_COMMENT, "" ) if LINE .endswith( INLINE_COMMENT ) else LINE);// 
+branch(if  LINE =='' or re.match(fr"^{INLINE_COMMENT} *Export\s+Date:", LINE.strip()) or LINE.startswith(';') or LINE.strip() == ""  :);// 
+path( );//
+output(pass);//
+path(else:);//
+set(counter = counter+1 );//
+set(LINE = LINE.replace(" ", ""));//
+output(if DEBUG : print ( LINE ));//if DEBUG : print ( counter, "vfc\t", LINE )
+set(RAWCODE .append( LINE ););//
+bend( );//
+set();//
+set();//
+set();//
+set();//
+set();//
+set();//
+path(else:);//
+branch(if   re.match(fr"^{INLINE_COMMENT} *Export\s+Date:", line.strip())  or line.strip() == "" or line.startswith(';')   :);// 
+path( );//
+output(pass);//
+path(else:);//
+set(line = line.strip());//
+set(counter = counter+1 );//
+set(line = line.replace(" ", ""));//
+output(if DEBUG : print  ( line));//if DEBUG : print  ( counter, 'code\t', line)
+set(RAWCODE .append( line ););//
+bend( );//
+output();//print( '------------------------------------------------') 
+bend( );//
+lend();// endfor
+bend();// endwith
+set(RAWCODE = [re.sub(r"\) *{", ")\n{", line) for line in RAWCODE]);//
+path(except Exception as e:);// 
+output(print(f"Error reading file: { filename } - { e }"));//// //
+end(return -1);// 
+bend();// endtry
+branch(if    DEBUG  :);//
+path();//
+branch(if    VFC_FILE :);//
+path( );//
+branch(with open( 'T2.txt' , 'w' ) as T2  :);//
+path();//
+set(T2.write( "\n".join( RAWCODE )));//
+bend( );//
+path(else: );//
+branch(with open( 'T1.txt' , 'w' ) as T1  :);//
+path();//
+set(T1.write( "\n".join( RAWCODE )));//
+bend( );//
+bend( );//
+bend( );//
+output(if DEBUG : print ( "File: ", filename, " Size:" , len( RAWCODE  )  ));//
+set(rawCODE = [item.replace("\n", "") for item in RAWCODE ]);//
+set(rawCODE = [ re.sub(r" +", ""  , item) for item in rawCODE ]);//
+set();//rawCODE = [ re.sub(r"}", "" , item) for item in rawCODE ]
+end(return   "".join( rawCODE ));// return RAWCODE
+
+input(def check_for_update( filename ):);// beginfunc
+set(global Code);//
+set(global CodeFlow);//
+set();//
+process(Code = scan_file( filename ));//////
+process(CodeFlow = scan_file( filename+'.vfc' ));//// //
+process( );//if DEBUG : compare_strings( Code , CodeFlow ) ;
+output(print (  filename , len(Code ) , " ------> VFC:", len( CodeFlow ) ));//
+branch(if   Code == CodeFlow   :);//
+path();//
+output(print( 'SYNCHED'));//
+path(else:);//
+output(print( 'UNSYNCHED'));//
+bend( );//
+end();// endfunc
+set(global  INLINE_COMMENT);//
+branch(if __name__ == "__main__":);// beginif
+path();//
+branch(if len(sys.argv) < 2:);// beginif
+path();//
+output(print("Usage: python update.py <filename>"));//// //
+path(else:);//
+set(filename = sys.argv[1]);// 
+set(check_for_update(filename));// 
+bend();// endif
+output(print( INLINE_COMMENT ));// 
+bend();// endif
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 13158600 13158600 0 255 255 9895835 6946660 3289650
+;    update.py   #   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 1531 70 2101 1049 68 188   4294967059   4294963738    python.key  0

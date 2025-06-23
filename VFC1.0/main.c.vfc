@@ -2,12 +2,34 @@
 ;  c1995-2015: Visual Flow Coder by 2LResearch
 ;
 ;  File Name : main.c.vfc
-;  File Date : 11:39:27 AM - 26:Mar:2025
+;  File Date : 02:12:15 PM - 09:Jun:2025
 
 
 input(void main() {);//
+set(*tok = NULL; );//
+set(*tok = NULL; );//
+set(*tok = NULL; );//
+set(*tok = NULL; );//
 loop(for(int i=0; i<5; i++ ){);//
 output(printf( 'Hello world\n'  ) ;);//
+branch( if( )  {);//
+path();//
+set(#define  );//
+output(printf("Yes!\n"); );//
+path( }else{ );//
+bend( } );//
+branch( if( )  {);//
+path();//
+set(#define  );//
+output(printf("Yes!\n"); );//
+path( }else{ );//
+bend( } );//
+branch( if( )  {);//
+path();//
+set(#define  );//
+output(printf("Yes!\n"); );//
+path( }else{ );//
+bend( } );//
 lend(});//
 end(});//
 process(main(););//
@@ -16,7 +38,7 @@ process(main(););//
 
 ;INSECTA EMBEDDED SESSION INFORMATION
 ; 255 16777215 65280 16777088 16711680 13158600 13158600 0 255 255 9895835 6946660 3289650
-;    #   //   ;
+;    main.c   //   ;
 ; notepad.exe
 ;INSECTA EMBEDDED ALTSESSION INFORMATION
-; 1000 295 757 614 0 150   337   115    C++.key  0
+; 491 400 1191 1058 8 100   502   166    cpp.key  0
