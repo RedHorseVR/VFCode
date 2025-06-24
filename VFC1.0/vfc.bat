@@ -13,7 +13,7 @@ IF "%1"=="" (
             echo --- PARSING %1
             echo ---  
             C++parse.bat %~1
-            echo ---  
+            echo --- PARSING COMPLETED
         )
 
         echo --- VFC FILE READY 
