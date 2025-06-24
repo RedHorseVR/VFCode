@@ -64,7 +64,8 @@ sub process_files{ my( $dir , $word , $type , $size_args ) = @_;
 			$ROOT = basename( $VFCfile ) ;
 			if ( $VFCfile =~ m/$EXTEN$/i  && (   ".vfc" =~ m/$EXTEN$/i   ||  $ROOT !~ /^[_]/ ) )
 			{
-				if ( ".vfc" =~ /$EXTEN/i ) {  print "<$VFCfile>\n"; }
+				$VFCfile =~ tr|/|\\|;
+				if ( ".vfc" =~ /$EXTEN/i ) {  print "explorer $VFCfile\n"; }
 				$lines = GetLines( $VFCfile , $word , $type  ) ;
 				
 				$total_lines  += $lines ;
@@ -144,5 +145,5 @@ sub process_files{ my( $dir , $word , $type , $size_args ) = @_;
 	
 	print "\n==> TOTAL VFC LOC: $TotalLines :: HITS: $HIT_TOTAL \n";
 	
-#  Export  Date: 10:15:19 AM - 19:Jun:2025.
+#  Export  Date: 10:25:00 AM - 24:Jun:2025.
 

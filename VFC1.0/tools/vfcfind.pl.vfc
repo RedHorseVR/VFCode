@@ -1,8 +1,8 @@
 ;  IRL FlowCode Version: Version 10.0
 ;  c1995-2015: Visual Flow Coder by 2LResearch
 ;
-;  File Name : findfiles.pl.vfc
-;  File Date : 10:15:19 AM - 19:Jun:2025
+;  File Name : vfcfind.pl.vfc
+;  File Date : 11:25:21 AM - 24:Jun:2025
 
 event(use File::Find;);//// //////
 event(use File::Basename;);// ////
@@ -33,19 +33,19 @@ branch(if ( $tok =~ m/^$type/ ));//
 path( {);//
 set($found += 1;);//
 branch(if ( $EXTEN =~ m/vfc/i  ));//
-path( { );//
+path( {);//
 output(print "\tVFC2000 $filename  -Goto $line_number\t|--------> $tok$row;\n";);// ////
-bend( } );//
+bend( });//
 path( }else{);//
 bend( });//
 path( }else{);//
 set($found += 1;);//
 branch(if ( $EXTEN =~ m/vfc/i  ));//
-path( { );//
+path( {);//
 output(print "\tVFC2000 $filename  -Goto $line_number\t|--------> $tok$row;\n";);// ////
-path(} else { );//
+path(} else {);//
 output(print "\tNOTEPAD $filename      | line: $line_number  -------> $tok$row;\n";);// ////
-bend( } );//
+bend( });//
 bend( });//
 bend(});//// //////
 lend(});//// //////
@@ -73,7 +73,8 @@ output();//print "   <$EXTEN> \n";
 generic($ROOT = basename( $VFCfile ) ;);// 
 branch(if ( $VFCfile =~ m/$EXTEN$/i  && (   ".vfc" =~ m/$EXTEN$/i   ||  $ROOT !~ /^[_]/ ) ));//if ( $VFCfile =~ m/\.vfc$/ )
 path( {);//
-output(if ( ".vfc" =~ /$EXTEN/i ) {  print "<$VFCfile>\n"; });//if ( $EXTEN eq "\.vfc"  ) print "<$VFCfile>\n";
+set($VFCfile =~ tr|/|\\|;);//
+output(if ( ".vfc" =~ /$EXTEN/i ) {  print "explorer $VFCfile\n"; });//if ( $EXTEN eq "\.vfc"  ) print "<$VFCfile>\n";
 process($lines = GetLines( $VFCfile , $word , $type  ) ;);//
 output( );//if ( $FIRST_HIT == "True" && length($lines)>0 ) { print "<$EXTEN> $VFCfile\n"; $FIRST_HIT = "False";}
 set($total_lines  += $lines ;);//
@@ -158,7 +159,7 @@ end();//
 
 ;INSECTA EMBEDDED SESSION INFORMATION
 ; 255 16777215 65280 16777088 16711680 8454143 13158600 0 255 255 9895835 8454143 7274551
-;    findfiles.pl   #   .
+;    vfcfind.pl   #   .
 ; notepad.exe
 ;INSECTA EMBEDDED ALTSESSION INFORMATION
-; 813 146 1660 1571 66 129   1034   4294965616    perl.key  0
+; 367 137 1660 1571 66 129   1001   4294965549    perl.key  0
