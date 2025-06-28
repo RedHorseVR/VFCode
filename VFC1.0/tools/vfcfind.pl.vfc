@@ -2,7 +2,7 @@
 ;  c1995-2015: Visual Flow Coder by 2LResearch
 ;
 ;  File Name : vfcfind.pl.vfc
-;  File Date : 11:25:21 AM - 24:Jun:2025
+;  File Date : 02:46:59 PM - 28:Jun:2025
 
 event(use File::Find;);//// //////
 event(use File::Basename;);// ////
@@ -119,7 +119,7 @@ output(print "default dir\n\n";);//
 generic( $dir = ".";);//
 generic($word = $ARGV[0];);//\
 generic($type = $ARGV[1];);//\
-output(print "begin at $dir\nlooking for: $ARGV[0]\n";);//
+output(print "begin at [$dir]\nlooking for: $ARGV[0]\n\n";);//
 generic();//$flag = $ARGV[2];
 bend( });//
 bend(});//// //////
@@ -131,8 +131,21 @@ bend(});//
 process();//process_files( "$dir" , $word  , $type ) ;
 generic();// // Use glob to get all the files and directories in the path //
 generic(my @list_of_files = glob("$dir/*"););// 
-process(my @list_of_files =  File::Find::Rule->directory->in($dir););// find(sub { push @list_of_files, $File::Find::name if -d }, $dir);
-set($TotalLines = 0;);//
+process(my @list_of_files =  File::Find::Rule->directory->in($dir););//
+event(use File::Find; );// ////
+generic(my @safe_dirs; );// ////
+
+input(my $wanted = sub { );// ////
+end(return unless -d; );// ////
+end(return if $File::Find::name =~ /\/?build\//;        );// // skip any build/ //
+end(return if $File::Find::name =~ /\/?CMakeFiles\//;   );// // skip CMake garbage //
+generic(push @safe_dirs, $File::Find::name; );// ////
+end(}; );//// //////
+generic(find($wanted, '.'); );// ////
+generic();// // Debug it: //
+output(print "$_\n" for @safe_dirs; );//// //////
+generic(my @safe_dirs; );// ////
+generic(@list_of_dirs = @safe_dirs;);// ////
 output(print "\n==============================================================\n";);// 
 output(print( "<directory=$dir>  <search term=$word> <vfc_type=$type>\n" ) ;);////// ////////
 output(print "==============================================================\n\n";);// 
@@ -143,8 +156,9 @@ set($TotalLines += $lines;);//
 generic();// // Filter out the directories using the -d file test operator //
 process(my @list_of_dirs = grep { -d } @list_of_files;);//
 loop(foreach my $dir (@list_of_dirs) {);//
-branch(if ( $dir =~ m/BackupVFC/ || $dir =~ m/BSP_/ ));//
+branch(if ( $dir =~ m/BackupVFC/ || $dir =~ m/BSP_/ || $dir =~ m/build/ ));//
 path( {);//
+output();//print( "\t\t---->Skipping ... $dir\n"  );
 path(} else {);//
 output( );//print "FOLDER==> $dir:\n";
 process($lines = process_files( "$dir" , $word , $type , $size ) ;);//
@@ -162,4 +176,4 @@ end();//
 ;    vfcfind.pl   #   .
 ; notepad.exe
 ;INSECTA EMBEDDED ALTSESSION INFORMATION
-; 367 137 1660 1571 66 129   1001   4294965549    perl.key  0
+; 367 137 1400 1552 151 129   620   4294962540    perl.key  0

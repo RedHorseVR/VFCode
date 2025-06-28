@@ -109,7 +109,7 @@ sub process_files{ my( $dir , $word , $type , $size_args ) = @_;
 				$dir = ".";
 				$word = $ARGV[0];
 				$type = $ARGV[1];
-				print "begin at $dir\nlooking for: $ARGV[0]\n";
+				print "begin at [$dir]\nlooking for: $ARGV[0]\n\n";
 				
 				}
 			}
@@ -122,28 +122,41 @@ sub process_files{ my( $dir , $word , $type , $size_args ) = @_;
 	
 	my @list_of_files = glob("$dir/*");
 	my @list_of_files =  File::Find::Rule->directory->in($dir);
-	$TotalLines = 0;
-	print "\n==============================================================\n";
-	print( "<directory=$dir>  <search term=$word> <vfc_type=$type>\n" ) ;
-	print "==============================================================\n\n";
-	
-	
-	
-	$TotalLines += $lines;
-	
-	my @list_of_dirs = grep { -d } @list_of_files;
-	foreach my $dir (@list_of_dirs) {
-		if ( $dir =~ m/BackupVFC/ || $dir =~ m/BSP_/ )
-		{
-		} else {
-			
-			$lines = process_files( "$dir" , $word , $type , $size ) ;
-			$TotalLines += $lines;
-			
-			}
+	use File::Find;
+	my @safe_dirs;
+my $wanted = sub {
+	return unless -d;
+return if $File::Find::name =~ /\/?build\//;
+return if $File::Find::name =~ /\/?CMakeFiles\//;
+push @safe_dirs, $File::Find::name;
+};
+find($wanted, '.');
+
+print "$_\n" for @safe_dirs;
+my @safe_dirs;
+@list_of_dirs = @safe_dirs;
+print "\n==============================================================\n";
+print( "<directory=$dir>  <search term=$word> <vfc_type=$type>\n" ) ;
+print "==============================================================\n\n";
+
+
+
+$TotalLines += $lines;
+
+my @list_of_dirs = grep { -d } @list_of_files;
+foreach my $dir (@list_of_dirs) {
+	if ( $dir =~ m/BackupVFC/ || $dir =~ m/BSP_/ || $dir =~ m/build/ )
+	{
+		
+	} else {
+		
+		$lines = process_files( "$dir" , $word , $type , $size ) ;
+		$TotalLines += $lines;
+		
 		}
-	
-	print "\n==> TOTAL VFC LOC: $TotalLines :: HITS: $HIT_TOTAL \n";
-	
-#  Export  Date: 10:25:00 AM - 24:Jun:2025.
+	}
+
+print "\n==> TOTAL VFC LOC: $TotalLines :: HITS: $HIT_TOTAL \n";
+
+#  Export  Date: 02:46:59 PM - 28:Jun:2025.
 
