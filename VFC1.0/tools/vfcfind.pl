@@ -3,6 +3,22 @@ use File::Basename;
 use File::Find::Rule;
 $HIT_TOTAL = 0;
 
+$default = "\e[0m" ;
+my $reset     = "\e[0m";
+my $bold      = "\e[1m";
+my $black     = "\e[30m";
+my $red       = "\e[31m";
+my $green     = "\e[32m";
+my $yellow    = "\e[33m";
+my $blue      = "\e[34m";
+my $magenta   = "\e[35m";
+my $cyan      = "\e[36m";
+my $white     = "\e[37m";
+
+my $bright_red     = "\e[1;31m";
+my $bright_green   = "\e[1;32m";
+my $bright_yellow  = "\e[1;33m";
+my $bright_blue    = "\e[1;34m";
 sub GetLines{ local ( $filename , $word_to_find  , $type ) = @_;
 	open(my $fh, '<', $filename) or die "Could not open file '$filename' $!";
 	my $line_number = 0;
@@ -26,7 +42,8 @@ sub GetLines{ local ( $filename , $word_to_find  , $type ) = @_;
 					$found += 1;
 					if ( $EXTEN =~ m/vfc/i  )
 					{
-						print "\tVFC2000 $filename  -Goto $line_number\t|--------> $tok$row;\n";
+						print "$bright_green";
+						print "\tvfc $filename  -Goto $line_number\t|--------> $tok$row;\n";
 						}
 				}else{
 					}
@@ -34,18 +51,21 @@ sub GetLines{ local ( $filename , $word_to_find  , $type ) = @_;
 				$found += 1;
 				if ( $EXTEN =~ m/vfc/i  )
 				{
-					print "\tVFC2000 $filename  -Goto $line_number\t|--------> $tok$row;\n";
+					print "$cyan";
+					print "\tvfc $filename  -Goto $line_number\t$default|--------> $tok$row;\n";
 				} else {
-					print "\tNOTEPAD $filename      | line: $line_number  -------> $tok$row;\n";
+					print "$yellow";
+					print "\tvfc $filename      \t$default| line: $line_number  -------> $tok$row;\n";
 					}
 				}
 			}
+		print "$reset";
 		}
 	
 	close($fh);
 	if ( $found > 0  )
 	{
-		print "\tVFC LOC: $line_number :: $found HIT(s)\n\n";
+		print "\n\tVFC LOC: $line_number :: $found HIT(s)\n\n";
 		$HIT_TOTAL += $found ;
 		}
 	return $line_number; }
@@ -158,5 +178,5 @@ foreach my $dir (@list_of_dirs) {
 
 print "\n==> TOTAL VFC LOC: $TotalLines :: HITS: $HIT_TOTAL \n";
 
-#  Export  Date: 02:46:59 PM - 28:Jun:2025.
+#  Export  Date: 08:44:21 PM - 29:Jun:2025.
 
