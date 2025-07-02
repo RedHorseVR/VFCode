@@ -2,7 +2,7 @@
 ;  c1995-2015: Visual Flow Coder by 2LResearch
 ;
 ;  File Name : vfcfind.pl.vfc
-;  File Date : 10:35:36 AM - 02:Jul:2025
+;  File Date : 12:23:45 PM - 02:Jul:2025
 
 event(use File::Find;);//// //////
 event(use File::Basename;);// ////
@@ -33,12 +33,12 @@ set($found = 0;);//
 output();//print( "******************** $type \n\n  " );
 set($VFCtoken = "^(generic|variable|input|event|process|set|output|loop|lend|branch|path|bend|end)" ;);//
 loop(while (my $row = <$fh>) {);// ////
-branch(if ( $row =~ m/$VFCtoken/  ));//if ( $row =~ m/$VFCtoken/ ||  $row =~ m/\w*/ )
+branch(if ($str =~ /[^\x00-\x7F]/));//if ( $row =~ m/$VFCtoken/  )
 path( {);//
-generic($line_number++;);// ////
+generic(next ;);// ////
 path(} else { );//
-generic($line_number++;);// ////
 bend( });//
+generic($line_number++;);// ////
 set(if(  $EXTEN =~ m/vfc/i  ) { $row =~ s/$VFCtoken// } ;);//<---- CLEANS THE TOKEN FOR vfc FILE ONLY 
 set();//$tok = $& ;
 set();//$row =~ s/;\/\/.*// ;
@@ -101,7 +101,10 @@ generic($ROOT = basename( $VFCfile ) ;);//
 branch(if (  (  $ROOT !~ /^[_]/ ) ));//if ( $VFCfile =~ m/$EXTEN$/i  && (   ".vfc" =~ m/$EXTEN$/i   ||  $ROOT !~ /^[_]/ ) )
 path( {);//
 set($VFCfile =~ tr|/|\\|;);//
-output(if ( ".vfc" =~ /$EXTEN/i ) {  print "explorer $VFCfile\n"; });//if ( $EXTEN eq "\.vfc"  ) print "<$VFCfile>\n";
+branch(if ( ".vfc" =~ m/$EXTEN/i ));//
+path( { );//
+output( print "explorer $VFCfile\n";);//
+bend( } );//
 process($lines = GetLines( $VFCfile , $word , $type  ) ;);//
 output( );//if ( $FIRST_HIT == "True" && length($lines)>0 ) { print "<$EXTEN> $VFCfile\n"; $FIRST_HIT = "False";}
 set($total_lines  += $lines ;);//
@@ -203,4 +206,4 @@ end();//
 ;    vfcfind.pl   #   .
 ; notepad.exe
 ;INSECTA EMBEDDED ALTSESSION INFORMATION
-; 655 109 2261 1905 118 149   826   4294962846    perl.key  0
+; 655 109 2261 1905 33 149   1134   4294966376    perl.key  0
