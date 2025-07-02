@@ -2,7 +2,7 @@
 ;  c1995-2015: Visual Flow Coder by 2LResearch
 ;
 ;  File Name : vfcfind.pl.vfc
-;  File Date : 08:56:44 PM - 29:Jun:2025
+;  File Date : 09:47:06 AM - 02:Jul:2025
 
 event(use File::Find;);//// //////
 event(use File::Basename;);// ////
@@ -36,6 +36,8 @@ loop(while (my $row = <$fh>) {);// ////
 branch(if ( $row =~ m/$VFCtoken/  ));//if ( $row =~ m/$VFCtoken/ ||  $row =~ m/\w*/ )
 path( {);//
 generic($line_number++;);// ////
+path(} else { );//
+generic($line_number++;);// ////
 bend( });//
 set($row =~ s/$VFCtoken// ;);//
 set();//$tok = $& ;
@@ -68,7 +70,7 @@ output(print "$cyan";);//
 path( }else{ );//
 output(print "$yellow";);//
 bend( } );//
-output(print "\tvfc $filename      \t$default| line: $line_number  -------> $tok$row;\n";);// ////
+output(print "\tvfc $filename   $line_number\t$default| line: $line_number  -------> $tok$row;\n";);// ////
 bend( });//
 bend( });//
 bend(});//// //////
@@ -88,7 +90,7 @@ generic(opendir(DIR, $dir) or die "Could not open $dir in process_files \n";);//
 set($total_lines  = 0;);//
 set($FIRST_HIT = "True" ;);//
 loop(while (my $file = readdir(DIR)) {);// ////
-branch(if ( $file =~ m/$EXTEN$/ &&   -f "$dir/$file") {);//if ( $file =~ m/\.vfc/ &&   -f "$dir/$file") {
+branch(if ( $file =~ m/$EXTEN$/i &&   -f "$dir/$file") {);//if ( $file =~ m/\.vfc/ &&   -f "$dir/$file") {
 path();//
 set();//$FOLDER_FIRST_HIT = "False";
 set();//
@@ -96,7 +98,7 @@ set($VFCfile = "$dir\\$file" ;);//
 set($VFCfile  =~ s/\\\//\\/;);//
 output();//print "   <$EXTEN> \n";
 generic($ROOT = basename( $VFCfile ) ;);// 
-branch(if ( $VFCfile =~ m/$EXTEN$/i  && (   ".vfc" =~ m/$EXTEN$/i   ||  $ROOT !~ /^[_]/ ) ));//if ( $VFCfile =~ m/\.vfc$/ )
+branch(if (  (   ".vfc" =~ m/$EXTEN$/i   ||  $ROOT !~ /^[_]/ ) ));//if ( $VFCfile =~ m/$EXTEN$/i  && (   ".vfc" =~ m/$EXTEN$/i   ||  $ROOT !~ /^[_]/ ) )
 path( {);//
 set($VFCfile =~ tr|/|\\|;);//
 output(if ( ".vfc" =~ /$EXTEN/i ) {  print "explorer $VFCfile\n"; });//if ( $EXTEN eq "\.vfc"  ) print "<$VFCfile>\n";
@@ -201,4 +203,4 @@ end();//
 ;    vfcfind.pl   #   .
 ; notepad.exe
 ;INSECTA EMBEDDED ALTSESSION INFORMATION
-; 324 92 1952 1582 47 129   1122   4294966124    perl.key  0
+; 324 92 1866 1661 66 129   741   4294966410    perl.key  0

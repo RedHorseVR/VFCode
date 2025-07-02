@@ -1,7 +1,7 @@
 
 echo off
 
-echo --- CHECKING %1 AND PARSING IF NEEDED  
+echo ---  %1  
 
 IF "%1"=="" (
     echo --- No file given, launching VFC2000
@@ -13,22 +13,13 @@ IF "%1"=="" (
             echo --- PARSING %1
             echo ---  
             C++parse.bat %~1
-            echo --- PARSING COMPLETED
+            echo --- PARSED %1 COMPLETED
         )
-
-        echo --- VFC FILE READY 
-        IF "%~2"=="" (
-            start vfc2000 "%~1.vfc" -Reload
-        ) ELSE ( 
-            start vfc2000 "%~1.vfc" -Goto %2
-        )
+    	echo --- VFC FILE READY GOTO %2
+    	start vfc2000 "%~1.vfc -Goto %2"
 
     ) ELSE (
-        IF "%~2"=="" (
-            start vfc2000 "%~1" -Reload
-        ) ELSE ( 
-            start vfc2000 "%~1" -Goto %2
-        )
+    	start vfc2000 "%~1.vfc -Goto %2"
     )
 
 )
