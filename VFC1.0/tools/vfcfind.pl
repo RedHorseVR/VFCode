@@ -32,12 +32,12 @@ sub GetLines{ local ( $filename , $word_to_find  , $type ) = @_;
 		} else {
 			$line_number++;
 			}
-		$row =~ s/$VFCtoken// ;
+		if(  $EXTEN =~ m/vfc/i  ) { $row =~ s/$VFCtoken// } ;
 		
 		
 		$row =~ s/\n// ;
 		if($row =~ m/$word_to_find/) {
-			if ( $type =~ m/$VFCtoken/  )
+			if ( $type =~ m/$VFCtoken/  &&  $EXTEN =~ m/vfc/i   )
 			{
 				if ( $tok =~ m/^$type/ )
 				{
@@ -54,7 +54,7 @@ sub GetLines{ local ( $filename , $word_to_find  , $type ) = @_;
 				if ( $EXTEN =~ m/vfc/i  )
 				{
 					print "$cyan";
-					print "\tvfc $filename  $line_number\t$default|--------> $tok$row;\n";
+					print "\tvfc $filename  $line_number\t$default|---- $EXTEN ----> $tok$row;\n";
 				} else {
 					if (-e "$filename.vfc" )
 					{
@@ -62,7 +62,7 @@ sub GetLines{ local ( $filename , $word_to_find  , $type ) = @_;
 					}else{
 						print "$yellow";
 						}
-					print "\tvfc $filename   $line_number\t$default| line: $line_number  -------> $tok$row;\n";
+					print "\tvfc $filename   $line_number\t$default| line: $line_number  ---$EXTEN ----> $tok$row;\n";
 					}
 				}
 			}
@@ -82,14 +82,14 @@ sub process_files{ my( $dir , $word , $type , $size_args ) = @_;
 	$total_lines  = 0;
 	$FIRST_HIT = "True" ;
 	while (my $file = readdir(DIR)) {
-		if ( $file =~ m/$EXTEN$/i &&   -f "$dir/$file") {
+		if ( ( $file =~ m/$EXTEN$/i  ||  '*' =~ m/$EXTEN$/i   ) &&   -f "$dir/$file") {
 			
 			
 			$VFCfile = "$dir\\$file" ;
 			$VFCfile  =~ s/\\\//\\/;
 			
 			$ROOT = basename( $VFCfile ) ;
-			if (  (   ".vfc" =~ m/$EXTEN$/i   ||  $ROOT !~ /^[_]/ ) )
+			if (  (  $ROOT !~ /^[_]/ ) )
 			{
 				$VFCfile =~ tr|/|\\|;
 				if ( ".vfc" =~ /$EXTEN/i ) {  print "explorer $VFCfile\n"; }
@@ -115,7 +115,7 @@ sub process_files{ my( $dir , $word , $type , $size_args ) = @_;
 		$A1 = $ARGV[1] ;
 		$A2 = $ARGV[2] ;
 		print "args: $A, $A1, $A2 --- @ARGV \n";
-		$EXTEN= ($A =~ /\.(\w+)$/) ? "\.$1" : "";
+		$EXTEN= ($A =~ /\.([\w\*]+)$/) ? "\.$1" : "";
 		if ($EXTEN) {
 			print "Scanning for $EXTEN ....\n\n";
 			$dir = ".";
@@ -185,5 +185,5 @@ foreach my $dir (@list_of_dirs) {
 
 print "\n==> TOTAL VFC LOC: $TotalLines :: HITS: $HIT_TOTAL \n";
 
-#  Export  Date: 09:47:06 AM - 02:Jul:2025.
+#  Export  Date: 10:35:36 AM - 02:Jul:2025.
 

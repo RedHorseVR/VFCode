@@ -2,7 +2,7 @@
 ;  c1995-2015: Visual Flow Coder by 2LResearch
 ;
 ;  File Name : vfcfind.pl.vfc
-;  File Date : 09:47:06 AM - 02:Jul:2025
+;  File Date : 10:35:36 AM - 02:Jul:2025
 
 event(use File::Find;);//// //////
 event(use File::Basename;);// ////
@@ -39,13 +39,13 @@ generic($line_number++;);// ////
 path(} else { );//
 generic($line_number++;);// ////
 bend( });//
-set($row =~ s/$VFCtoken// ;);//
+set(if(  $EXTEN =~ m/vfc/i  ) { $row =~ s/$VFCtoken// } ;);//<---- CLEANS THE TOKEN FOR vfc FILE ONLY 
 set();//$tok = $& ;
 set();//$row =~ s/;\/\/.*// ;
 set($row =~ s/\n// ;);//
 branch(if($row =~ m/$word_to_find/) {);///// ////////if($row =~ /\b$word_to_find\b/) {
 path();//
-branch(if ( $type =~ m/$VFCtoken/  ));//
+branch(if ( $type =~ m/$VFCtoken/  &&  $EXTEN =~ m/vfc/i   ));//
 path( {);//
 branch(if ( $tok =~ m/^$type/ ));//
 path( {);//
@@ -62,7 +62,7 @@ set($found += 1;);//
 branch(if ( $EXTEN =~ m/vfc/i  ));//
 path( {);//
 output(print "$cyan";);//
-output(print "\tvfc $filename  $line_number\t$default|--------> $tok$row;\n";);// ////
+output(print "\tvfc $filename  $line_number\t$default|---- $EXTEN ----> $tok$row;\n";);// ////
 path(} else {);//
 branch(if (-e "$filename.vfc" ));//
 path( { );//
@@ -70,7 +70,7 @@ output(print "$cyan";);//
 path( }else{ );//
 output(print "$yellow";);//
 bend( } );//
-output(print "\tvfc $filename   $line_number\t$default| line: $line_number  -------> $tok$row;\n";);// ////
+output(print "\tvfc $filename   $line_number\t$default| line: $line_number  ---$EXTEN ----> $tok$row;\n";);// ////
 bend( });//
 bend( });//
 bend(});//// //////
@@ -90,7 +90,7 @@ generic(opendir(DIR, $dir) or die "Could not open $dir in process_files \n";);//
 set($total_lines  = 0;);//
 set($FIRST_HIT = "True" ;);//
 loop(while (my $file = readdir(DIR)) {);// ////
-branch(if ( $file =~ m/$EXTEN$/i &&   -f "$dir/$file") {);//if ( $file =~ m/\.vfc/ &&   -f "$dir/$file") {
+branch(if ( ( $file =~ m/$EXTEN$/i  ||  '*' =~ m/$EXTEN$/i   ) &&   -f "$dir/$file") {);// if ( $file =~ m/$EXTEN$/i    &&   -f "$dir/$file") {
 path();//
 set();//$FOLDER_FIRST_HIT = "False";
 set();//
@@ -98,7 +98,7 @@ set($VFCfile = "$dir\\$file" ;);//
 set($VFCfile  =~ s/\\\//\\/;);//
 output();//print "   <$EXTEN> \n";
 generic($ROOT = basename( $VFCfile ) ;);// 
-branch(if (  (   ".vfc" =~ m/$EXTEN$/i   ||  $ROOT !~ /^[_]/ ) ));//if ( $VFCfile =~ m/$EXTEN$/i  && (   ".vfc" =~ m/$EXTEN$/i   ||  $ROOT !~ /^[_]/ ) )
+branch(if (  (  $ROOT !~ /^[_]/ ) ));//if ( $VFCfile =~ m/$EXTEN$/i  && (   ".vfc" =~ m/$EXTEN$/i   ||  $ROOT !~ /^[_]/ ) )
 path( {);//
 set($VFCfile =~ tr|/|\\|;);//
 output(if ( ".vfc" =~ /$EXTEN/i ) {  print "explorer $VFCfile\n"; });//if ( $EXTEN eq "\.vfc"  ) print "<$VFCfile>\n";
@@ -124,7 +124,7 @@ set($A = $ARGV[0] ;);//
 set($A1 = $ARGV[1] ;);//
 set($A2 = $ARGV[2] ;);//
 output(print "args: $A, $A1, $A2 --- @ARGV \n";);//
-generic($EXTEN= ($A =~ /\.(\w+)$/) ? "\.$1" : "";);// 
+generic($EXTEN= ($A =~ /\.([\w\*]+)$/) ? "\.$1" : "";);// 
 branch(if ($EXTEN) {);// 
 path();//
 output(print "Scanning for $EXTEN ....\n\n";);//// //
@@ -203,4 +203,4 @@ end();//
 ;    vfcfind.pl   #   .
 ; notepad.exe
 ;INSECTA EMBEDDED ALTSESSION INFORMATION
-; 324 92 1866 1661 66 129   741   4294966410    perl.key  0
+; 655 109 2261 1905 118 149   826   4294962846    perl.key  0
