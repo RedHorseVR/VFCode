@@ -1,10 +1,11 @@
 
+
 echo off
+echo ---  [%1]  
+cd 
 
-echo ---  %1  
-
-IF "%1"=="" (
-    echo --- No file given, launching VFC2000
+IF "%~1"=="" (
+    echo file: [%1]--- No file given, launching VFC2000
     start vfc2000
 ) ELSE (
 
@@ -15,11 +16,11 @@ IF "%1"=="" (
             C++parse.bat %~1
             echo --- PARSED %1 COMPLETED
         )
-    	echo --- VFC FILE READY GOTO %2
-    	start vfc2000 "%~1.vfc -Goto %2"
-
+    	echo --- VFC FILE %1 READY TO GOTO %2
+    	start vfc2000 %1.vfc -Goto %2
+	timout 3
     ) ELSE (
-    	start vfc2000 "%~1.vfc -Goto %2"
+        echo --- EXISTING VFC FILE %1 -Goto %2
+    	start vfc2000 %1 -Goto %2    
     )
-
 )

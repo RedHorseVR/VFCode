@@ -2,7 +2,7 @@
 ;  c1995-2015: Visual Flow Coder by 2LResearch
 ;
 ;  File Name : vfcfind.pl.vfc
-;  File Date : 12:23:45 PM - 02:Jul:2025
+;  File Date : 03:41:19 PM - 02:Jul:2025
 
 event(use File::Find;);//// //////
 event(use File::Basename;);// ////
@@ -33,7 +33,7 @@ set($found = 0;);//
 output();//print( "******************** $type \n\n  " );
 set($VFCtoken = "^(generic|variable|input|event|process|set|output|loop|lend|branch|path|bend|end)" ;);//
 loop(while (my $row = <$fh>) {);// ////
-branch(if ($str =~ /[^\x00-\x7F]/));//if ( $row =~ m/$VFCtoken/  )
+branch(if ($row=~ /[^\x00-\x7F]/));//if ( $row =~ m/$VFCtoken/  )
 path( {);//
 generic(next ;);// ////
 path(} else { );//
@@ -101,9 +101,11 @@ generic($ROOT = basename( $VFCfile ) ;);//
 branch(if (  (  $ROOT !~ /^[_]/ ) ));//if ( $VFCfile =~ m/$EXTEN$/i  && (   ".vfc" =~ m/$EXTEN$/i   ||  $ROOT !~ /^[_]/ ) )
 path( {);//
 set($VFCfile =~ tr|/|\\|;);//
-branch(if ( ".vfc" =~ m/$EXTEN/i ));//
+branch(if ( ".vfc" =~ m/$EXTEN/i   &&  ".*" !~ m/$EXTEN/i   ));//
 path( { );//
-output( print "explorer $VFCfile\n";);//
+output(print "$cyan";);//
+output( print "vfc2000 $VFCfile\n";);//
+output(print "$default";);//
 bend( } );//
 process($lines = GetLines( $VFCfile , $word , $type  ) ;);//
 output( );//if ( $FIRST_HIT == "True" && length($lines)>0 ) { print "<$EXTEN> $VFCfile\n"; $FIRST_HIT = "False";}
@@ -171,7 +173,7 @@ end(return if $File::Find::name =~ /\/?build\//;);// // skip any build/ //
 end(return if $File::Find::name =~ /\/?CMakeFiles\//;);// // skip CMake garbage //
 generic(push @safe_dirs, $File::Find::name;);// ////
 end(};);//// //////
-generic(find($wanted, '.'););// ////
+process(find($wanted, '.'););//// //////
 generic();// // Debug it: //
 output(print "$_\n" for @safe_dirs;);//// //////
 generic(my @safe_dirs;);// ////
@@ -206,4 +208,4 @@ end();//
 ;    vfcfind.pl   #   .
 ; notepad.exe
 ;INSECTA EMBEDDED ALTSESSION INFORMATION
-; 655 109 2261 1905 33 149   1134   4294966376    perl.key  0
+; 742 240 1931 1675 99 159   1420   4294964005    perl.key  0

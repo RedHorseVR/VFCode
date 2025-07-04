@@ -26,7 +26,7 @@ sub GetLines{ local ( $filename , $word_to_find  , $type ) = @_;
 	
 	$VFCtoken = "^(generic|variable|input|event|process|set|output|loop|lend|branch|path|bend|end)" ;
 	while (my $row = <$fh>) {
-		if ($str =~ /[^\x00-\x7F]/)
+		if ($row=~ /[^\x00-\x7F]/)
 		{
 			next ;
 		} else {
@@ -92,9 +92,11 @@ sub process_files{ my( $dir , $word , $type , $size_args ) = @_;
 			if (  (  $ROOT !~ /^[_]/ ) )
 			{
 				$VFCfile =~ tr|/|\\|;
-				if ( ".vfc" =~ m/$EXTEN/i )
+				if ( ".vfc" =~ m/$EXTEN/i   &&  ".*" !~ m/$EXTEN/i   )
 				{
-					print "explorer $VFCfile\n";
+					print "$cyan";
+					print "vfc2000 $VFCfile\n";
+					print "$default";
 					}
 				$lines = GetLines( $VFCfile , $word , $type  ) ;
 				
@@ -188,5 +190,5 @@ foreach my $dir (@list_of_dirs) {
 
 print "\n==> TOTAL VFC LOC: $TotalLines :: HITS: $HIT_TOTAL \n";
 
-#  Export  Date: 12:23:45 PM - 02:Jul:2025.
+#  Export  Date: 03:41:19 PM - 02:Jul:2025.
 
