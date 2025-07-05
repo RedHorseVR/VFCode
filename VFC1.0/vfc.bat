@@ -18,7 +18,7 @@ IF "%~1"=="" (
         )
     	echo --- VFC FILE %1 READY TO GOTO %2
     	start vfc2000 %1.vfc -Goto %2
-	timout 3
+	rem timeout 3
     ) ELSE (
         echo --- EXISTING VFC FILE %1 -Goto %2
     	start vfc2000 %1 -Goto %2    
