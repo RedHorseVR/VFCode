@@ -2,7 +2,7 @@
 ;  c1995-2015: Visual Flow Coder by 2LResearch
 ;
 ;  File Name : vfcfind.pl.vfc
-;  File Date : 03:41:19 PM - 02:Jul:2025
+;  File Date : 10:51:27 AM - 07:Jul:2025
 
 event(use File::Find;);//// //////
 event(use File::Basename;);// ////
@@ -61,7 +61,7 @@ path( }else{);//
 set($found += 1;);//
 branch(if ( $EXTEN =~ m/vfc/i  ));//
 path( {);//
-output(print "$cyan";);//
+output(print "$green";);//
 output(print "\tvfc $filename  $line_number\t$default|---- $EXTEN ----> $tok$row;\n";);// ////
 path(} else {);//
 branch(if (-e "$filename.vfc" ));//
@@ -70,7 +70,10 @@ output(print "$cyan";);//
 path( }else{ );//
 output(print "$yellow";);//
 bend( } );//
+branch(if ( $filename !~ /\.vfc$/ ));//
+path( { );//
 output(print "\tvfc $filename   $line_number\t$default| line: $line_number  ---$EXTEN ----> $tok$row;\n";);// ////
+bend( } );//
 bend( });//
 bend( });//
 bend(});//// //////
@@ -104,7 +107,7 @@ set($VFCfile =~ tr|/|\\|;);//
 branch(if ( ".vfc" =~ m/$EXTEN/i   &&  ".*" !~ m/$EXTEN/i   ));//
 path( { );//
 output(print "$cyan";);//
-output( print "vfc2000 $VFCfile\n";);//
+output( print "=====================\n";);// print "vfc2000 $VFCfile\n";
 output(print "$default";);//
 bend( } );//
 process($lines = GetLines( $VFCfile , $word , $type  ) ;);//
@@ -208,4 +211,4 @@ end();//
 ;    vfcfind.pl   #   .
 ; notepad.exe
 ;INSECTA EMBEDDED ALTSESSION INFORMATION
-; 742 240 1931 1675 99 159   1420   4294964005    perl.key  0
+; 567 308 1931 1675 66 159   4294967168   4294965503    perl.key  0

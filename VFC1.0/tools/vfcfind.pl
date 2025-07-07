@@ -53,7 +53,7 @@ sub GetLines{ local ( $filename , $word_to_find  , $type ) = @_;
 				$found += 1;
 				if ( $EXTEN =~ m/vfc/i  )
 				{
-					print "$cyan";
+					print "$green";
 					print "\tvfc $filename  $line_number\t$default|---- $EXTEN ----> $tok$row;\n";
 				} else {
 					if (-e "$filename.vfc" )
@@ -62,7 +62,10 @@ sub GetLines{ local ( $filename , $word_to_find  , $type ) = @_;
 					}else{
 						print "$yellow";
 						}
-					print "\tvfc $filename   $line_number\t$default| line: $line_number  ---$EXTEN ----> $tok$row;\n";
+					if ( $filename !~ /\.vfc$/ )
+					{
+						print "\tvfc $filename   $line_number\t$default| line: $line_number  ---$EXTEN ----> $tok$row;\n";
+						}
 					}
 				}
 			}
@@ -95,7 +98,7 @@ sub process_files{ my( $dir , $word , $type , $size_args ) = @_;
 				if ( ".vfc" =~ m/$EXTEN/i   &&  ".*" !~ m/$EXTEN/i   )
 				{
 					print "$cyan";
-					print "vfc2000 $VFCfile\n";
+					print "=====================\n";
 					print "$default";
 					}
 				$lines = GetLines( $VFCfile , $word , $type  ) ;
@@ -190,5 +193,5 @@ foreach my $dir (@list_of_dirs) {
 
 print "\n==> TOTAL VFC LOC: $TotalLines :: HITS: $HIT_TOTAL \n";
 
-#  Export  Date: 03:41:19 PM - 02:Jul:2025.
+#  Export  Date: 10:51:27 AM - 07:Jul:2025.
 
