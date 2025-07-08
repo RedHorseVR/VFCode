@@ -97,8 +97,8 @@ sub process_files{ my( $dir , $word , $type , $size_args ) = @_;
 				$VFCfile =~ tr|/|\\|;
 				if ( ".vfc" =~ m/$EXTEN/i   &&  ".*" !~ m/$EXTEN/i   )
 				{
-					print "$cyan";
-					print "=====================\n";
+					print "$bright_blue";
+					print "vfc2000 $VFCfile\n";
 					print "$default";
 					}
 				$lines = GetLines( $VFCfile , $word , $type  ) ;
@@ -193,5 +193,5 @@ foreach my $dir (@list_of_dirs) {
 
 print "\n==> TOTAL VFC LOC: $TotalLines :: HITS: $HIT_TOTAL \n";
 
-#  Export  Date: 10:51:27 AM - 07:Jul:2025.
+#  Export  Date: 11:56:31 PM - 07:Jul:2025.
 

@@ -2,7 +2,7 @@
 ;  c1995-2015: Visual Flow Coder by 2LResearch
 ;
 ;  File Name : vfcfind.pl.vfc
-;  File Date : 10:51:27 AM - 07:Jul:2025
+;  File Date : 11:56:31 PM - 07:Jul:2025
 
 event(use File::Find;);//// //////
 event(use File::Basename;);// ////
@@ -35,7 +35,7 @@ set($VFCtoken = "^(generic|variable|input|event|process|set|output|loop|lend|bra
 loop(while (my $row = <$fh>) {);// ////
 branch(if ($row=~ /[^\x00-\x7F]/));//if ( $row =~ m/$VFCtoken/  )
 path( {);//
-generic(next ;);// ////
+end(next ;);//// //////
 path(} else { );//
 bend( });//
 generic($line_number++;);// ////
@@ -106,8 +106,8 @@ path( {);//
 set($VFCfile =~ tr|/|\\|;);//
 branch(if ( ".vfc" =~ m/$EXTEN/i   &&  ".*" !~ m/$EXTEN/i   ));//
 path( { );//
-output(print "$cyan";);//
-output( print "=====================\n";);// print "vfc2000 $VFCfile\n";
+output(print "$bright_blue";);//
+output( print "vfc2000 $VFCfile\n";);// print "=====================\n";
 output(print "$default";);//
 bend( } );//
 process($lines = GetLines( $VFCfile , $word , $type  ) ;);//
@@ -211,4 +211,4 @@ end();//
 ;    vfcfind.pl   #   .
 ; notepad.exe
 ;INSECTA EMBEDDED ALTSESSION INFORMATION
-; 567 308 1931 1675 66 159   4294967168   4294965503    perl.key  0
+; 567 308 1931 1675 66 159   1416   4294963860    perl.key  0
