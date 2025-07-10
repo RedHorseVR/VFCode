@@ -2,13 +2,31 @@
 ;  c1995-2015: Visual Flow Coder by 2LResearch
 ;
 ;  File Name : vfcfind.pl.vfc
-;  File Date : 11:56:31 PM - 07:Jul:2025
+;  File Date : 02:07:40 PM - 10:Jul:2025
 
 event(use File::Find;);//// //////
 event(use File::Basename;);// ////
 event(use File::Find::Rule;);// ////
 set($HIT_TOTAL = 0;);//
 end();//
+set(my $ps;);//// //////
+
+input(sub start_powershell {);// ////
+end(return if $ps;);// ////
+generic();// // Open a persistent PowerShell process//
+generic(open($ps, '|-', 'powershell -Command -') or die "Can't start PowerShell: $!";);// ////
+generic(select((select($ps), $| = 1)[0]);  );// // Autoflush to make output instant//
+end(});//// //////
+
+input(sub cprint { );// ////
+generic(my ($text, $color) = @_; );// ////
+generic();// // Escape any single quotes in the text to prevent PowerShell issues //
+generic(start_powershell();  );// // Ensure PowerShell is running//
+generic();// // Escape any single quotes//
+generic($text =~ s/'/'\''/g;);// ////
+set();//// // Send the command to PowerShell////
+output(print $ps "Write-Host '$text' -ForegroundColor $color\n";);// ////
+end(});// 
 set($default = "\e[0m" ;);//resets to default color
 generic(my $reset     = "\e[0m";);// ////
 generic(my $bold      = "\e[1m";);// ////
@@ -33,9 +51,13 @@ set($found = 0;);//
 output();//print( "******************** $type \n\n  " );
 set($VFCtoken = "^(generic|variable|input|event|process|set|output|loop|lend|branch|path|bend|end)" ;);//
 loop(while (my $row = <$fh>) {);// ////
-branch(if ($row=~ /[^\x00-\x7F]/));//if ( $row =~ m/$VFCtoken/  )
+generic();// // Remove ANSI escape sequences //
+generic($row =~ s/\x1B[\(\)][0-9A-Za-z]*//g;);//  # Extra escape variations
+generic($row =~ s/[^\x20-\x7E\r\n\t]//g;         );// // Removes non-printable, keeps tabs/newlines//
+branch(if ($row =~ /[^\x00-\x7F]/   || $row =~ m/\x/ ));//if ($row[$i] !~ /^[\x01-\x7F]*$/)
 path( {);//
 end(next ;);//// //////
+set();//
 path(} else { );//
 bend( });//
 generic($line_number++;);// ////
@@ -52,7 +74,7 @@ path( {);//
 set($found += 1;);//
 branch(if ( $EXTEN =~ m/vfc/i  ));//
 path( {);//
-output(print "$bright_green";);//
+output();//print "$bright_green";
 output(print "\tvfc $filename  $line_number\t$default|--------> $tok$row;\n";);//
 bend( });//
 path( }else{);//
@@ -61,23 +83,26 @@ path( }else{);//
 set($found += 1;);//
 branch(if ( $EXTEN =~ m/vfc/i  ));//
 path( {);//
-output(print "$green";);//
-output(print "\tvfc $filename  $line_number\t$default|---- $EXTEN ----> $tok$row;\n";);// ////
+output();//print "$green";
+output(cprint( "\tvfc $filename  $line_number\t$default|---- $EXTEN ----> $tok$row;" , 'red'  ););// ////
 path(} else {);//
-branch(if (-e "$filename.vfc" ));//
-path( { );//
-output(print "$cyan";);//
-path( }else{ );//
-output(print "$yellow";);//
-bend( } );//
 branch(if ( $filename !~ /\.vfc$/ ));//
 path( { );//
-output(print "\tvfc $filename   $line_number\t$default| line: $line_number  ---$EXTEN ----> $tok$row;\n";);// ////
+output(cprint ( "\tvfc $filename   $line_number\t$default| line: $line_number  ---$EXTEN ----> $tok$row" , 'green' ););// ////
+path(} else { );//
+branch(if (-e "$filename.vfc" ));//
+path( { );//
+output();//print "$cyan";
+output(cprint ( "\tvfc $filename   $line_number\t$default| line: $line_number  ---$EXTEN ----> $tok$row", 'cyan' ););// ////
+path( }else{ );//
+output();//print "$yellow";
+output(cprint ( "\tvfc $filename   $line_number\t$default| line: $line_number  ---$EXTEN ----> $tok$row" , 'yellow'  ););// ////
+bend( } );//
 bend( } );//
 bend( });//
 bend( });//
 bend(});//// //////
-output(print "$reset";);//
+output();//print "$reset";
 lend(});//// //////
 generic(close($fh););// ////
 branch(if ( $found > 0  ));//
@@ -93,6 +118,22 @@ generic(opendir(DIR, $dir) or die "Could not open $dir in process_files \n";);//
 set($total_lines  = 0;);//
 set($FIRST_HIT = "True" ;);//
 loop(while (my $file = readdir(DIR)) {);// ////
+output( );//print ( "\tvfc $file  \n" );
+branch(if ( $EXTEN =~ m/files/ ));//
+path( { );//
+output( );//print ( "\tvfc $file == $word \n" );
+branch(if ( $file =~ m/$word/ && $file !~ m/^_/ &&  $file !~ m/\.vfc$/ ));//
+path( { );//
+branch(if (-e "$dir/$file.vfc" ));//
+path( { );//
+output(print "-->";);//print "$cyan";
+path( }else{ );//
+output();//print "$yellow";
+bend( } );//
+output(print ( "\tvfc $dir/$file  \n" ););// 
+path(} else { );//
+bend( } );//
+path( }else{ );//
 branch(if ( ( $file =~ m/$EXTEN$/i  ||  '*' =~ m/$EXTEN$/i   ) &&   -f "$dir/$file") {);// if ( $file =~ m/$EXTEN$/i    &&   -f "$dir/$file") {
 path();//
 set();//$FOLDER_FIRST_HIT = "False";
@@ -116,6 +157,7 @@ set($total_lines  += $lines ;);//
 output( );//print "$VFCfile $lines\n";
 bend( });//
 bend(});//// //////
+bend( } );//
 lend(});//// //////
 generic(closedir(DIR););// ////
 end(return $total_lines  ;   });//
@@ -178,11 +220,15 @@ generic(push @safe_dirs, $File::Find::name;);// ////
 end(};);//// //////
 process(find($wanted, '.'););//// //////
 generic();// // Debug it: //
-output(print "$_\n" for @safe_dirs;);//// //////
+output();//print "$_\n" for @safe_dirs;
 generic(my @safe_dirs;);// ////
 generic(@list_of_dirs = @safe_dirs;);// ////
 output(print "\n==============================================================\n";);// 
-output(print( "<directory=$dir>  <search term=$word> <vfc_type=$type>\n" ) ;);////// ////////
+output(print( "<directory=$dir>  type=<$EXTEN> <search term=$word> <vfc_type=$type>\n" ) ;);////// ////////
+output(print( "\tvfcfind .* \tkeyword - looks for all file types of ANY ext for <keyword>\n" ) ;);//
+output(print( "\tvfcfind .ext \tkeyword - looks for all file types of .ext for <keyword>\n" ) ;);//
+output(print( "\tvfcfind  \tkeyword - looks for all VFC files for <keyword>\n" ) ;);//
+output(print( "\tvfcfind .files \tkeyword - looks for all filenames with <keyword>\n" ) ;);//
 output(print "==============================================================\n\n";);// 
 output( );//print "TOP FOLDER ============> $dir\n";
 process();//$lines = process_files( "$dir" , $word , $type ) ;
@@ -191,7 +237,7 @@ set($TotalLines += $lines;);//
 generic();// // Filter out the directories using the -d file test operator //
 process(my @list_of_dirs = grep { -d } @list_of_files;);//
 loop(foreach my $dir (@list_of_dirs) {);//
-branch(if ( $dir =~ m/BackupVFC/ || $dir =~ m/BSP_/ || $dir =~ m/build/ ));//
+branch(if ( $dir =~ m/BackupVFC/ || $dir =~ m/BSP_/ || $dir =~ m/build/ || $dir =~ /^\./ ));//
 path( {);//
 output();//print( "\t\t---->Skipping ... $dir\n"  );
 path(} else {);//
@@ -201,7 +247,9 @@ set($TotalLines += $lines;);//
 output();// print "Lines of VFC in $dir  :  $lines \n\n";
 bend( });//
 lend(});//// //////
-output(print "\n==> TOTAL VFC LOC: $TotalLines :: HITS: $HIT_TOTAL \n";);// 
+set();//sleep(5);
+output(print( "\n\n==> <directory=$dir>  type=<$EXTEN> <search term=$word> <vfc_type=$type>\n" ) ;);// 
+output(print "==> TOTAL SCANNED LOC: $TotalLines :: HITS: $HIT_TOTAL \n";);// 
 end();//
 
 
@@ -211,4 +259,4 @@ end();//
 ;    vfcfind.pl   #   .
 ; notepad.exe
 ;INSECTA EMBEDDED ALTSESSION INFORMATION
-; 567 308 1931 1675 66 159   1416   4294963860    perl.key  0
+; 451 134 2020 1620 124 138   1504   4294963389    perl.key  0
