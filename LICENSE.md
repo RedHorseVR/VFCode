@@ -7,7 +7,7 @@ This software is dual-licensed by the author, Luis R. Lopez.
    - Fewer than 4 developers
    - AND less than $5,000,000 USD in annual revenue
 
-2.  The software is licensed under the GNU General Public License v3.0, with the following conditions:
+2. The software is licensed under the GNU General Public License v3.0, with the following conditions:
    - Retain all copyright notices
    - Share modifications under the same license (GPLv3)
    - Prominently display the reference:
