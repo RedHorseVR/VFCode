@@ -130,9 +130,6 @@ IndentPPDirectives: BeforeHash
 # IndentRequiresClause: true
 IndentWidth:     3
 IndentWrappedFunctionNames: false
-
-InsertBraces: true
-
 # InsertBraces:    false
 # InsertNewlineAtEOF: false
 InsertTrailingCommas: None
@@ -174,10 +171,6 @@ QualifierAlignment: Leave
 ReferenceAlignment: Pointer
 ReflowComments:  true
 RemoveBracesLLVM: false
-
-RemoveEmptyLinesInUnwrappedLines: true
-
-
 # RemoveSemicolon: false
 # RequiresClausePosition: OwnLine
 # RequiresExpressionIndentation: OuterScope

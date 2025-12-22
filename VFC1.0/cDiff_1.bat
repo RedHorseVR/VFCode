@@ -6,7 +6,7 @@ echo ------------------------------------
 echo %1
 echo %2
  
-
+ 
 if "%~1"=="" (
     echo Usage: cDiff.bat file1 file2
     exit /b
@@ -28,13 +28,15 @@ ECHO ---------------------------------
 set "clean1=%1
 set "clean2=%2
 
-set STYLE="C:\Users\lopezl10\AppData\Local\RedHorseVR\C2VFC_parser\.clang-format"
 
-echo FOMRATTING ::::::::::::::::::::::::::::::::::
- clang-format -style=file:"%STYLE%"  -i "%clean1%"
-remclang-format -style=file:"%STYLE%"  -i "%clean2%"
+echo FOMATTING ::::::::::::::::::::::::::::::::::
+clang-format -style=file:"C:/Users/lopezl10/AppData/Local/RedHorseVR/VFCode/VFC1.0/.clang-format" -i "%1"
 
-WinMergeU.exe "%clean1%" "%clean2%"
+rem  set STYLE="C:\Users\lopezl10\AppData\Local\RedHorseVR\C2VFC_parser\.clang-format"
+rem  clang-format -style=file:"%STYLE%"  -i "%clean1%"
+rem  clang-format -style=file:"%STYLE%"  -i "%clean2%"
+
+WinMergeU.exe "%1" "%2"
 
 ECHO C CODE DIFF CHECK EXIT ... 
 
