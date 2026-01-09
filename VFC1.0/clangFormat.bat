@@ -10,4 +10,4 @@ rem clang-format -style=file:".clang-format" -i "%1"
 
 rem cmake -S . -B build -G \"Unix Makefiles\" -DFSW_CLANG_TIDY=1 && cmake --build build --target clang-tidy  "%1"
 
-pause
+REM pause

@@ -17,3 +17,4 @@ ECHO ---------------------------------
 ECHO CODE DIFF EXIT ... 
 
 
+pause
