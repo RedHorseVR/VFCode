@@ -1,0 +1,44 @@
+;  IRL FlowCode Version: Version 10.0
+;  c1995-2015: Visual Flow Coder by 2LResearch
+;
+;  File Name : test.py.vfc
+;  File Date : 05:40:45 PM - 05:Feb:2026
+
+event(import re);// 
+
+input(def count_indent(line):);// 
+set(indent = re.match(r"[ \t]*", line).group(0));// 
+set(return indent, len(indent));// 
+end();// 
+
+input(def process_lines(lines):);// 
+set(out = []);// 
+set(prev_indent = 0);// 
+loop(for line in lines:);// 
+set(stripped = line.strip());// 
+branch(if stripped == "":);// 
+path();//
+set(out.append(line));// 
+set(continue);// 
+bend();// 
+set(indent_str, indent_len = count_indent(line));// 
+branch(if indent_len < prev_indent:);// 
+path();//
+loop(for level in range(prev_indent, indent_len, -1):);// 
+set(out.append(" " * level + "\n"));// 
+lend();// 
+bend();// 
+set(out.append(line));// 
+set(prev_indent = indent_len);// 
+lend();// 
+set(return out);// 
+end();// 
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 13158600 13158600 0 255 255 9895835 6946660 3289650
+;    test.py   #   .
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 2018 799 890 1092 0 100   481   94    python.key  0
