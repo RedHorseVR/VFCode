@@ -8,7 +8,7 @@ echo %CD%
 
 echo %1  %2
 
-python format.py %1
+python %~dp0\format.py %1
 
 
 
