@@ -1,4 +1,6 @@
-echo  python CODE DIFFERENCE CHECK ...
+echo ===================================
+echo    python CODE DIFFERENCE CHECK ...
+echo ===================================
 @echo off
 setlocal enabledelayedexpansion
 
