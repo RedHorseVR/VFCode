@@ -2,7 +2,7 @@
 ;  c1995-2015: Visual Flow Coder by 2LResearch
 ;
 ;  File Name : test.py.vfc
-;  File Date : 05:57:02 PM - 05:Feb:2026
+;  File Date : 09:48:43 PM - 05:Feb:2026
 
 event(import re);// 
 
@@ -15,6 +15,7 @@ input(def process_lines(lines):);//
 set(out = []);// 
 set(prev_indent = 0);// 
 loop(for line in lines:);// 
+output(print( '------------------------------------------------') );//
 set(stripped = line.strip());// 
 branch(if stripped == "":);// 
 path();//
@@ -41,4 +42,4 @@ end();//
 ;    test.py   #   .
 ; notepad.exe
 ;INSECTA EMBEDDED ALTSESSION INFORMATION
-; 2018 799 890 1092 0 100   485   96    python.key  0
+; 1691 824 1081 1092 10 100   551   97    python.key  0

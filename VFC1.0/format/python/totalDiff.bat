@@ -7,7 +7,7 @@ echo %CD%
 echo %1  %2
 
 python format.py %1
-
+python format.py %2
 
 
 WinMergeU.exe %1 %2
@@ -17,3 +17,4 @@ WinMergeU.exe %1 %2
 ECHO python CODE DIFF CHECK EXIT ... 
 
 
+pause

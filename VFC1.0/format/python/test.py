@@ -10,6 +10,7 @@ def process_lines(lines):
     out = []
     prev_indent = 0
     for line in lines:
+        print("------------------------------------------------")
         stripped = line.strip()
         if stripped == "":
             out.append(line)
