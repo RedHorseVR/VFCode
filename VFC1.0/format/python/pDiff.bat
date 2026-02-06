@@ -6,8 +6,6 @@ echo %CD%
 
 echo %1  %2
 
-pause 
-
 python format.py %1
 python format.py %2
 
