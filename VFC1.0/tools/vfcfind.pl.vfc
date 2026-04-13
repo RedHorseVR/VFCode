@@ -2,8 +2,10 @@
 ;  c1995-2015: Visual Flow Coder by 2LResearch
 ;
 ;  File Name : vfcfind.pl.vfc
-;  File Date : 12:08:25 PM - 13:Apr:2026
+;  File Date : 02:14:24 PM - 13:Apr:2026
 
+event(use Cwd 'getcwd'; );// ////
+event(use File::Spec; );// ////
 event(use File::Find;);//// //////
 event(use File::Basename;);// ////
 event(use File::Find::Rule;);// ////
@@ -28,6 +30,27 @@ generic($text =~ s/'/'\''/g;);// ////
 set();//// // Send the command to PowerShell////
 output(print $ps "Write-Host '$text' -ForegroundColor $color\n";);// ////
 end(});// 
+
+input(sub path_to_safe_term { );// ////
+generic(my ($path) = @_; );// ////
+generic();// // 1. Get current working directory //
+generic(my $cwd = getcwd(); );// ////
+generic();// // 2. Convert to relative path //
+generic(my $rel = File::Spec->abs2rel($path, $cwd); );// ////
+generic();// // 3. Normalize slashes //
+generic($rel =~ s!\\!/!g; );// ////
+generic();// // 4. Replace path separators with underscores //
+generic($rel =~ s!/!_!g; );// ////
+set();// // 5. Remove anything unsafe for filenames //
+generic($rel =~ s![^A-Za-z0-9._-]!_!g; );// ////
+generic();// // 6. Collapse multiple underscores //
+generic($rel =~ s/_+/_/g; );// ////
+generic();// // 7. Trim leading/trailing underscores //
+generic($rel =~ s/^_+//; );// ////
+generic($rel =~ s/_+$//; );// ////
+generic();// // 8. Guarantee non-empty //
+end(return $rel || "unnamed"; );// ////
+end(});// ////
 set($default = "\e[0m" ;);//resets to default color
 generic(my $reset     = "\e[0m";);// ////
 generic(my $bold      = "\e[1m";);// ////
@@ -112,18 +135,25 @@ branch(if ( $found_in_file > 0 ));//
 path( { );//
 set(my $dir  = dirname($filename););//my $dir  = dirname($FileName);
 set(($name)= basename( $filename ););//my ($name) = fileparse($filename, qr/\.[^.]*/);
-output(print( "==== $found_in_file\tREFERENCES FOUND in FILE: $name =========== PATH: $dir ===========\n" ););//
-set($file = "npp_$name.ref" ;);//
+set($search_term = $word_to_find ;);//
+set($search_term =~ s/[\\\/:*?"<>|]+/_/g;);//
+set($term = path_to_safe_term($filename););//
+output(print( "$search_term ==== $found_in_file\tREFERENCES FOUND in FILE: $name =========== PATH: $dir ===========\n" ););//
+set(mkdir "refs_npp"  ;);//
+set($file = "refs_npp/npp_$search_term-$term-$name.ref" ;);//$file = "npp_XXX_$name.ref" ;
 branch(open my $fh, '>', $file or die "Cannot open $file: $!";);//
 path();//
 output();//print( "$NPPcodeData\n" );
+output(print( $fh "CURRENT DIRECTORY: $cwd\n" ););//
 output(print( $fh "REFERENCES FOR $word_to_find on PATH: $dir  FILE: $name\n\n" ););//
 output(print( $fh "$NPPcodeData\n" ););//
 bend( close $fh or die "Cannot close $file: $!";);//
-set($file = "vsc_$name.ref" ;);//
+set(mkdir "refs_vsc"  ;);//
+set($file = "refs_vsc/vsc_$search_term-$term-$name.ref" ;);//
 branch(open my $fh, '>', $file or die "Cannot open $file: $!";);//
 path();//
 output();//print( "$VScodeData\n" );
+output(print( $fh "CURRENT DIRECTORY: $cwd\n" ););//
 output(print( $fh "REFERENCES FOR $word_to_find on PATH: $dir  FILE: $name\n\n" ););//
 output(print( $fh "$VScodeData\n" ););//
 bend( close $fh or die "Cannot close $file: $!";);//
@@ -288,4 +318,4 @@ end();//
 ;    vfcfind.pl   #   .
 ; notepad.exe
 ;INSECTA EMBEDDED ALTSESSION INFORMATION
-; 1048 410 1217 1042 106 115   851   4294963989    perl.key  0
+; 1037 105 1399 1165 142 126   841   4294962430    perl.key  0

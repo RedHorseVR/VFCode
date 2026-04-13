@@ -1,3 +1,5 @@
+use Cwd 'getcwd';# ////
+use File::Spec;# ////
 use File::Find;#// //////
 use File::Basename;# ////
 use File::Find::Rule;# ////
@@ -20,6 +22,26 @@ sub cprint {# ////
 	#// // Send the command to PowerShell////
 	print $ps "Write-Host '$text' -ForegroundColor $color\n";# ////
 	} 
+sub path_to_safe_term {# ////
+	my ($path) = @_;# ////
+	# // 1. Get current working directory //
+	my $cwd = getcwd();# ////
+	# // 2. Convert to relative path //
+	my $rel = File::Spec->abs2rel($path, $cwd);# ////
+	# // 3. Normalize slashes //
+	$rel =~ s!\\!/!g;# ////
+	# // 4. Replace path separators with underscores //
+	$rel =~ s!/!_!g;# ////
+	# // 5. Remove anything unsafe for filenames //
+	$rel =~ s![^A-Za-z0-9._-]!_!g;# ////
+	# // 6. Collapse multiple underscores //
+	$rel =~ s/_+/_/g;# ////
+	# // 7. Trim leading/trailing underscores //
+	$rel =~ s/^_+//;# ////
+	$rel =~ s/_+$//;# ////
+	# // 8. Guarantee non-empty //
+	return $rel || "unnamed";# ////
+}# ////
 $default = "\e[0m" ;#resets to default color
 my $reset     = "\e[0m";# ////
 my $bold      = "\e[1m";# ////
@@ -103,16 +125,23 @@ sub GetLines{ local ( $filename , $word_to_find  , $type ) = @_;
 	{
 		my $dir  = dirname($filename);#my $dir  = dirname($FileName);
 		($name)= basename( $filename );#my ($name) = fileparse($filename, qr/\.[^.]*/);
-		print( "==== $found_in_file\tREFERENCES FOUND in FILE: $name =========== PATH: $dir ===========\n" );
-		$file = "npp_$name.ref" ;
+		$search_term = $word_to_find ;
+		$search_term =~ s/[\\\/:*?"<>|]+/_/g;
+		$term = path_to_safe_term($filename);
+		print( "$search_term ==== $found_in_file\tREFERENCES FOUND in FILE: $name =========== PATH: $dir ===========\n" );
+		mkdir "refs_npp"  ;
+		$file = "refs_npp/npp_$search_term-$term-$name.ref" ;#$file = "npp_XXX_$name.ref" ;
 		open my $fh, '>', $file or die "Cannot open $file: $!";
 			#print( "$NPPcodeData\n" );
+			print( $fh "CURRENT DIRECTORY: $cwd\n" );
 			print( $fh "REFERENCES FOR $word_to_find on PATH: $dir  FILE: $name\n\n" );
 			print( $fh "$NPPcodeData\n" );
 			close $fh or die "Cannot close $file: $!";
-		$file = "vsc_$name.ref" ;
+		mkdir "refs_vsc"  ;
+		$file = "refs_vsc/vsc_$search_term-$term-$name.ref" ;
 		open my $fh, '>', $file or die "Cannot open $file: $!";
 			#print( "$VScodeData\n" );
+			print( $fh "CURRENT DIRECTORY: $cwd\n" );
 			print( $fh "REFERENCES FOR $word_to_find on PATH: $dir  FILE: $name\n\n" );
 			print( $fh "$VScodeData\n" );
 			close $fh or die "Cannot close $file: $!";
