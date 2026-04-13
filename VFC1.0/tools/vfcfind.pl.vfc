@@ -2,12 +2,13 @@
 ;  c1995-2015: Visual Flow Coder by 2LResearch
 ;
 ;  File Name : vfcfind.pl.vfc
-;  File Date : 12:03:29 PM - 28:Jul:2025
+;  File Date : 12:08:25 PM - 13:Apr:2026
 
 event(use File::Find;);//// //////
 event(use File::Basename;);// ////
 event(use File::Find::Rule;);// ////
 set($HIT_TOTAL = 0;);//
+generic(my $cwd = getcwd(););// ////
 end();//
 set(my $ps;);//// //////
 
@@ -48,7 +49,10 @@ input(sub GetLines{ local ( $filename , $word_to_find  , $type ) = @_;);//
 generic(open(my $fh, '<', $filename) or die "Could not open file '$filename' $!";);// ////
 generic(my $line_number = 0;);// ////
 set($found = 0;);//
-output();//print( "******************** $type \n\n  " );
+set($found_in_file = 0;);//
+set($VScodeData = "" ;);//
+set($NPPcodeData = "" ;);//
+output();//print( "\n_______________________  $type file $filename\n" );
 set($VFCtoken = "^(generic|variable|input|event|process|set|output|loop|lend|branch|path|bend|end)" ;);//
 loop(while (my $row = <$fh>) {);// ////
 generic();// // Remove ANSI escape sequences //
@@ -67,6 +71,7 @@ set();//$row =~ s/;\/\/.*// ;
 set($row =~ s/\n// ;);//
 branch(if($row =~ m/$word_to_find/) {);///// ////////if($row =~ /\b$word_to_find\b/) {
 path();//
+output($FileName = "$cwd/$filename" ;);//
 branch(if ( $type =~ m/$VFCtoken/  &&  $EXTEN =~ m/vfc/i   ));//
 path( {);//
 branch(if ( $tok =~ m/^$type/ ));//
@@ -74,8 +79,8 @@ path( {);//
 set($found += 1;);//
 branch(if ( $EXTEN =~ m/vfc/i  ));//
 path( {);//
-output();//print "$bright_green";
-output(print "\tvfc $filename  $line_number\t$default|--------> $tok$row;\n";);//
+output(print "$bright_green";);//
+output(print "\tvfc $FileName $line_number\t$default|--------> $tok$row;\n";);//
 bend( });//
 path( }else{);//
 bend( });//
@@ -84,25 +89,51 @@ set($found += 1;);//
 branch(if ( $EXTEN =~ m/vfc/i  ));//
 path( {);//
 output();//print "$green";
-output(cprint( "\tvfc $filename  $line_number\t$default|---- $EXTEN ----> $tok$row;" , 'red'  ););// ////
+output(cprint( "\tvfc $FileName $line_number\t$default|---- $EXTEN ----> $tok$row;" , 'red'  ););// ////
 path(} else {);//
 branch(if (-e "$filename.vfc" ));//
 path( { );//
 output();//print "$cyan";
-output(cprint ( "\tvfc $filename   $line_number\t$default| line: $line_number  ---$EXTEN ----> $tok$row", 'cyan' ););// ////
+output(cprint ( "\tvfc $FileName $line_number\t$default| line: $line_number  ---$EXTEN ----> $tok$row", 'cyan' ););// ////
 path( } elsif( $filename !~ /\.vfc$/ ) {);//
 output();//print "$yellow";
-output(cprint ( "\tvfc $filename   $line_number\t$default| line: $line_number  ---$EXTEN ----> $tok$row" , 'yellow'  ););// ////
+output(cprint ( "\tvfc $FileName   $line_number\t$default| line: $line_number  ---$EXTEN ----> $tok$row" , 'yellow'  ););// ////
 bend( } );//
 bend( });//
 bend( });//
+output();//print "$bright_green";
+output($VScodeData = "$VScodeData\tcode  -g $filename:$line_number \t|--------> $tok$row\n";);//
+output($NPPcodeData = "$NPPcodeData\tnotepad++.exe -n$line_number -multiInst\t$FileName \t|--------> $tok$row\n";);//
+set($found_in_file++;);//
 bend(});//// //////
 output();//print "$reset";
 lend(});//// //////
+branch(if ( $found_in_file > 0 ));//
+path( { );//
+set(my $dir  = dirname($filename););//my $dir  = dirname($FileName);
+set(($name)= basename( $filename ););//my ($name) = fileparse($filename, qr/\.[^.]*/);
+output(print( "==== $found_in_file\tREFERENCES FOUND in FILE: $name =========== PATH: $dir ===========\n" ););//
+set($file = "npp_$name.ref" ;);//
+branch(open my $fh, '>', $file or die "Cannot open $file: $!";);//
+path();//
+output();//print( "$NPPcodeData\n" );
+output(print( $fh "REFERENCES FOR $word_to_find on PATH: $dir  FILE: $name\n\n" ););//
+output(print( $fh "$NPPcodeData\n" ););//
+bend( close $fh or die "Cannot close $file: $!";);//
+set($file = "vsc_$name.ref" ;);//
+branch(open my $fh, '>', $file or die "Cannot open $file: $!";);//
+path();//
+output();//print( "$VScodeData\n" );
+output(print( $fh "REFERENCES FOR $word_to_find on PATH: $dir  FILE: $name\n\n" ););//
+output(print( $fh "$VScodeData\n" ););//
+bend( close $fh or die "Cannot close $file: $!";);//
+set($TOTAL_FILES++;);//
+output();//print( "\n=====================> $found_in_file HITS in FILE:  $filename\n\n");
+bend( } );//
 generic(close($fh););// ////
 branch(if ( $found > 0  ));//
 path( {);//
-output(print "\n\tVFC LOC: $line_number :: $found HIT(s)\n\n";);//
+output();//print "\n\tVFC LOC: $line_number :: $found HIT(s)\n\n";
 set($HIT_TOTAL += $found ;);//
 bend( });//
 end(return $line_number; });//
@@ -160,6 +191,7 @@ end(return $total_lines  ;   });//
 input(#main);//// // Print the directories ////
 event(use Cwd;);// ////
 event();//my $dir = shift @ARGV or die "Usage: $0 <directory>\n";
+set($TOTAL_FILES  = 0;);//
 set(my $dir = "";);//
 set(my $word = "";);//
 generic(my $size = $#ARGV + 1;);//
@@ -218,10 +250,7 @@ end(};);//// //////
 process(find($wanted, '.'););//// //////
 generic();// // Debug it: //
 output();//print "$_\n" for @safe_dirs;
-generic(my @safe_dirs;);// ////
-generic(@list_of_dirs = @safe_dirs;);// ////
 output(print "\n==============================================================\n";);// 
-generic(my $cwd = getcwd(););// ////
 output(print( "Curent directory: $cwd \n" ););//
 output(print "\n==============================================================\n";);// 
 output(print( "<directory=$dir>  type=<$EXTEN> <search term=$word> <vfc_type=$type>\n" ) ;);////// ////////
@@ -248,8 +277,8 @@ output();// print "Lines of VFC in $dir  :  $lines \n\n";
 bend( });//
 lend(});//// //////
 set();//sleep(5);
-output(print( "\n\n==> <directory=$dir>  type=<$EXTEN> <search term=$word> <vfc_type=$type>\n" ) ;);// 
-output(print "==> TOTAL SCANNED LOC: $TotalLines :: HITS: $HIT_TOTAL \n";);// 
+output(print( "\==> <directory=$dir>  type=<$EXTEN> <search term=$word> <vfc_type=$type>\n\n" ) ;);// 
+output(print "==> TOTAL SCANNED LOC: $TotalLines :: HITS: $HIT_TOTAL :: FILES: $TOTAL_FILES\n";);//
 end();//
 
 
@@ -259,4 +288,4 @@ end();//
 ;    vfcfind.pl   #   .
 ; notepad.exe
 ;INSECTA EMBEDDED ALTSESSION INFORMATION
-; 1329 146 2494 1620 218 87   254   4294965834    perl.key  0
+; 1048 410 1217 1042 106 115   851   4294963989    perl.key  0
