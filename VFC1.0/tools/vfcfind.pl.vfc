@@ -2,7 +2,7 @@
 ;  c1995-2015: Visual Flow Coder by 2LResearch
 ;
 ;  File Name : vfcfind.pl.vfc
-;  File Date : 02:14:24 PM - 13:Apr:2026
+;  File Date : 04:20:58 PM - 13:Apr:2026
 
 event(use Cwd 'getcwd'; );// ////
 event(use File::Spec; );// ////
@@ -125,7 +125,8 @@ bend( } );//
 bend( });//
 bend( });//
 output();//print "$bright_green";
-output($VScodeData = "$VScodeData\tcode  -g $filename:$line_number \t|--------> $tok$row\n";);//
+output();//$VScodeData = "$VScodeData\tcode  -g $filename:$line_number \t|--------> $tok$row\n";
+output($VScodeData = "$VScodeData\t$filename:$line_number\n" ;);//
 output($NPPcodeData = "$NPPcodeData\tnotepad++.exe -n$line_number -multiInst\t$FileName \t|--------> $tok$row\n";);//
 set($found_in_file++;);//
 bend(});//// //////
@@ -318,4 +319,4 @@ end();//
 ;    vfcfind.pl   #   .
 ; notepad.exe
 ;INSECTA EMBEDDED ALTSESSION INFORMATION
-; 1037 105 1399 1165 142 126   841   4294962430    perl.key  0
+; 1037 105 1917 1647 119 126   841   4294963637    perl.key  0

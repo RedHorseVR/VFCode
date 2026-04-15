@@ -114,7 +114,8 @@ sub GetLines{ local ( $filename , $word_to_find  , $type ) = @_;
 					}
 				}
 			#print "$bright_green";
-			$VScodeData = "$VScodeData\tcode  -g $filename:$line_number \t|--------> $tok$row\n";
+			#$VScodeData = "$VScodeData\tcode  -g $filename:$line_number \t|--------> $tok$row\n";
+			$VScodeData = "$VScodeData\t$filename:$line_number\n" ;
 			$NPPcodeData = "$NPPcodeData\tnotepad++.exe -n$line_number -multiInst\t$FileName \t|--------> $tok$row\n";
 			$found_in_file++;
 			}#// //////
