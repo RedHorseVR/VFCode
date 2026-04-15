@@ -1,0 +1,59 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+
+
+
+        {
+            "label": "parse-ref-diagnostics",
+            "type": "shell",
+            "command": "Get-ChildItem -Recurse -Filter *.ref | Get-Content",
+            "group": "build",
+            "problemMatcher": {
+                "owner": "ref-files",
+                "severity": "warning",
+                "applyTo": "allDocuments",
+                "fileLocation": ["relative", "${workspaceFolder}"],
+                "pattern": {
+                    "regexp":  "^\\s*([^:()]+)[(:](\\d+)", //"^([^:]+):(\\d+)\\b",
+                    "file": 1,
+                    "line": 2
+                }
+            }
+        },
+
+        {
+            "label": "vfc-parse-clip",
+            "type": "shell",
+            "command": "vfcparseclip",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        
+        {
+            "label": "vfc-flowgraph-tool",
+            "type": "shell",
+            "command": "vfc ${file} ${lineNumber}",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+
+        {
+            "label": "clang-tidy-fix-braces",
+            "type": "shell",
+            "command": "clang-tidy -p . -fix -checks=\\\"readability-braces-around-statements,hicpp-braces-around-statements,bugprone-suspicious-semicolon\\\" \\\"${file}\\\"",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        }
+
+
+           
+        
+    ]
+}
