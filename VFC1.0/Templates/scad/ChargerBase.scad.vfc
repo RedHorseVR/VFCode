@@ -1,0 +1,158 @@
+;  IRL FlowCode Version: Version 10.0
+;  c1995-2015: Visual Flow Coder by 2LResearch
+;
+;  File Name : ChargerBase.scad.vfc
+;  File Date : 02:43:22 PM - 28:Sep:2025
+
+
+input(//BEGIN_INSECTA_TEMPLATE  );//
+event(//MAP_VARIABLE $name=<InsectaFileName>.   ENTER: Enter name  );//
+set(//SET_LANGUAGE_KEY  scad.key);//
+set(//SET_EXPORT_FILENAME  $name);//
+end( //END_INSECTA_TEMPLATE );//
+event(include <..\SCAD_Modules\modules.scad>);//FILE: ..\SCAD_Modules\modules.scad.vfc
+end();//
+branch();//
+path();//
+set(thick = 2;);//
+set(t = 1.8;);//
+set();//
+set();//
+set();//
+path();//
+set(usbL = 14;);//
+set(usbD = 35;);//
+set(usbW = 7 ;);//
+set(usb = [ usbL , usbD ,  usbW ];);//
+bend();//
+end();//
+process(base( A  ););//
+end();//
+
+input(module ballsock(  T = [ 0, 8, 0 ] , R = [ 90, 0, 0 ] ) {);//
+process(translate( [ 0 , 8, 0 ] )  rotate( [90, 0, 0 ])   import( "ball_socket.stl" ););//
+end(});//
+process();//translate( [ 50, 0 , 0 ] )
+
+input(module ring_holder (  ) {);//
+set(L = 52;);//
+set(D = 10;);//
+set(H = 8;);//
+set(R = 57.5 / 2 ;);//
+set(W = t + R ;);//
+branch(difference(){);//
+path(union(){);//
+set(cylinder( r = W, h = H ););//
+path( } #union(){);// } union() {
+set(cylinder( r = R, h = H ););//
+process(translate( [ 0, 30 , H/2-usbW/2+1 ] )  rounded_box( usb , 1 ););//
+set();//
+bend(  } });//
+end( });//
+process();//  ballsock();
+
+input(module base(    ) {);// 
+set(L = 52;);//
+set(D = 10;);//
+set(H = 9.5;);//
+set(R = 57.5 / 2 ;);//
+set(W = t + R ;);//
+set(ANG = 8 ;);//
+branch(difference(){);//
+path(union(){);//
+loop(for  (A= [ 0:120:300 ]) {);//
+branch(if( A == 0 ));//
+path( {);//
+process(rotate( [ 0 , 0 , A ] )   plug(  72 ););//
+path(} else {);//
+process(rotate( [ 0 , 0 , A ] )   plug(  64 ););//
+bend( });//
+lend( });//
+set(rotate( [ 0 , ANG, 0 ]) translate( [0,0,-.2] ) cylinder( r = W, h = H+.2 ););//
+path( } #union(){);// } union() {
+set(rotate( [ 0 , ANG, 0 ]) translate( [0,0,.10] )  cylinder( r = R, h = H ););//
+set(rotate( [ 0 , ANG, 0 ]) translate( [0,0,-3] )  cylinder( r = R-1, h = 4););//
+process(rotate( [ 0 , ANG, 0 ])  translate( [ 0, 30 , H/2-usbW/2+1 ] )  rounded_box( usb , 1 ););//
+set();//
+bend(  } });//
+end( });//
+
+input(module plug( H = 64  )  {);//plug( pos=[0,0,35] )
+set(R = 22/2 ;);//
+set(L = 3;);//
+set(ROT= -16 ;);//
+set(ZOF= -3 ;);//
+generic(pos=[0,0,65] ;);// 
+process(translate( pos  ));//
+branch(difference(){);//
+path(union(){);//
+set(cylinder( r = R+t, h = L ););//
+process(rotate( [ 0, ROT, 0 ])  translate( [ (R+1.5*t) , 0 , -H+L + ZOF ] )  cylinder( r = 3, h = H ););//
+path( } #union(){);//
+set(cylinder( r = R, h = L ););//
+bend(  } });//
+end( });//
+set(/* ============================================================================= */);//
+set(/* ============================================================================= */);//
+set(/* ============================================================================= */);//
+process();//BOOKstand() ;
+process();//rotate( [ 180 , 0 , 0 ] )  cover ( );
+
+input(module BOOKstand(  ) {);//
+set(A = 0;);//
+set(Y = 20;);//
+set(Z = -5;);//
+set(R = 3;);//
+set(H = 100;);//
+set(t = 10;);//
+branch(difference(){);//
+path(union(){);//
+process(translate( [ 0 , 11, 5 ] )  rotate( [ 0 , 180 , 0 ] )    box( 70 ,50 , 6 ););//  box( W , L , 1 );
+process(translate( [ 0 , 34 , 0 ] )    box( 70 ,4 , 70 ););//  box( W , L , 1 );
+process();//translate( [ 20 , Y, Z ] ) rotate( [-A,0,0] ) wedge(T=t,L=10,h = H );
+process();//translate( [-20 , Y, Z ] ) rotate( [-A,0,0] ) wedge(T=t,L=10,h = H );
+set();//translate([ 20, 8 , 33 ]) rotate([ -30 , 0 , 0 ]) cylinder( r = R, h = H , center = true );
+set();//translate([ -20, 8 , 33 ]) rotate([ -30 , 0 , 0 ]) cylinder( r = R, h = H , center = true );
+path( } #union(){);//
+process(translate( [ 0 , 0 , -1] )  floor() ;);//
+bend(  } });//
+end(});//////
+process();//stand() ;
+process();//rotate( [ 180 , 0 , 0 ] )  cover ( );
+
+input(module stand(  ) {);//
+set(A = -15;);//
+set(Y = 20;);//
+set(Z = -5;);//
+branch(difference(){);//
+path(union(){);//
+process(rotate( [ 0 , 180 , 0 ] )    box( 57.5 , 51.5 , 2 ););//  box( W , L , 1 );
+process(translate( [ 20 , Y, Z ] ) rotate( [-A,0,0] ) wedge(T=5,L=10,h = 50 ););//
+process(translate( [-20 , Y, Z ] ) rotate( [-A,0,0] ) wedge(T=5,L=10,h = 50 ););//
+set(translate([ 20, 8 , 11 ]) rotate([ -30 , 0 , 0 ]) cylinder( r = 1.3, h = 45 , center = true ););//
+set(translate([ -20, 8 , 11 ]) rotate([ -30 , 0 , 0 ]) cylinder( r = 1.3, h = 45 , center = true ););//
+path( } #union(){);//
+process(translate( [ 0 , 0 , -1] )  floor() ;);//
+bend(  } });//
+end(});//////
+process();//translate( [ W/2 + 3 , 0 , 0] )  usb();
+
+input(module usb(  ) {);//
+branch(difference(){);//
+path(union(){);//
+set(box( usbL , usbW , usbD ););//
+path( } #union(){);//
+bend(  } });//
+end(});//////
+set();//
+set();//
+set(echo("------------------------"););//
+
+
+
+;INSECTA EMBEDDED SESSION INFORMATION
+; 255 16777215 65280 16777088 16711680 13158600 13158600 0 255 255 9895835 6946660 3289650
+;    ChargerBase.scad      
+; notepad.exe
+;INSECTA EMBEDDED ALTSESSION INFORMATION
+; 1584 232 1560 1257 3 128   586   245    template.key  0
