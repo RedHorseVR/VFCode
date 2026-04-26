@@ -12,16 +12,21 @@ rem cmd / k
 
 cd %2
 
+echo %FILE% | findstr /I "_w.py" >nul
+	if %errorlevel% equ 0 (
+		echo The file has a .wpy extension. Using PythonW
+		start pythonW %CD%/%EXPORT%
+		exit
+	)  
+
 echo %EXPORT% | findstr /I ".py" >nul
-if %errorlevel% equ 0 (
-    echo The file has a .py extension. Using Python
-    start python %CD%/%EXPORT%
-) else (
-    echo The file does not have a .py extension.
-)
+	if %errorlevel% equ 0 (
+		echo The file has a .py extension. Using Python
+		start python %CD%/%EXPORT%
+	)
 
-TIMEOUT 2
 
-pause
+::pause
 
 EXIT
+
